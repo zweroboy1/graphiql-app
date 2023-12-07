@@ -13,6 +13,7 @@
     "prepare": "husky install",
     "test": "vitest run",
     "test-coverage": "vitest run --coverage",
+    "postinstall": "chmod +x .husky/*",
     "commit": "git add . && git-cz"
   },
   "dependencies": {
