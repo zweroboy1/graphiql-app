@@ -11,7 +11,8 @@
     "format:fix": "prettier --write ./src",
     "prepare": "husky install",
     "test": "vitest run",
-    "test-coverage": "vitest run --coverage"
+    "test-coverage": "vitest run --coverage",
+    "commit": "git-cz"
   },
   "dependencies": {
     "react": "^18.2.0",
