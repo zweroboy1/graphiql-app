@@ -6,6 +6,7 @@ import { TextField } from '../../components/inputs/TextFiled';
 import { PasswordField } from '../../components/inputs/PasswordField';
 
 import { loginSchema } from '../../schemas';
+import { loginUser } from '../../services/auth';
 
 export const Login: React.FC = () => {
   const {
@@ -14,8 +15,12 @@ export const Login: React.FC = () => {
     handleSubmit,
   } = useForm({ mode: 'onChange', resolver: yupResolver(loginSchema) });
 
+  const onSubmit = (data: { email: string; password: string }) => {
+    loginUser(data);
+  };
+
   return (
-    <form onSubmit={handleSubmit(console.log)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <TextField
         id="email"
         type="email"
