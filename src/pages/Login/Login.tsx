@@ -1,15 +1,21 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+
 import { TextField } from '../../components/inputs/TextFiled';
 import { PasswordField } from '../../components/inputs/PasswordField';
+
+import { loginSchema } from '../../schemas';
 
 export const Login: React.FC = () => {
   const {
     register,
     formState: { errors },
-  } = useForm();
+    handleSubmit,
+  } = useForm({ mode: 'onChange', resolver: yupResolver(loginSchema) });
+
   return (
-    <div>
+    <form onSubmit={handleSubmit(console.log)}>
       <TextField
         id="email"
         type="email"
@@ -25,6 +31,7 @@ export const Login: React.FC = () => {
         register={register}
         error={errors['password']}
       />
-    </div>
+      <button type="submit">Log in</button>
+    </form>
   );
 };

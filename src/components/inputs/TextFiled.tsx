@@ -1,3 +1,4 @@
+import { FieldValues, UseFormRegister } from 'react-hook-form';
 import { TextFieldProps } from '../../types/inputs';
 
 export const TextField: React.FC<TextFieldProps> = ({
@@ -16,7 +17,7 @@ export const TextField: React.FC<TextFieldProps> = ({
           type={type}
           id={id}
           placeholder={placeholder}
-          {...register(id)}
+          {...(register as UseFormRegister<FieldValues>)(id)}
         />
         {icon && (
           <button
