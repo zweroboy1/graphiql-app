@@ -35,14 +35,13 @@ export const loginUser = async ({
   email: string;
   password: string;
 }): Promise<UserCredential> => {
-  return signInWithEmailAndPassword(auth, email, password)
-  .catch((error) => {
-    if (error.message.includes('invalid-credential'))  {
-      console.log(error.message)
+  return signInWithEmailAndPassword(auth, email, password).catch((error) => {
+    if (error.message.includes('invalid-credential')) {
+      console.log(error.message);
       throw new Error('Your password or email is invalid.');
-     } else {
+    } else {
       throw new Error('Something went wrong. Try again later.');
-     }
+    }
   });
 };
 

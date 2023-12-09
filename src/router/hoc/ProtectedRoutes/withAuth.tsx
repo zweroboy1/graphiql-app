@@ -1,6 +1,8 @@
-import React, { ReactNode, useContext } from 'react';
+import React, { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
-import { UserContext } from '../../../components/App/App';
+import { useSelector } from 'react-redux';
+
+import { RootState } from '../../../store/store';
 
 interface withAuthRouteProps {
   redirectLink: string;
@@ -11,7 +13,7 @@ export const WithAuthRoute: React.FC<withAuthRouteProps> = ({
   redirectLink,
   children,
 }) => {
-  const user = useContext(UserContext);
+  const user = useSelector((state: RootState) => state.user.value);
 
   if (user) return <Navigate to={redirectLink} />;
 

@@ -1,20 +1,15 @@
-import { useState, createContext } from 'react';
 import { Router } from '../../router/router';
 import { auth } from '../../firebase';
-import { User } from '@firebase/auth';
+import { useDispatch } from 'react-redux';
 
-export const UserContext = createContext<User | null>(null);
+import { updateUser } from '../../store/slices/useSlice';
 
 export const App: React.FC = () => {
-  const [user, setUser] = useState<User | null>(null);
+  const dispatch = useDispatch();
 
   auth.onAuthStateChanged((user) => {
-    setUser(user);
+    dispatch(updateUser(user));
   });
 
-  return (
-    <UserContext.Provider value={user}>
-      <Router />
-    </UserContext.Provider>
-  );
+  return <Router />;
 };

@@ -1,10 +1,12 @@
-import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 import { logoutUser } from '../../services/auth';
-import { UserContext } from '../App/App';
+
+import { RootState } from '../../store/store';
 
 export const Header: React.FC = () => {
-  const user = useContext(UserContext);
+  const user = useSelector((state: RootState) => state.user.value);
 
   return (
     <>
