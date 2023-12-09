@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
-import { isAuthorized } from '../../../utils/consts';
+import { isAuthorized } from '../../../firebase';
 
 interface ProtectedRouteProps {
   redirectLink: string;
