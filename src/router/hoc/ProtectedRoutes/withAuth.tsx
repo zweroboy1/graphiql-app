@@ -1,6 +1,6 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useContext } from 'react';
 import { Navigate } from 'react-router-dom';
-import { isAuthorized } from '../../../firebase';
+import { UserContext } from '../../../components/App/App';
 
 interface withAuthRouteProps {
   redirectLink: string;
@@ -11,7 +11,9 @@ export const WithAuthRoute: React.FC<withAuthRouteProps> = ({
   redirectLink,
   children,
 }) => {
-  if (isAuthorized) return <Navigate to={redirectLink} />;
+  const user = useContext(UserContext);
+
+  if (user) return <Navigate to={redirectLink} />;
 
   return children;
 };
