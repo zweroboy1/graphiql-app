@@ -7,6 +7,7 @@ export const TextField: React.FC<TextFieldProps> = ({
   label,
   placeholder,
   register,
+  error,
   icon,
 }) => {
   return (
@@ -29,6 +30,7 @@ export const TextField: React.FC<TextFieldProps> = ({
           </button>
         )}
       </div>
+      {error && <div>{error.message as string}</div>}
     </>
   );
 };
