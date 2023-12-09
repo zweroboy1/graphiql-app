@@ -10,6 +10,7 @@ export const PasswordField: React.FC<PasswordFieldProps> = ({
   label,
   placeholder,
   register,
+  error,
 }) => {
   const [passwordType, setPasswordType] = useState<'password' | 'text'>(
     'password'
@@ -27,6 +28,7 @@ export const PasswordField: React.FC<PasswordFieldProps> = ({
         label={label}
         placeholder={placeholder}
         register={register}
+        error={error}
         icon={{
           SvgComponent: passwordType === 'password' ? EyeOffSVG : EyeOnSVG,
           onClick: toggleVisibilityPassword,
