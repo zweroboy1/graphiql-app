@@ -1,4 +1,5 @@
 import {
+  UserCredential,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
@@ -27,20 +28,26 @@ export const registerUser = async (user: {
   }
 };
 
-export const loginUser = ({
+export const loginUser = async ({
   email,
   password,
 }: {
   email: string;
   password: string;
-}) => {
-  signInWithEmailAndPassword(auth, email, password).catch((error) => {
-    console.log(error);
+}): Promise<UserCredential> => {
+  return signInWithEmailAndPassword(auth, email, password)
+  .catch((error) => {
+    if (error.message.includes('invalid-credential'))  {
+      console.log(error.message)
+      throw new Error('Your password or email is invalid.');
+     } else {
+      throw new Error('Something went wrong. Try again later.');
+     }
   });
 };
 
-export const logoutUser = () => {
-  signOut(auth).catch((error) => {
-    console.log(error);
+export const logoutUser = async () => {
+  return signOut(auth).catch(() => {
+    throw Error('Something went wrong. Try again later.');
   });
 };

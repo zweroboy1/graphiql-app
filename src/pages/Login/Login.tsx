@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+
+import { loginUser } from '../../services/auth';
 
 import { TextField } from '../../components/inputs/TextFiled';
 import { PasswordField } from '../../components/inputs/PasswordField';
 
 import { loginSchema } from '../../schemas';
-import { loginUser } from '../../services/auth';
 
 export const Login: React.FC = () => {
   const {
@@ -14,10 +15,24 @@ export const Login: React.FC = () => {
     formState: { errors },
     handleSubmit,
   } = useForm({ mode: 'onChange', resolver: yupResolver(loginSchema) });
+  const [submiting, setSubmiting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const onSubmit = (data: { email: string; password: string }) => {
-    loginUser(data);
+  const onSubmit = async (data: { email: string; password: string }) => {
+    setSubmiting(true);
+    setError(null);
+    try {
+      await loginUser(data);
+    } catch (e) {
+      if (e instanceof Error) {
+        setError(e.message);
+      }
+    } finally {
+      setSubmiting(false);
+    }
   };
+
+  console.log(error);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -36,7 +51,10 @@ export const Login: React.FC = () => {
         register={register}
         error={errors['password']}
       />
-      <button type="submit">Log in</button>
+      <button disabled={submiting} type="submit">
+        Log in
+      </button>
+      {error && <div>{error}</div>}
     </form>
   );
 };

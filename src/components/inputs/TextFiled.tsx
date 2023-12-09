@@ -22,7 +22,7 @@ export const TextField: React.FC<TextFieldProps> = ({
         />
         {icon && (
           <button
-            style={{ position: 'absolute', top: '2px', right: '2px' }}
+            style={{ position: 'absolute', top: '0', right: '0' }}
             type="button"
             onClick={icon.onClick}
           >
