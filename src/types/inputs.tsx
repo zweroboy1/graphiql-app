@@ -3,14 +3,14 @@ import {
   FieldErrorsImpl,
   FieldValues,
   Merge,
-  UseFormRegister,
+  // UseFormRegister,
 } from 'react-hook-form';
 
 export interface PasswordFieldProps {
   id: string;
   label: string;
   placeholder: string;
-  register: UseFormRegister<FieldValues>;
+  register: unknown;
   error?: FieldError | Merge<FieldError, FieldErrorsImpl<FieldValues>>;
 }
 
