@@ -6,11 +6,28 @@ export const TextField: React.FC<TextFieldProps> = ({
   label,
   placeholder,
   register,
+  icon,
 }) => {
   return (
     <>
       <label htmlFor={id}>{label}</label>
-      <input type={type} id={id} placeholder={placeholder} {...register(id)} />
+      <div style={{ position: 'relative', width: 'max-content' }}>
+        <input
+          type={type}
+          id={id}
+          placeholder={placeholder}
+          {...register(id)}
+        />
+        {icon && (
+          <button
+            style={{ position: 'absolute', top: '2px', right: '2px' }}
+            type="button"
+            onClick={icon.onClick}
+          >
+            <icon.SvgComponent />
+          </button>
+        )}
+      </div>
     </>
   );
 };

@@ -6,11 +6,15 @@ import {
   UseFormRegister,
 } from 'react-hook-form';
 
-export interface TextFieldProps {
+export interface PasswordFieldProps {
   id: string;
-  type: string;
   label: string;
   placeholder: string;
   register: UseFormRegister<FieldValues>;
   error?: FieldError | Merge<FieldError, FieldErrorsImpl<FieldValues>>;
+}
+
+export interface TextFieldProps extends PasswordFieldProps {
+  type: string;
+  icon?: { SvgComponent: React.FC; onClick?: () => void };
 }
