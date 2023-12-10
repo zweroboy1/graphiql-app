@@ -32,8 +32,6 @@ export const Login: React.FC = () => {
     }
   };
 
-  console.log(error);
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <TextField
@@ -51,8 +49,8 @@ export const Login: React.FC = () => {
         register={register}
         error={errors['password']}
       />
-      <button disabled={submiting} type="submit">
-        Log in
+      <button disabled={submiting} type="submit" role="submit">
+        Login
       </button>
       {error && <div>{error}</div>}
     </form>

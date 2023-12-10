@@ -3,13 +3,13 @@ import * as yup from 'yup';
 export const loginSchema = yup.object().shape({
   email: yup
     .string()
-    .required('this field is required')
+    .required('email is required')
     .email()
     .matches(/\.[a-z]{2,}$/, 'email address must contain a domain')
     .required(),
   password: yup
     .string()
-    .required('this field is required')
+    .required('password is required')
     .min(8)
     .matches(
       /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]+/,
