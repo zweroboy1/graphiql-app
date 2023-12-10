@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { TextField } from './TextFiled';
+import { TextField } from './TextField';
 import { EyeOffSVG, EyeOnSVG } from '../../shared/svg';
 
 import { PasswordFieldProps } from '../../types/inputs';

@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { loginUser } from '../../services/auth';
 
-import { TextField } from '../../components/inputs/TextFiled';
+import { TextField } from '../../components/inputs/TextField';
 import { PasswordField } from '../../components/inputs/PasswordField';
 
 import { loginSchema } from '../../schemas';
@@ -33,7 +33,9 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <>
+    <h2 className="h2">Login form</h2>
+    <form className="login-form" onSubmit={handleSubmit(onSubmit)}>      
       <TextField
         id="email"
         type="email"
@@ -49,10 +51,11 @@ export const Login: React.FC = () => {
         register={register}
         error={errors['password']}
       />
-      <button disabled={submiting} type="submit" role="submit">
+      <button className="button" disabled={submiting} type="submit" role="submit">
         Login
       </button>
-      {error && <div>{error}</div>}
+      {false && error && <div>{error}</div>}
     </form>
+    </>
   );
 };
