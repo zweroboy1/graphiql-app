@@ -34,28 +34,33 @@ export const Login: React.FC = () => {
 
   return (
     <>
-    <h2 className="h2">Login form</h2>
-    <form className="login-form" onSubmit={handleSubmit(onSubmit)}>      
-      <TextField
-        id="email"
-        type="email"
-        label="Email:"
-        placeholder="name@example.com"
-        register={register}
-        error={errors['email']}
-      />
-      <PasswordField
-        id="password"
-        label="Password:"
-        placeholder="Enter your password"
-        register={register}
-        error={errors['password']}
-      />
-      <button className="button" disabled={submiting} type="submit" role="submit">
-        Login
-      </button>
-      {false && error && <div>{error}</div>}
-    </form>
+      <h2 className="h2">Login form</h2>
+      <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
+        <TextField
+          id="email"
+          type="email"
+          label="Email:"
+          placeholder="name@example.com"
+          register={register}
+          error={errors['email']}
+        />
+        <PasswordField
+          id="password"
+          label="Password:"
+          placeholder="Enter your password"
+          register={register}
+          error={errors['password']}
+        />
+        <button
+          className="button"
+          disabled={submiting}
+          type="submit"
+          role="submit"
+        >
+          Login
+        </button>
+        {false && error && <div>{error}</div>}
+      </form>
     </>
   );
 };
