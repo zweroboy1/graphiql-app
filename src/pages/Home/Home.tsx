@@ -1,5 +1,8 @@
 import React from 'react';
+import { useLocalization } from '../../contexts/locale.context';
 
 export const Home: React.FC = () => {
-  return <div>Home</div>;
+  const { translations } = useLocalization();
+
+  return <div>{translations.Home}</div>;
 };
