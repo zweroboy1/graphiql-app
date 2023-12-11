@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { logoutUser } from '../../services/auth';
 import { RootState } from '../../store/store';
+import { LanguageButton } from '../LanguageButton/LanguageButton';
 
 import Logo from '../../assets/svg/logo.svg';
 
@@ -17,6 +18,7 @@ export const Header: React.FC = () => {
             <span className="header__logo-text">GraphQl app</span>
           </div>
         </Link>
+        <LanguageButton />
         {user ? (
           <div className="header__right">
             <Link className="button button_medium" to="/graph-ql">
