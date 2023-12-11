@@ -16,14 +16,12 @@
     font-size: 16px;
   }
 
+  @include hover {
+    color: $white-color;
+    background-color: $primary-hover-color;
+  }
+
   &:focus {
     outline: 2px solid $outline-stroke-color;
-  }
-}
-@media (hover: hover) {
-  .button {
-    &:hover {
-      background-color: $primary-hover-color;
-    }
   }
 }

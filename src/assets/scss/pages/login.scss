@@ -7,4 +7,11 @@
   max-width: map-get($sizes, 's');
 
   box-shadow: $medium-shadow;
+
+  &__title {
+    margin-bottom: 12px;
+  }
+  &__text {
+    margin-top: 12px;
+  }
 }

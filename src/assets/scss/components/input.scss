@@ -1,14 +1,3 @@
-@media (hover: hover) {
-  .input {
-    &:hover {
-      outline: 1px solid $grey-border-color;
-    }
-    &_error:hover {
-      outline: 1px solid $error-border-color;
-    }
-  }
-}
-
 .input {
   padding: 12px 20px;
   font-family: inherit;
@@ -17,6 +6,11 @@
   border-radius: 10px;
   background-color: $light-grey-color;
   color: $text-color;
+
+  @include hover {
+    outline: 1px solid $grey-border-color;
+  }
+
   &::placeholder {
     color: $dark-grey-color;
   }
@@ -27,6 +21,12 @@
   &_error:focus {
     background-color: $error-bg-color;
     outline: 1px solid $error-border-color;
+  }
+
+  &_error {
+    @include hover {
+      outline: 1px solid $error-border-color;
+    }
   }
 
   &__container {

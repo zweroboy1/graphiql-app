@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-
+import { Link } from 'react-router-dom';
 import { loginUser } from '../../services/auth';
-
 import { TextField } from '../../components/inputs/TextField';
 import { PasswordField } from '../../components/inputs/PasswordField';
-
 import { loginSchema } from '../../schemas';
 
 export const Login: React.FC = () => {
@@ -35,7 +33,7 @@ export const Login: React.FC = () => {
   return (
     <>
       <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
-        <h2 className="h2">Sign in</h2>
+        <h2 className="login-form__title h2">Sign in</h2>
         <TextField
           id="email"
           type="email"
@@ -60,6 +58,12 @@ export const Login: React.FC = () => {
           Login
         </button>
         {false && error && <div>{error}</div>}
+
+        <div className="login-form__text text">
+          Do not have an account yet?
+          <br />
+          <Link to="/register">Sign Up</Link>
+        </div>
       </form>
     </>
   );
