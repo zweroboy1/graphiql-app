@@ -18,8 +18,8 @@ describe('Login Page:', () => {
         <Login />
       </MemoryRouter>
     );
-    emailInput = screen.getByLabelText('Email:');
-    passwordInput = screen.getByLabelText('Password:');
+    emailInput = screen.getByLabelText('Email');
+    passwordInput = screen.getByLabelText('Password');
     submitButton = screen.getByRole('submit');
   });
 
