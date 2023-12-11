@@ -11,7 +11,15 @@ body {
 }
 
 a {
+  color: $primary-color;
   text-decoration: none;
+  @include hover {
+    color: $primary-hover-color;
+  }
+  &:focus,
+  &:focus-visible {
+    outline-color: $outline-stroke-color;
+  }
 }
 
 button {
