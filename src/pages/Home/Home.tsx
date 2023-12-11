@@ -3,7 +3,6 @@ import React from 'react';
 export const Home: React.FC = () => {
   return (
     <div>
-      {' '}
       {/*
       Home Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum
       blanditiis officia consequatur nisi distinctio beatae aperiam, rem debitis
