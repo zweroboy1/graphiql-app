@@ -16,5 +16,5 @@ export interface PasswordFieldProps {
 
 export interface TextFieldProps extends PasswordFieldProps {
   type: string;
-  icon?: { SvgComponent: React.FC; onClick?: () => void };
+  icon?: { component: React.FC; onClick?: () => void };
 }

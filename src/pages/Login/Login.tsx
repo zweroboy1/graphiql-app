@@ -34,19 +34,19 @@ export const Login: React.FC = () => {
 
   return (
     <>
-      <h2 className="h2">Login form</h2>
       <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
+        <h2 className="h2">Sign in</h2>
         <TextField
           id="email"
           type="email"
-          label="Email:"
+          label="Email"
           placeholder="name@example.com"
           register={register}
           error={errors['email']}
         />
         <PasswordField
           id="password"
-          label="Password:"
+          label="Password"
           placeholder="Enter your password"
           register={register}
           error={errors['password']}

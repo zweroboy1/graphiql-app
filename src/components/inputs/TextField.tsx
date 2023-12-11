@@ -26,7 +26,7 @@ export const TextField: React.FC<TextFieldProps> = ({
         />
         {icon && (
           <button className="input__icon" type="button" onClick={icon.onClick}>
-            <icon.SvgComponent />
+            <icon.component />
           </button>
         )}
       </div>
