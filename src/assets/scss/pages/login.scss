@@ -4,7 +4,7 @@
   background: #fff;
 
   margin: 0 auto;
-  max-width: 1000px;
+  max-width: map-get($sizes, 's');
 
   box-shadow: $medium-shadow;
 }

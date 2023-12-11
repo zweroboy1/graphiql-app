@@ -4,12 +4,12 @@ import { Footer } from '../Footer/Footer';
 
 export const Layout: React.FC = () => {
   return (
-    <>
+    <div className="wrapper">
       <Header />
-      <main>
+      <main className="main">
         <Outlet />
       </main>
       <Footer />
-    </>
+    </div>
   );
 };

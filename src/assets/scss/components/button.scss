@@ -3,13 +3,18 @@
   padding: 16px 36px;
   justify-content: center;
   align-items: center;
-  gap: 10px;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 400;
   background-color: $primary-color;
   color: $white-color;
   border-radius: 10px;
+  white-space: nowrap;
   cursor: pointer;
+
+  &_medium {
+    padding: 12px 30px;
+    font-size: 16px;
+  }
 
   &:focus {
     outline: 2px solid $outline-stroke-color;
