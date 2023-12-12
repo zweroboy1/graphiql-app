@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-
+import { Link } from 'react-router-dom';
 import { loginUser } from '../../services/auth';
-
-import { TextField } from '../../components/inputs/TextFiled';
+import { TextField } from '../../components/inputs/TextField';
 import { PasswordField } from '../../components/inputs/PasswordField';
-
 import { loginSchema } from '../../schemas';
 
 export const Login: React.FC = () => {
@@ -33,26 +31,40 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <TextField
-        id="email"
-        type="email"
-        label="Email"
-        placeholder="name@example.com"
-        register={register}
-        error={errors['email']}
-      />
-      <PasswordField
-        id="password"
-        label="Password"
-        placeholder="Enter your password"
-        register={register}
-        error={errors['password']}
-      />
-      <button disabled={submiting} type="submit" role="submit">
-        Login
-      </button>
-      {error && <div>{error}</div>}
-    </form>
+    <>
+      <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
+        <h2 className="login-form__title h2">Sign in</h2>
+        <TextField
+          id="email"
+          type="email"
+          label="Email"
+          placeholder="name@example.com"
+          register={register}
+          error={errors['email']}
+        />
+        <PasswordField
+          id="password"
+          label="Password"
+          placeholder="Enter your password"
+          register={register}
+          error={errors['password']}
+        />
+        <button
+          className="button"
+          disabled={submiting}
+          type="submit"
+          role="submit"
+        >
+          Login
+        </button>
+        {false && error && <div>{error}</div>}
+
+        <div className="login-form__text text">
+          Do not have an account yet?
+          <br />
+          <Link to="/register">Sign Up</Link>
+        </div>
+      </form>
+    </>
   );
 };

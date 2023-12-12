@@ -1,0 +1,99 @@
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  color: $dark-grey-color;
+  border-top: 1px solid $light-grey-color;
+
+  @include media('m') {
+    gap: 12px 4px;
+  }
+
+  &__rss {
+    &-container {
+      display: flex;
+      justify-content: flex-end;
+      width: 160px;
+      order: 3;
+
+      @include media('xxs') {
+        order: 4;
+        width: 100%;
+        justify-content: center;
+      }
+    }
+    &-icon {
+      width: 90px;
+      height: 30px;
+      cursor: pointer;
+      @include hover {
+        color: $primary-hover-color;
+      }
+    }
+  }
+
+  &__links {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    order: 2;
+    @include media('m') {
+      width: 100%;
+      justify-content: space-between;
+      order: 1;
+    }
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    text-decoration: none;
+    line-height: 1;
+    user-select: none;
+    color: $dark-grey-color;
+    cursor: pointer;
+
+    @include media('xxs') {
+      justify-content: center;
+      width: 100%;
+    }
+
+    @include hover {
+      color: $primary-hover-color;
+    }
+
+    &:visited {
+      color: inherit;
+    }
+  }
+  &__link-name {
+    margin-left: 4px;
+    font-weight: 500;
+    color: inherit;
+  }
+  &__svg {
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    color: inherit;
+  }
+
+  &__team {
+    font-weight: bold;
+    white-space: nowrap;
+    order: 1;
+    @include media('m') {
+      order: 2;
+    }
+    @include media('xxs') {
+      order: 1;
+      display: flex;
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}

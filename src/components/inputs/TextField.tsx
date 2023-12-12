@@ -10,27 +10,29 @@ export const TextField: React.FC<TextFieldProps> = ({
   error,
   icon,
 }) => {
+  const inputClasses = error ? 'input input_error' : 'input';
   return (
-    <>
-      <label htmlFor={id}>{label}</label>
-      <div style={{ position: 'relative', width: 'max-content' }}>
+    <div className="input__group">
+      <label className="h4" htmlFor={id}>
+        {label}
+      </label>
+      <div className="input__container">
         <input
+          className={inputClasses}
           type={type}
           id={id}
           placeholder={placeholder}
           {...(register as UseFormRegister<FieldValues>)(id)}
         />
         {icon && (
-          <button
-            style={{ position: 'absolute', top: '0', right: '0' }}
-            type="button"
-            onClick={icon.onClick}
-          >
-            <icon.SvgComponent />
+          <button className="input__icon" type="button" onClick={icon.onClick}>
+            <icon.component />
           </button>
         )}
       </div>
-      {error && <div>{error.message as string}</div>}
-    </>
+      {error && (
+        <div className="input-error-message">{error.message as string}</div>
+      )}
+    </div>
   );
 };

@@ -1,0 +1,24 @@
+.language {
+  &__button {
+    display: flex;
+    justify-content: center;
+    width: 100px;
+    padding: 12px 0;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    border: 1px solid $grey-border-color;
+    border-radius: 10px;
+    background-color: $light-grey-color;
+    color: $light-text-color;
+    outline: 0;
+    cursor: pointer;
+    @include hover {
+      background-color: $white-color;
+    }
+    &:focus,
+    &:focus-visible {
+      outline: 2px solid $outline-stroke-color;
+    }
+  }
+}

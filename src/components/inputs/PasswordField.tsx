@@ -1,8 +1,6 @@
 import { useState } from 'react';
-
-import { TextField } from './TextFiled';
+import { TextField } from './TextField';
 import { EyeOffSVG, EyeOnSVG } from '../../shared/svg';
-
 import { PasswordFieldProps } from '../../types/inputs';
 
 export const PasswordField: React.FC<PasswordFieldProps> = ({
@@ -30,7 +28,7 @@ export const PasswordField: React.FC<PasswordFieldProps> = ({
         register={register}
         error={error}
         icon={{
-          SvgComponent: passwordType === 'password' ? EyeOffSVG : EyeOnSVG,
+          component: passwordType === 'password' ? EyeOffSVG : EyeOnSVG,
           onClick: toggleVisibilityPassword,
         }}
       />

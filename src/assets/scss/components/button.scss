@@ -1,0 +1,28 @@
+.button {
+  display: inline-flex;
+  padding: 16px 36px;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 400;
+  background-color: $primary-color;
+  color: $white-color;
+  border: 0;
+  border-radius: 10px;
+  white-space: nowrap;
+  cursor: pointer;
+
+  &_medium {
+    padding: 12px 30px;
+    font-size: 16px;
+  }
+
+  @include hover {
+    color: $white-color;
+    background-color: $primary-hover-color;
+  }
+
+  &:focus {
+    outline: 2px solid $outline-stroke-color;
+  }
+}
