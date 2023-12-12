@@ -6,7 +6,6 @@ import { loginUser } from '../../services/auth';
 import { TextField } from '../../components/inputs/TextField';
 import { PasswordField } from '../../components/inputs/PasswordField';
 import { loginSchema } from '../../schemas';
-import { useLocalization } from '../../contexts/locale.context';
 
 export const Login: React.FC = () => {
   const {
@@ -16,7 +15,6 @@ export const Login: React.FC = () => {
   } = useForm({ mode: 'onChange', resolver: yupResolver(loginSchema) });
   const [submiting, setSubmiting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const { translations } = useLocalization();
 
   const onSubmit = async (data: { email: string; password: string }) => {
     setSubmiting(true);
