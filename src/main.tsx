@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { App } from './components/App/App';
 import { BrowserRouter } from 'react-router-dom';
 import { store } from './store/store';
+import { LanguageProvider } from './contexts/locale.context';
 import './assets/scss/style.scss';
 import { LanguageProvider } from './contexts/locale.context';
 
