@@ -6,13 +6,13 @@ type LanguageContextType = {
   translations: Record<string, string>;
 };
 
-const LanguageContext = createContext<LanguageContextType | undefined>(
-  undefined
-);
-
 type LanguageProviderProps = {
   children: ReactNode;
 };
+
+const LanguageContext = createContext<LanguageContextType | undefined>(
+  undefined
+);
 
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({
   children,
@@ -45,6 +45,6 @@ export const useLocalization = () => {
   if (!context) {
     throw new Error('useLocalization must be used within a LanguageProvider');
   }
-
+  
   return context;
 };

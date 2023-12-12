@@ -8,6 +8,7 @@ import { TextField } from '../../components/inputs/TextFiled';
 import { PasswordField } from '../../components/inputs/PasswordField';
 
 import { loginSchema } from '../../schemas';
+import { useLocalization } from '../../contexts/locale.context';
 
 export const Login: React.FC = () => {
   const {
@@ -17,6 +18,7 @@ export const Login: React.FC = () => {
   } = useForm({ mode: 'onChange', resolver: yupResolver(loginSchema) });
   const [submiting, setSubmiting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { translations } = useLocalization();
 
   const onSubmit = async (data: { email: string; password: string }) => {
     setSubmiting(true);
@@ -37,20 +39,20 @@ export const Login: React.FC = () => {
       <TextField
         id="email"
         type="email"
-        label="Email:"
+        label={translations.email}
         placeholder="name@example.com"
         register={register}
         error={errors['email']}
       />
       <PasswordField
         id="password"
-        label="Password:"
+        label={translations.password}
         placeholder="Enter your password"
         register={register}
         error={errors['password']}
       />
       <button disabled={submiting} type="submit" role="submit">
-        Login
+        {translations.login}
       </button>
       {error && <div>{error}</div>}
     </form>
