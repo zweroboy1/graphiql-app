@@ -45,6 +45,6 @@ export const useLocalization = () => {
   if (!context) {
     throw new Error('useLocalization must be used within a LanguageProvider');
   }
-
+  
   return context;
 };
