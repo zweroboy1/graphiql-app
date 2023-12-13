@@ -39,6 +39,7 @@ export const Login: React.FC = () => {
           type="email"
           label="Email"
           placeholder="name@example.com"
+          autocomplete="username"
           register={register}
           error={errors['email']}
         />
@@ -46,6 +47,7 @@ export const Login: React.FC = () => {
           id="password"
           label="Password"
           placeholder="Enter your password"
+          autocomplete="current-password"
           register={register}
           error={errors['password']}
         />

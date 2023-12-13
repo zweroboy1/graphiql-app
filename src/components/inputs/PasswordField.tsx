@@ -7,6 +7,7 @@ export const PasswordField: React.FC<PasswordFieldProps> = ({
   id,
   label,
   placeholder,
+  autocomplete,
   register,
   error,
 }) => {
@@ -25,6 +26,7 @@ export const PasswordField: React.FC<PasswordFieldProps> = ({
         type={passwordType}
         label={label}
         placeholder={placeholder}
+        autocomplete={autocomplete}
         register={register}
         error={error}
         icon={{

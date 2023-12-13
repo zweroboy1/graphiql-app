@@ -6,11 +6,13 @@ export const TextField: React.FC<TextFieldProps> = ({
   type,
   label,
   placeholder,
+  autocomplete,
   register,
   error,
   icon,
 }) => {
-  const inputClasses = error ? 'input input_error' : 'input';
+  let inputClasses = error ? 'input input_error' : 'input';
+  inputClasses = icon ? `${inputClasses} input_eye` : inputClasses;
   return (
     <div className="input__group">
       <label className="h4" htmlFor={id}>
@@ -22,6 +24,7 @@ export const TextField: React.FC<TextFieldProps> = ({
           type={type}
           id={id}
           placeholder={placeholder}
+          autoComplete={autocomplete}
           {...(register as UseFormRegister<FieldValues>)(id)}
         />
         {icon && (
