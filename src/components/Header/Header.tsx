@@ -7,7 +7,7 @@ import { LanguageButton } from '../LanguageButton/LanguageButton';
 import Logo from '../../assets/svg/logo.svg';
 
 export const Header: React.FC = () => {
-  const user = useSelector((state: RootState) => state.user.value);
+  const user = useSelector((state: RootState) => state.user);
 
   return (
     <header className="header">

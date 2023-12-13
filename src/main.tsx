@@ -10,10 +10,10 @@ import { LanguageProvider } from './cantexts/locale.context';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
-    <LanguageProvider>
-      <Provider store={store}>
-        <App />
-      </Provider>
+      <LanguageProvider>
+        <Provider store={store}>
+          <App />
+        </Provider>
       </LanguageProvider>
     </BrowserRouter>
   </React.StrictMode>
