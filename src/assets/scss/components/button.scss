@@ -8,6 +8,7 @@
   background-color: $primary-color;
   color: $white-color;
   border: 0;
+  outline: 0;
   border-radius: 10px;
   white-space: nowrap;
   cursor: pointer;
@@ -24,5 +25,11 @@
 
   &:focus {
     outline: 2px solid $outline-stroke-color;
+  }
+
+  &:disabled {
+    color: $disabled-text-color;
+    background-color: $disabled-bg-color;
+    cursor: not-allowed;
   }
 }
