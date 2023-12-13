@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { LANGUAGES } from '../../constants';
-import { useLocalization } from '../../cantexts/locale.context';
+import { useLocalization } from '../../contexts/locale.context';
 
 const LanguageButton: React.FC = () => {
   const [currentLanguageIndex, setCurrentLanguageIndex] = useState<number>(0);
