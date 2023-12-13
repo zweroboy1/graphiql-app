@@ -6,7 +6,7 @@ import {
   // UseFormRegister,
 } from 'react-hook-form';
 
-export type AutocompleteType = 'off' | 'username' | 'current-password';
+export type AutocompleteType = 'off' | 'username' | 'current-password' | 'name';
 export interface PasswordFieldProps {
   id: string;
   label: string;
