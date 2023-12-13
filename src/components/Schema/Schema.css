@@ -1,0 +1,21 @@
+.menu {
+  position: fixed;
+  top: 0;
+  overflow-y: auto;
+  right: -300px;
+  width: 300px;
+  height: 100%;
+  transition: right 0.3s ease;
+}
+
+.menu.open {
+  right: 26px;
+  transition: right 0.3s ease;
+}
+
+.btn {
+  position: fixed;
+  right: -18px;
+  bottom: 50vh;
+  transform: rotate(-90deg);
+}

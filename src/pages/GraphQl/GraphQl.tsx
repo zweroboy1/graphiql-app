@@ -4,7 +4,7 @@ import { Schema } from '../../components/Schema/Schema';
 export const GraphQl: React.FC = () => {
   return (
     <>
-      <div
+      {/* <div
         style={{
           position: 'fixed',
           display: 'flex',
@@ -12,10 +12,10 @@ export const GraphQl: React.FC = () => {
           flexDirection: 'row',
           transform: 'rotate(-90deg)',
         }}
-      >
-        <Docs />
-        <Schema />
-      </div>
+      > */}
+      <Docs />
+      <Schema />
+      {/* </div> */}
     </>
   );
 };

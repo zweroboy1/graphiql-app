@@ -7,5 +7,16 @@ export const Docs: React.FC = () => {
   //   setOpen(!open)
   // }
 
-  return <button>Docs</button>;
+  return (
+    <button
+      style={{
+        position: 'fixed',
+        right: '-10px',
+        bottom: '40vh',
+        transform: 'rotate(-90deg)',
+      }}
+    >
+      Docs
+    </button>
+  );
 };
