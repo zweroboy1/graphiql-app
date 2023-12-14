@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'react-router-dom';
-import { loginUser } from '../../services/auth';
+import { registerUser } from '../../services/auth';
 import { TextField } from '../../components/inputs/TextField';
 import { PasswordField } from '../../components/inputs/PasswordField';
 import { registerSchema } from '../../schemas';
@@ -16,11 +16,15 @@ export const Register: React.FC = () => {
   const [submiting, setSubmiting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const onSubmit = async (data: { email: string; password: string }) => {
+  const onSubmit = async (data: {
+    email: string;
+    password: string;
+    name: string;
+  }) => {
     setSubmiting(true);
     setError(null);
     try {
-      await loginUser(data);
+      await registerUser(data);
     } catch (e) {
       if (e instanceof Error) {
         setError(e.message);

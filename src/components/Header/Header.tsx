@@ -21,6 +21,7 @@ export const Header: React.FC = () => {
         <LanguageButton />
         {user ? (
           <div className="header__right">
+            logged as {user.name}
             <Link className="button button_medium" to="/graph-ql">
               Graph Ql
             </Link>
