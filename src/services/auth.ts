@@ -1,6 +1,7 @@
 import {
   UserCredential,
   createUserWithEmailAndPassword,
+  updateProfile,
   signInWithEmailAndPassword,
   signOut,
 } from '@firebase/auth';
@@ -10,15 +11,18 @@ import { auth, db } from '../firebase';
 export const registerUser = async (user: {
   email: string;
   password: string;
+  name: string;
 }) => {
-  const { email, password } = user;
+  const { email, password, name } = user;
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
+    await updateProfile(user, { displayName: name });
     await addDoc(collection(db, 'users'), {
       uid: user.uid,
       authProvider: 'local',
       email,
+      name: user.displayName,
     });
   } catch (error) {
     if (!(error instanceof Error)) {
