@@ -1,34 +1,23 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import {
-  // GraphQLSchema,
-  // IntrospectionQuery,
-  // buildClientSchema,
-  getIntrospectionQuery,
-} from 'graphql';
+import { getIntrospectionQuery } from 'graphql';
 import { apiUrl } from '../../utils/consts';
+import { RootObject } from '../../types/types';
 
 export const schemasApi = createApi({
   reducerPath: 'schemasApi',
   baseQuery: fetchBaseQuery({ baseUrl: apiUrl }),
   endpoints: (builder) => ({
-    getGraphQlSchema: builder.mutation({
+    getGraphQlSchema: builder.query<RootObject, void>({
       query: () => ({
         url: '',
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          operationName: 'IntrospectionQuery',
-          query: getIntrospectionQuery(),
-        }),
-        // transformResponse: (response: { data: IntrospectionQuery }) => {
-        //   const schema = buildClientSchema(response.data);
-        //   return schema;
-        // },
+        body: JSON.stringify({ query: getIntrospectionQuery() }),
       }),
     }),
   }),
 });
 
-export const { useGetGraphQlSchemaMutation } = schemasApi;
+export const { useGetGraphQlSchemaQuery } = schemasApi;
