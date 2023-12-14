@@ -15,19 +15,9 @@ export interface Directive {
   name: string;
   description: string;
   locations: string[];
-  args: Arg2[];
+  args: Arg[];
 }
-export interface Arg2 {
-  name: string;
-  description: string;
-  type: Type4;
-  defaultValue?: string;
-}
-export interface Type4 {
-  kind: string;
-  name?: string;
-  ofType: OfType2;
-}
+
 export interface Type3 {
   kind: string;
   name: string;
@@ -37,6 +27,7 @@ export interface Type3 {
   interfaces?: string[];
   enumValues?: EnumValue[];
   possibleTypes?: string;
+  ofType?: Type3;
 }
 export interface EnumValue {
   name: string;
@@ -47,45 +38,25 @@ export interface EnumValue {
 export interface InputField {
   name: string;
   description: string;
-  type: OfType2;
+  type: Type3;
   defaultValue?: string;
 }
 export interface Field {
   name: string;
   description?: null | string;
-  args: (Arg | Args2)[];
-  type: Type2;
+  args: Arg[];
+  type: Type3;
   isDeprecated: boolean;
   deprecationReason?: string;
 }
-export interface Type2 {
-  kind: string;
-  name?: string;
-  ofType: OfType2;
-}
 
-export interface Args2 {
-  name: string;
-  description?: string;
-  type: OfType2;
-  defaultValue: string;
-}
 export interface Arg {
   name: string;
   description: string;
-  type: Type;
+  type: Type3;
   defaultValue?: string;
 }
-export interface Type {
-  kind: string;
-  name?: string;
-  ofType: OfType2;
-}
-export interface OfType2 {
-  kind: string;
-  name: string;
-  ofType: string;
-}
+
 export interface QueryType {
   name: string;
 }
