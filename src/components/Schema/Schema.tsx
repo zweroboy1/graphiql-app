@@ -1,16 +1,13 @@
 import React, { useCallback, useState } from 'react';
-import { fetchGraphQlSchema } from '../../utils/api';
 import './Schema.css';
 
-export const Schema: React.FC = () => {
-  const [open, setOpen] = useState(false);
-  const [schema, setSchema] = useState('');
+interface ISchemaProps {
+  schema: string;
+}
 
+export const Schema: React.FC<ISchemaProps> = ({ schema }) => {
+  const [open, setOpen] = useState(false);
   const toggleMenu = useCallback(async () => {
-    if (!open) {
-      const res = await fetchGraphQlSchema();
-      setSchema(res);
-    }
     setOpen(!open);
   }, [open]);
 
