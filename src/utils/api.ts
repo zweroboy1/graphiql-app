@@ -1,4 +1,4 @@
-import { buildClientSchema, getIntrospectionQuery, printSchema } from 'graphql';
+import { getIntrospectionQuery } from 'graphql';
 import { apiUrl } from './consts';
 
 export const fetchGraphQlSchema = async () => {
@@ -9,9 +9,5 @@ export const fetchGraphQlSchema = async () => {
     },
     body: JSON.stringify({ query: getIntrospectionQuery() }),
   });
-
-  const res = await responce.json();
-  const schema = buildClientSchema(res.data);
-  const print = printSchema(schema);
-  return print;
+  return responce.json();
 };
