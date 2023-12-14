@@ -1,24 +1,17 @@
 export interface RootObject {
   data: Data;
 }
+
 export interface Data {
   __schema: Schema;
 }
+
 export interface Schema {
   queryType: QueryType;
-  mutationType?: string;
-  subscriptionType?: string;
-  types: Type3[];
-  directives: Directive[];
-}
-export interface Directive {
-  name: string;
-  description: string;
-  locations: string[];
-  args: Arg[];
+  types: Type[];
 }
 
-export interface Type3 {
+export interface Type {
   kind: string;
   name: string;
   description: string;
@@ -27,33 +20,35 @@ export interface Type3 {
   interfaces?: string[];
   enumValues?: EnumValue[];
   possibleTypes?: string;
-  ofType?: Type3;
+  ofType?: Type;
 }
+
 export interface EnumValue {
   name: string;
   description: string;
-  isDeprecated: boolean;
-  deprecationReason?: string;
+  args?: null;
+  type?: null;
 }
+
 export interface InputField {
   name: string;
   description: string;
-  type: Type3;
+  type: Type;
   defaultValue?: string;
+  args?: null;
 }
+
 export interface Field {
   name: string;
   description?: null | string;
   args: Arg[];
-  type: Type3;
-  isDeprecated: boolean;
-  deprecationReason?: string;
+  type: Type;
 }
 
 export interface Arg {
   name: string;
   description: string;
-  type: Type3;
+  type: Type;
   defaultValue?: string;
 }
 
