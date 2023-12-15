@@ -1,5 +1,4 @@
 import React from 'react';
-import '../Schema/Schema.css';
 import { Type } from '../../types/types';
 import { RootState } from '../../store/store';
 import { Scalar } from './Scalar';
@@ -8,6 +7,7 @@ import { useGetGraphQlSchemaQuery } from '../../store/api/api';
 import { Loader } from '../Loader/Loader';
 import { TypeLink } from './TypeLink';
 import { useSelector } from 'react-redux';
+import '../Schema/Schema.css';
 
 export const SchemasArgs: React.FC = () => {
   const { data, isFetching } = useGetGraphQlSchemaQuery();
@@ -15,6 +15,7 @@ export const SchemasArgs: React.FC = () => {
   const rootQuery = data?.data.__schema.types.find(
     (elem) => elem.name === activeType
   );
+  const rootName = rootQuery?.name;
 
   const getField = (field: Type) => {
     if (field.kind === FieldsType.OBJECT) {
@@ -29,30 +30,42 @@ export const SchemasArgs: React.FC = () => {
   return (
     <>
       {isFetching && <Loader />}
-      {!isFetching && rootQuery && Array.isArray(getField(rootQuery))
-        ? getField(rootQuery)!.map((el) => {
-            return (
-              <div key={el.name}>
-                {el.name}
-                {el.args && <span>( </span>}
-                {el.args &&
-                  el.args.map((arg) => (
-                    <span key={arg.name}>
-                      {arg.name}: <TypeLink type={arg.type} />,
-                    </span>
-                  ))}
-                {el.args && <span>){' : '}</span>}
-
-                {el.type && (
-                  <>
-                    <TypeLink type={el.type} />
-                    <div>{el.description}</div>
-                  </>
-                )}
-              </div>
-            );
-          })
-        : rootQuery && <Scalar rootQuery={rootQuery} />}
+      {rootQuery === undefined ? (
+        data?.data.__schema.types.map((el) => (
+          <div>
+            <TypeLink type={el} />
+          </div>
+        ))
+      ) : (
+        <>
+          {!isFetching && rootQuery && Array.isArray(getField(rootQuery))
+            ? getField(rootQuery)!.map((el) => {
+                return (
+                  <div key={el.name}>
+                    <div>{rootName}</div>
+                    {el.name}
+                    {el.args && el.args.length > 0 && <span>( </span>}
+                    {el.args &&
+                      el.args.map((arg, idx) => (
+                        <span key={arg.name}>
+                          {arg.name}: <TypeLink type={arg.type} />
+                          {idx < el.args.length - 1 && ', '}
+                        </span>
+                      ))}
+                    {el.args && el.args.length > 0 && <span>)</span>}
+                    {' : '}
+                    {el.type && (
+                      <>
+                        <TypeLink type={el.type} />
+                        <div>{el.description}</div>
+                      </>
+                    )}
+                  </div>
+                );
+              })
+            : rootQuery && <Scalar rootQuery={rootQuery} />}
+        </>
+      )}
     </>
   );
 };

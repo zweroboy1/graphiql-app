@@ -22,6 +22,7 @@ export const TypeLink: React.FC<TypeButtonProps> = ({ type }) => {
       return typeName;
     }
   };
+
   return (
     <a
       href="#"
