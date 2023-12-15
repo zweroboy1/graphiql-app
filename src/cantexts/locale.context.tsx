@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 type LanguageContextType = {
   language: string;
   setLanguage: (language: string) => void;
-  translations: Record<string, string>;
+  t: Record<string, string>;
 };
 
 type LanguageProviderProps = {
@@ -20,7 +20,7 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({
   const [language, setLanguage] = useState<string>('en');
 
   const translationsPromise = import(`../locales/${language}.json`);
-  const [translations, setTranslations] = useState<Record<string, string>>({});
+  const [t, setTranslations] = useState<Record<string, string>>({});
 
   translationsPromise.then((module) => {
     setTranslations(module.default || {});
@@ -29,7 +29,7 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({
   const contextValue: LanguageContextType = {
     language,
     setLanguage,
-    translations,
+    t,
   };
 
   return (

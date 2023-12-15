@@ -6,7 +6,7 @@ import { Transition } from 'react-transition-group';
 
 export const Documentation: React.FC = () => {
   const [open, setOpen] = useState(false);
-  const { translations } = useLocalization();
+  const { t } = useLocalization();
   const toggleMenu = useCallback(async () => {
     setOpen(!open);
   }, [open]);
@@ -20,7 +20,7 @@ export const Documentation: React.FC = () => {
       <Transition in={open} timeout={300}>
         {(state) => (
           <div className={`menu ${state === 'entered' ? 'open' : ''}`}>
-            <div>{translations.Docs}</div>
+            <div>{t.Docs}</div>
             <SchemasArgs />
           </div>
         )}

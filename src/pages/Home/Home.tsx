@@ -1,7 +1,7 @@
 import { useLocalization } from '../../cantexts/locale.context';
 
 export const Home: React.FC = () => {
-  const { translations } = useLocalization();
+  const { t } = useLocalization();
 
-  return <div>{translations.Home}</div>;
+  return <div>{t.Home}</div>;
 };
