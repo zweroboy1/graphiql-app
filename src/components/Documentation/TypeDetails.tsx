@@ -3,14 +3,12 @@ import { TypeLink } from './TypeLink';
 
 interface TypeDetailsProps {
   el: Field | InputField | EnumValue;
-  rootName: string | undefined;
 }
 
-export const TypeDetails: React.FC<TypeDetailsProps> = ({ el, rootName }) => {
+export const TypeDetails: React.FC<TypeDetailsProps> = ({ el }) => {
   return (
     <div>
       <div key={el.name}>
-        <div>{rootName}</div>
         {el.name}
         {el.args && el.args.length > 0 && <span>( </span>}
         {el.args &&
