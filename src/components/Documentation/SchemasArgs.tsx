@@ -7,6 +7,7 @@ import { useGetGraphQlSchemaQuery } from '../../store/api/api';
 import { Loader } from '../Loader/Loader';
 import { TypeLink } from './TypeLink';
 import { useSelector } from 'react-redux';
+import { TypeDetails } from './TypeDetails';
 import '../Schema/Schema.css';
 
 export const SchemasArgs: React.FC = () => {
@@ -27,44 +28,24 @@ export const SchemasArgs: React.FC = () => {
     }
   };
 
+  if (isFetching) {
+    return <Loader />;
+  }
+
+  const field = rootQuery && getField(rootQuery);
+
   return (
     <>
-      {isFetching && <Loader />}
-      {rootQuery === undefined ? (
+      {!rootQuery ? (
         data?.data.__schema.types.map((el) => (
           <div>
             <TypeLink type={el} />
           </div>
         ))
+      ) : Array.isArray(field) ? (
+        field.map((el) => <TypeDetails el={el} rootName={rootName} />)
       ) : (
-        <>
-          {!isFetching && rootQuery && Array.isArray(getField(rootQuery))
-            ? getField(rootQuery)!.map((el) => {
-                return (
-                  <div key={el.name}>
-                    <div>{rootName}</div>
-                    {el.name}
-                    {el.args && el.args.length > 0 && <span>( </span>}
-                    {el.args &&
-                      el.args.map((arg, idx) => (
-                        <span key={arg.name}>
-                          {arg.name}: <TypeLink type={arg.type} />
-                          {idx < el.args.length - 1 && ', '}
-                        </span>
-                      ))}
-                    {el.args && el.args.length > 0 && <span>)</span>}
-                    {' : '}
-                    {el.type && (
-                      <>
-                        <TypeLink type={el.type} />
-                        <div>{el.description}</div>
-                      </>
-                    )}
-                  </div>
-                );
-              })
-            : rootQuery && <Scalar rootQuery={rootQuery} />}
-        </>
+        <Scalar rootQuery={rootQuery} />
       )}
     </>
   );
