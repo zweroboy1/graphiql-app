@@ -8,7 +8,7 @@ import { Loader } from '../Loader/Loader';
 import { TypeLink } from './TypeLink';
 import { useSelector } from 'react-redux';
 import { TypeDetails } from './TypeDetails';
-import '../Schema/Schema.css';
+import './Schema.css';
 
 export const SchemasArgs: React.FC = () => {
   const { data, isFetching } = useGetGraphQlSchemaQuery();
@@ -16,7 +16,6 @@ export const SchemasArgs: React.FC = () => {
   const rootQuery = data?.data.__schema.types.find(
     (elem) => elem.name === activeType
   );
-  const rootName = rootQuery?.name;
 
   const getField = (field: Type) => {
     if (field.kind === FieldsType.OBJECT) {
@@ -38,12 +37,16 @@ export const SchemasArgs: React.FC = () => {
     <>
       {!rootQuery ? (
         data?.data.__schema.types.map((el) => (
-          <div>
+          <div key={el.name}>
             <TypeLink type={el} />
           </div>
         ))
       ) : Array.isArray(field) ? (
-        field.map((el) => <TypeDetails el={el} rootName={rootName} />)
+        field.map((el) => (
+          <div key={el.name}>
+            <TypeDetails el={el} />
+          </div>
+        ))
       ) : (
         <Scalar rootQuery={rootQuery} />
       )}
