@@ -65,14 +65,14 @@ export const Register: React.FC = () => {
           error={errors['password']}
         />
         <button
-          className="button"
+          className={submiting ? 'button button_loading' : 'button'}
           disabled={!isValid || submiting}
           type="submit"
           role="submit"
         >
-          Register
+          <span>Register</span>
         </button>
-        {false && error && <div>{error}</div>}
+        {error && <div>{error}</div>}
 
         <div className="login-form__text text">
           Already have an account?

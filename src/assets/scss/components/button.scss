@@ -32,4 +32,32 @@
     background-color: $disabled-bg-color;
     cursor: not-allowed;
   }
+
+  &_loading:disabled {
+    position: relative;
+    background-color: $primary-color;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      translate: 0 -50%;
+      width: 18px;
+      height: 18px;
+      background-image: url(/src/assets/svg/loader.svg);
+      background-repeat: no-repeat;
+      animation: spin 1s linear infinite;
+    }
+    & span {
+      visibility: hidden;
+    }
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
