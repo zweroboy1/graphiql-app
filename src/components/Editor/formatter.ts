@@ -43,8 +43,6 @@ const checkTab = (value: string): string => {
     }
   }
   result = result.replace(/\t+\n+/g, '');
-
-  //tab space
   result = result.replace(/\t */g, '\t');
   result = result.replace(/ *\t/g, '\t');
   return result;
@@ -55,7 +53,6 @@ const checkFilter = (value: string): string => {
     .replace(/\s+\(\s+/g, ' (')
     .replace(/\s+\)\s+/g, ') ')
     .replace(/\([\w\s:"{}[\],]+\)/g, (match) => {
-      console.log(match);
       let result = match.replace(/\s/g, '');
       result = result.replace(/{/g, '{ ');
       result = result.replace(/}/g, ' }');
