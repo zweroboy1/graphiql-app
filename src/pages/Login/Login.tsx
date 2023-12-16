@@ -10,7 +10,7 @@ import { loginSchema } from '../../schemas';
 export const Login: React.FC = () => {
   const {
     register,
-    formState: { errors },
+    formState: { errors, isValid },
     handleSubmit,
   } = useForm({ mode: 'onChange', resolver: yupResolver(loginSchema) });
   const [submiting, setSubmiting] = useState(false);
@@ -52,12 +52,12 @@ export const Login: React.FC = () => {
           error={errors['password']}
         />
         <button
-          className="button"
-          disabled={submiting}
+          className={submiting ? 'button button_loading' : 'button'}
+          disabled={!isValid || submiting}
           type="submit"
           role="submit"
         >
-          Login
+          <span>Login</span>
         </button>
         {false && error && <div>{error}</div>}
 
