@@ -1,40 +1,6 @@
 import { useRef, useState } from 'react';
 import { formatter } from './formatter';
-
-// class ValuePresentation {
-//   rowValue = '';
-//   formattedValue = '';
-
-//   setRowValue(rowString) {
-//     this.rowValue = rowString;
-//   }
-// addSymbol(e) {
-//   this.rowValue += e.key;
-
-//   if (e.key !== 'Enter') {
-//     this.htmlValue += e.key;
-//   } else {
-//     this.htmlValue += `<div> </div>`;
-//   }
-// }
-
-// removeSymbol() {}
-
-//   _format() {
-//     return `<div>${this.rowValue}</div>`;
-//   }
-
-//   format() {
-//     this.formattedValue = this._format();
-//   }
-
-//   reset() {
-//     this.rowValue = '';
-//     this.formattedValue = '';
-//   }
-// }
-
-// const valuePresenter = new ValuePresentation();
+// import { setCaret } from '../../utils/queryEditor';
 
 export const QueryEditor = () => {
   const [modifiedAt, setModifiedAt] = useState(new Date());
@@ -42,19 +8,34 @@ export const QueryEditor = () => {
   const valueRef = useRef<HTMLPreElement>(null);
 
   // useEffect(() => {
-  //   const handleKeyUp = (e) => {
-  //     // valuePresenter.addSymbol(e);
-  //     setValue((prevValue) => {
-  //       let symbolToAdd = e.code === 'Enter' ? '\n' : e.key;
-  //       const newValue = `${prevValue}${symbolToAdd}`;
-  //       console.log('>>', { newValue });
-  //       valuePresenter.setRowValue(newValue);
-  //       return newValue;
-  //     });
+  //   const handleKeyUp = (e: KeyboardEvent) => {
+  //     e.preventDefault();
+  //     if (!valueRef || !valueRef.current) {
+  //       return;
+  //     }
+  //     if (
+  //       !valueRef.current.innerText ||
+  //       !valueRef.current.innerText.includes('{')
+  //     ) {
+  //       return;
+  //     }
+  //     if (e.code === 'Enter') {
+  //       const checkValue = valueRef.current.innerText;
+  //       let tabCount =
+  //         [...checkValue.matchAll(/{/g)].length -
+  //         [...checkValue.matchAll(/}/g)].length;
+  //       tabCount = tabCount < 0 ? 0 : tabCount;
+  //       if (tabCount > 0) {
+  //         valueRef.current.innerText += '\t'.repeat(tabCount);
+  //       }
+  //       valueRef.current.innerText = valueRef.current.innerText.replace(
+  //         /\n+/g,
+  //         '\n'
+  //       );
+  //       setCaret(valueRef.current, tabCount);
+  //     }
   //   };
-
   //   document.addEventListener('keyup', handleKeyUp);
-
   //   return () => {
   //     document.removeEventListener('keyup', handleKeyUp);
   //   };
@@ -96,7 +77,6 @@ export const QueryEditor = () => {
           overflowX: 'auto',
         }}
         contentEditable={isEditor}
-        // dangerouslySetInnerHTML={{ __html: valuePresenter.rowValue }}
       />
     </div>
   );
