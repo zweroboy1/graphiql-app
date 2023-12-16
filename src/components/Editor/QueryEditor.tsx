@@ -1,4 +1,5 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
+import { formatter } from './formatter';
 
 // class ValuePresentation {
 //   rowValue = '';
@@ -36,7 +37,8 @@ import { useRef } from 'react';
 // const valuePresenter = new ValuePresentation();
 
 export const QueryEditor = () => {
-  // const [value, setValue] = useState('');
+  const [modifiedAt, setModifiedAt] = useState(new Date());
+  const [isEditor] = useState(true);
   const valueRef = useRef<HTMLPreElement>(null);
 
   // useEffect(() => {
@@ -58,51 +60,44 @@ export const QueryEditor = () => {
   //   };
   // }, []);
 
+  const onReset = () => {
+    if (!valueRef.current) {
+      return;
+    }
+    valueRef.current.innerText = '';
+    setModifiedAt(new Date());
+  };
+
+  const onFormat = () => {
+    if (!valueRef || !valueRef.current || !valueRef.current.innerText) {
+      return;
+    }
+    valueRef.current.innerText = formatter(valueRef.current.innerText);
+    setModifiedAt(new Date());
+  };
+
   return (
     <div>
-      <button
-        type="button"
-        onClick={() => {
-          // valueRef.current?.innerText = '';
-          // setValue('');
-          // valuePresenter.reset();
-        }}
-      >
+      <button type="button" onClick={onReset}>
         Reset
       </button>
-      <button
-        type="button"
-        onClick={() => {
-          console.log('format >>>', { valueRef });
-          if (!valueRef || !valueRef.current) {
-            return;
-          }
-          valueRef.current.innerText = valueRef.current.innerText.replace(
-            /\n+/g,
-            '\n'
-          );
-          // setValue('');
-          // valuePresenter.format();
-        }}
-      >
+      <button type="button" onClick={onFormat}>
         Format
       </button>
       <br />
       <pre
+        title={`Last Modified At ${modifiedAt}`}
         ref={valueRef}
         style={{
-          width: '85vw',
+          width: '45vw',
           height: '50vh',
+          padding: '10px',
+          border: '2px solid #000',
+          overflowX: 'auto',
         }}
-        contentEditable
+        contentEditable={isEditor}
         // dangerouslySetInnerHTML={{ __html: valuePresenter.rowValue }}
       />
     </div>
   );
 };
-
-// .queryEditor {
-//   & div {
-//     padding-left: 4px;
-//   }
-// }
