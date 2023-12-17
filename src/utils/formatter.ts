@@ -17,8 +17,12 @@ const checkSpaces = (value: string): string => {
   return value.replace(/ {2,}/g, ' ');
 };
 
+const fixEnter = (value: string): string => {
+  return value.replace(/\n+/g, '\n');
+};
+
 const checkEnter = (value: string): string => {
-  return value.replace(/\n{2,}/g, '\n').replace(/\s+{/, ' {');
+  return value.replace(/\s+{/, ' {');
 };
 
 const checkTab = (value: string): string => {
@@ -71,5 +75,6 @@ export const formatter = (value: string): string => {
   result = checkEnter(result);
   result = checkTab(result);
   result = checkFilter(result);
+  result = fixEnter(result);
   return result;
 };

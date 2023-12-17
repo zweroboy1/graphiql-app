@@ -18,8 +18,13 @@ export const QueryEditor = () => {
         // valueRef.current.innerText += '\t';
         // setCaret(valueRef.current, 1);
       }
-      if (e.key === 'Enter' || e.key === 'Backspace' || e.key === 'Delete') {
-        updateRowCounts();
+      if (e.key === 'Enter') {
+        setRowCounts(updateRowCounts());
+      }
+      if (e.key === 'Backspace' || e.key === 'Delete') {
+        const arr = updateRowCounts();
+        arr.pop();
+        setRowCounts(arr);
       }
       // if (
       //   !valueRef.current.innerText ||
@@ -63,22 +68,32 @@ export const QueryEditor = () => {
       return;
     }
     valueRef.current.innerText = formatter(valueRef.current.innerText);
-    updateRowCounts();
+    const arr = updateRowCounts();
+    arr.pop();
+    setRowCounts(arr);
     setModifiedAt(new Date());
   };
 
   const updateRowCounts = () => {
     if (!valueRef || !valueRef.current) {
-      setRowCounts([1]);
-      return;
+      return [1];
     }
-    const length = [...valueRef.current.childNodes].length + 1;
+    //const length = [...valueRef.current.childNodes].length + 1;
+    const length =
+      [...valueRef.current.innerText.matchAll(/\n/g)].length -
+      [...valueRef.current.innerText.matchAll(/\n\n/g)].length +
+      2;
+
+    // console.warn('>>>', {
+    //   length,
+    //   innerText: valueRef.current.innerText,
+    // });
     let first = 0;
     const arr = Array.from({ length }, () => {
       first += 1;
       return first;
     });
-    return setRowCounts(arr);
+    return arr;
   };
 
   return (
@@ -92,6 +107,7 @@ export const QueryEditor = () => {
       <br />
       <div style={{ position: 'relative' }}>
         <pre
+          id="pre"
           title={`Last Modified At ${modifiedAt}`}
           ref={valueRef}
           style={{
