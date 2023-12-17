@@ -7,6 +7,8 @@ import {
 } from '@firebase/auth';
 import { collection, addDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
+import { toast } from 'react-toastify';
+import { getErrorText } from '../utils/getErrorText';
 
 export const registerUser = async (user: {
   email: string;
@@ -14,22 +16,15 @@ export const registerUser = async (user: {
   name: string;
 }) => {
   const { email, password, name } = user;
-  try {
-    const res = await createUserWithEmailAndPassword(auth, email, password);
-    const user = res.user;
-    await updateProfile(user, { displayName: name });
-    await addDoc(collection(db, 'users'), {
-      uid: user.uid,
-      authProvider: 'local',
-      email,
-      name: user.displayName,
-    });
-  } catch (error) {
-    if (!(error instanceof Error)) {
-      return;
-    }
-    console.log(error.name);
-  }
+  const res = await createUserWithEmailAndPassword(auth, email, password);
+  const userFromServer = res.user;
+  await updateProfile(userFromServer, { displayName: name });
+  await addDoc(collection(db, 'users'), {
+    uid: userFromServer.uid,
+    authProvider: 'local',
+    email,
+    name: userFromServer.displayName,
+  });
 };
 
 export const loginUser = async ({
@@ -40,17 +35,16 @@ export const loginUser = async ({
   password: string;
 }): Promise<UserCredential> => {
   return signInWithEmailAndPassword(auth, email, password).catch((error) => {
-    if (error.message.includes('invalid-credential')) {
-      console.log(error.message);
-      throw new Error('Your password or email is invalid.');
-    } else {
-      throw new Error('Something went wrong. Try again later.');
-    }
+    throw error;
   });
 };
 
 export const logoutUser = async () => {
-  return signOut(auth).catch(() => {
-    throw Error('Something went wrong. Try again later.');
+  return signOut(auth).catch((e) => {
+    const errorCode = e instanceof Error ? e.message : null;
+    const toastText = getErrorText(errorCode, 'en');
+    toast.error(toastText, {
+      className: 'toast-message',
+    });
   });
 };

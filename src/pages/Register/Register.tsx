@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Link } from 'react-router-dom';
-import { registerUser } from '../../services/auth';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { loginUser, registerUser } from '../../services/auth';
 import { TextField } from '../../components/inputs/TextField';
 import { PasswordField } from '../../components/inputs/PasswordField';
 import { registerSchema } from '../../schemas';
+import { getErrorText } from '../../utils/getErrorText';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 export const Register: React.FC = () => {
   const {
@@ -14,7 +18,8 @@ export const Register: React.FC = () => {
     handleSubmit,
   } = useForm({ mode: 'onChange', resolver: yupResolver(registerSchema) });
   const [submiting, setSubmiting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const navigate = useNavigate();
 
   const onSubmit = async (data: {
     email: string;
@@ -22,13 +27,20 @@ export const Register: React.FC = () => {
     name: string;
   }) => {
     setSubmiting(true);
-    setError(null);
     try {
       await registerUser(data);
+      await loginUser(data);
+      navigate('/');
     } catch (e) {
-      if (e instanceof Error) {
-        setError(e.message);
-      }
+      const errorCode = e instanceof Error ? e.message : null;
+      const toastText = getErrorText(errorCode, 'en');
+      setButtonDisabled(true);
+      toast.error(toastText, {
+        onClose: () => {
+          setButtonDisabled(false);
+        },
+        className: 'toast-message',
+      });
     } finally {
       setSubmiting(false);
     }
@@ -66,13 +78,12 @@ export const Register: React.FC = () => {
         />
         <button
           className={submiting ? 'button button_loading' : 'button'}
-          disabled={!isValid || submiting}
+          disabled={!isValid || submiting || buttonDisabled}
           type="submit"
           role="submit"
         >
           <span>Register</span>
         </button>
-        {error && <div>{error}</div>}
 
         <div className="login-form__text text">
           Already have an account?

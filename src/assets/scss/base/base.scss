@@ -7,7 +7,7 @@
 body {
   height: 100vh;
   height: 100svh;
-  font-family: 'Roboto', sans-serif;
+  font-family: $main-font;
   background-color: $bg-color;
 }
 
@@ -65,4 +65,35 @@ button {
 
 ::-webkit-scrollbar-thumb:hover {
   background: $dark-grey-color;
+}
+
+.toast-message {
+  background: $error-notification-bg-color;
+  color: $text-color;
+  font-family: $main-font;
+  font-size: 16px;
+  //width: 34vw;
+  padding: 14px 20px;
+}
+
+.Toastify__toast {
+  border-radius: 10px;
+}
+
+.Toastify__toast-icon {
+  & svg {
+    visibility: hidden;
+  }
+
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -8px;
+    width: 24px;
+    height: 24px;
+    background-image: url(/src/assets/svg/Error.svg);
+    background-repeat: no-repeat;
+  }
 }

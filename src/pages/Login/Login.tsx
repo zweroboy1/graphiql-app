@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { loginUser } from '../../services/auth';
 import { TextField } from '../../components/inputs/TextField';
 import { PasswordField } from '../../components/inputs/PasswordField';
 import { loginSchema } from '../../schemas';
+import { getErrorText } from '../../utils/getErrorText';
 
 export const Login: React.FC = () => {
   const {
@@ -14,17 +16,22 @@ export const Login: React.FC = () => {
     handleSubmit,
   } = useForm({ mode: 'onChange', resolver: yupResolver(loginSchema) });
   const [submiting, setSubmiting] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
 
   const onSubmit = async (data: { email: string; password: string }) => {
     setSubmiting(true);
-    setError(null);
     try {
       await loginUser(data);
     } catch (e) {
-      if (e instanceof Error) {
-        setError(e.message);
-      }
+      const errorCode = e instanceof Error ? e.message : null;
+      const toastText = getErrorText(errorCode, 'en');
+      setButtonDisabled(true);
+      toast.error(toastText, {
+        onClose: () => {
+          setButtonDisabled(false);
+        },
+        className: 'toast-message',
+      });
     } finally {
       setSubmiting(false);
     }
@@ -53,13 +60,12 @@ export const Login: React.FC = () => {
         />
         <button
           className={submiting ? 'button button_loading' : 'button'}
-          disabled={!isValid || submiting}
+          disabled={!isValid || submiting || buttonDisabled}
           type="submit"
           role="submit"
         >
           <span>Login</span>
         </button>
-        {false && error && <div>{error}</div>}
 
         <div className="login-form__text text">
           Do not have an account yet?
