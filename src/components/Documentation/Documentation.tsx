@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useRef } from 'react';
 import { Transition } from 'react-transition-group';
 import { SchemasArgs } from './SchemasArgs';
-import { useLocalization } from '../../cantexts/locale.context';
+import { useLocalization } from '../../contexts/locale.context';
 import './Schema.css';
 
 export const Documentation: React.FC = () => {
