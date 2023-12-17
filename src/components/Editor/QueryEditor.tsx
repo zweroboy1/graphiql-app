@@ -130,7 +130,7 @@ export const QueryEditor = () => {
           }}
         >
           {rowCounts.map((item) => (
-            <div>{item}</div>
+            <div key={item}>{item}</div>
           ))}
         </div>
       </div>
