@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom';
 import { Router } from '../../router/router';
 import { auth } from '../../firebase';
 import { useDispatch } from 'react-redux';
@@ -29,6 +30,7 @@ import { useState, useEffect } from 'react';
 export const App: React.FC = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -48,7 +50,7 @@ export const App: React.FC = () => {
     return () => {
       unsubscribe();
     };
-  }, [dispatch]);
+  }, [dispatch, location]);
 
   if (loading) {
     return null; //<div>loader</div>;
