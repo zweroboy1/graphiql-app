@@ -1,103 +1,93 @@
-import { useEffect, useRef, useState } from 'react';
-import { formatter } from '../../utils/formatter';
-// import { setCaret } from '../../utils/queryEditor';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
-export const QueryEditor = () => {
-  const [modifiedAt, setModifiedAt] = useState(new Date());
-  const [isEditor] = useState(true);
-  const [rowCounts, setRowCounts] = useState<number[]>([1]);
-  const valueRef = useRef<HTMLPreElement>(null);
+import { formatter } from '../../utils/queryEditor';
+import { getTabCount } from '../../utils/queryEditor';
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!valueRef || !valueRef.current) {
-        return;
-      }
-      if (e.key === 'Tab') {
-        e.preventDefault();
-        // valueRef.current.innerText += '\t';
-        // setCaret(valueRef.current, 1);
-      }
-      if (e.key === 'Enter') {
-        setRowCounts(updateRowCounts());
-      }
-      if (e.key === 'Backspace' || e.key === 'Delete') {
-        const arr = updateRowCounts();
-        arr.pop();
-        setRowCounts(arr);
-      }
-      // if (
-      //   !valueRef.current.innerText ||
-      //   !valueRef.current.innerText.includes('{')
-      // ) {
-      //   return;
-      // }
-      // if (e.code === 'Enter') {
-      //   const checkValue = valueRef.current.innerText;
-      //   let tabCount =
-      //     [...checkValue.matchAll(/{/g)].length -
-      //     [...checkValue.matchAll(/}/g)].length;
-      //   tabCount = tabCount < 0 ? 0 : tabCount;
-      //   if (tabCount > 0) {
-      //     valueRef.current.innerText += '\t'.repeat(tabCount);
-      //   }
-      //   valueRef.current.innerText = valueRef.current.innerText.replace(
-      //     /\n+/g,
-      //     '\n'
-      //   );
-      //   setCaret(valueRef.current, tabCount);
-      //  }
-    };
-    document.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, []);
+type QueryEditorProps = {
+  mode: 'editor' | 'viewer';
+};
+
+export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
+  const [value, setValue] = useState('');
+  const [rowCounts, setRowCounts] = useState(1);
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const caretRef = useRef<number | undefined>(undefined);
+
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const target = e?.target;
+    setValue(target.value);
+  };
 
   const onReset = () => {
-    if (!valueRef.current) {
-      return;
-    }
-    valueRef.current.innerText = '';
-    setRowCounts([1]);
-    setModifiedAt(new Date());
+    setValue('');
   };
 
   const onFormat = () => {
-    if (!valueRef || !valueRef.current || !valueRef.current.innerText) {
+    if (value === '') {
       return;
     }
-    valueRef.current.innerText = formatter(valueRef.current.innerText);
-    const arr = updateRowCounts();
-    arr.pop();
-    setRowCounts(arr);
-    setModifiedAt(new Date());
+    setValue((prevState) => formatter(prevState));
   };
 
-  const updateRowCounts = () => {
-    if (!valueRef || !valueRef.current) {
-      return [1];
+  useEffect(() => {
+    if (textareaRef.current && caretRef.current) {
+      textareaRef.current.selectionStart = caretRef.current;
+      textareaRef.current.selectionEnd = caretRef.current;
+      caretRef.current = undefined;
     }
-    //const length = [...valueRef.current.childNodes].length + 1;
-    const length =
-      [...valueRef.current.innerText.matchAll(/\n/g)].length -
-      [...valueRef.current.innerText.matchAll(/\n\n/g)].length +
-      2;
+  }, [value]);
 
-    // console.warn('>>>', {
-    //   length,
-    //   innerText: valueRef.current.innerText,
-    // });
-    let first = 0;
-    const arr = Array.from({ length }, () => {
-      first += 1;
-      return first;
-    });
-    return arr;
-  };
+  useEffect(() => {
+    const handleTab = (e: KeyboardEvent) => {
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        const position = textareaRef.current?.selectionStart || value.length;
+
+        setValue((prevState) => {
+          return (
+            prevState.slice(0, position) + '\t' + prevState.slice(position)
+          );
+        });
+        caretRef.current = position + 1;
+      }
+    };
+    document.addEventListener('keydown', handleTab);
+    return () => {
+      document.removeEventListener('keydown', handleTab);
+    };
+  }, [value.length]);
+
+  useEffect(() => {
+    const handleEnter = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const position = textareaRef.current?.selectionStart || value.length;
+        const tabCount = getTabCount(value.slice(0, position));
+        setValue((prevState) => {
+          return (
+            prevState.slice(0, position) +
+            '\n' +
+            '\t'.repeat(tabCount) +
+            prevState.slice(position)
+          );
+        });
+        caretRef.current = position + tabCount + 1;
+      }
+    };
+    document.addEventListener('keydown', handleEnter);
+    return () => {
+      document.removeEventListener('keydown', handleEnter);
+    };
+  }, [value]);
+
+  useEffect(() => {
+    setRowCounts([...value.matchAll(/\n/g)].length + 1);
+  }, [value]);
 
   return (
     <div>
+      <div>{mode === 'viewer' ? <span>Viewer</span> : <span>Editor</span>}</div>
       <button type="button" onClick={onReset}>
         Reset
       </button>
@@ -106,30 +96,29 @@ export const QueryEditor = () => {
       </button>
       <br />
       <div style={{ position: 'relative' }}>
-        <pre
-          id="pre"
-          title={`Last Modified At ${modifiedAt}`}
-          ref={valueRef}
+        <textarea
+          ref={textareaRef}
+          value={value}
+          onChange={handleChange}
+          disabled={mode === 'viewer'}
           style={{
-            width: '45vw',
-            height: '50vh',
-            padding: '10px 10px 10px 30px',
-            border: '2px solid #000',
-            overflowX: 'auto',
+            width: '420px',
+            height: '520px',
+            tabSize: '10px',
+            fontFamily: 'inherit',
           }}
-          contentEditable={isEditor}
         />
         <div
           style={{
             position: 'absolute',
             display: 'flex',
-            top: '10px',
-            left: '5px',
+            top: '5px',
+            left: '-20px',
             flexDirection: 'column',
             alignItems: 'center',
           }}
         >
-          {rowCounts.map((item) => (
+          {Array.from({ length: rowCounts }, (_, i) => i + 1).map((item) => (
             <div key={item}>{item}</div>
           ))}
         </div>
