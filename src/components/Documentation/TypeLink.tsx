@@ -4,9 +4,10 @@ import { setActiveType } from '../../store/slices/activeTypeSlice';
 
 interface TypeButtonProps {
   type: Type;
+  onClick: () => void;
 }
 
-export const TypeLink: React.FC<TypeButtonProps> = ({ type }) => {
+export const TypeLink: React.FC<TypeButtonProps> = ({ type, onClick }) => {
   const dispatch = useDispatch();
 
   const renderType = (type: Type): string => {
@@ -23,11 +24,18 @@ export const TypeLink: React.FC<TypeButtonProps> = ({ type }) => {
     }
   };
 
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    }
+    dispatch(setActiveType(renderType(type)));
+  };
+
   return (
     <a
       href="#"
       onClick={() => {
-        dispatch(setActiveType(renderType(type)));
+        handleClick();
       }}
     >
       {renderType(type)}
