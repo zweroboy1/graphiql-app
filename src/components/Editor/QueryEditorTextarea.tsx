@@ -5,6 +5,8 @@ import { formatter } from '../../utils/formatter';
 export const QueryEditorTextarea = () => {
   const [value, setValue] = useState('');
   const [isViewer, setIsViewer] = useState(false);
+  const [rowCounts, setRowCounts] = useState(1);
+
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const caretRef = useRef<number | undefined>(undefined);
 
@@ -65,7 +67,6 @@ export const QueryEditorTextarea = () => {
           [...value.slice(0, position).matchAll(/{/g)].length -
           [...value.slice(0, position).matchAll(/}/g)].length;
         tabCount = tabCount < 0 ? 0 : tabCount;
-        console.log(tabCount);
         setValue((prevValue) => {
           console.log(prevValue);
           return (
@@ -85,6 +86,10 @@ export const QueryEditorTextarea = () => {
     };
   }, [value]);
 
+  useEffect(() => {
+    setRowCounts([...value.matchAll(/\n/g)].length + 1);
+  }, [value]);
+
   return (
     <div>
       <button type="button" onClick={onReset}>
@@ -97,13 +102,34 @@ export const QueryEditorTextarea = () => {
         {isViewer ? <span>Viewer</span> : <span>Editor</span>}
       </button>
       <br />
-      <textarea
-        ref={textareaRef}
-        value={value}
-        onChange={handleChange}
-        disabled={isViewer}
-        style={{ width: '420px', height: '520px', tabSize: '10px' }}
-      />
+      <div style={{ position: 'relative' }}>
+        <textarea
+          ref={textareaRef}
+          value={value}
+          onChange={handleChange}
+          disabled={isViewer}
+          style={{
+            width: '420px',
+            height: '520px',
+            tabSize: '10px',
+            fontFamily: 'inherit',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            display: 'flex',
+            top: '5px',
+            left: '-20px',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          {Array.from({ length: rowCounts }, (_, i) => i + 1).map((item) => (
+            <div key={item}>{item}</div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
