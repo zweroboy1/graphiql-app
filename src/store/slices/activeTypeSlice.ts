@@ -5,7 +5,7 @@ type ActiveType = {
 };
 
 const initialState: ActiveType = {
-  name: '',
+  name: 'Query',
 };
 
 export const activeTypeSlice = createSlice({
