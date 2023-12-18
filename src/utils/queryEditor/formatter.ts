@@ -1,10 +1,3 @@
-// const deleteSpecialCharacters = (value: string): string => {
-//   return value.replace(
-//     /[#%&'*+-./=;<>?@^_`|~]+/g,
-//     ''
-//   );
-// };
-
 const addEnter = (value: string): string => {
   let result = value.replace(/\w+[\s\w]+\w+/g, (match) => {
     return match.replace(/\s/g, '\n');
@@ -18,7 +11,9 @@ const checkSpaces = (value: string): string => {
 };
 
 const fixEnter = (value: string): string => {
-  return value.replace(/\n+\t*\n+/g, '\n');
+  return value.replace(/\n+\t*\n+/g, '\n').replace(/[)\w:]\s+{/g, (match) => {
+    return match.replace(/\s+{/g, ' {');
+  });
 };
 
 const checkEnter = (value: string): string => {
@@ -68,8 +63,7 @@ const checkFilter = (value: string): string => {
 };
 
 export const formatter = (value: string): string => {
-  let result = value.replace(/\s/g, '');
-  // result = deleteSpecialCharacters(result);
+  let result = value;
   result = addEnter(result);
   result = checkSpaces(result);
   result = checkEnter(result);
