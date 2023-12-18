@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { Type } from '../../types/types';
 import { RootState } from '../../store/store';
 import { Scalar } from './Scalar';
@@ -9,12 +8,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TypeDetails } from './TypeDetails';
 import { setActiveType } from '../../store/slices/activeTypeSlice';
 import { GoBackBtn } from './GoBackBtn/GoBackBtn';
+import { removeFromHistory } from '../../store/slices/history.slice';
 
 export const SchemasArgs: React.FC = () => {
   const { data, isFetching } = useGetGraphQlSchemaQuery();
   const activeType = useSelector((state: RootState) => state.type.name);
+  const history = useSelector((state: RootState) => state.history.history);
   const dispatch = useDispatch();
-  const [history, setHistory] = useState<string[]>([]);
   const rootQuery = data?.data.__schema.types.find(
     (elem) => elem.name === activeType
   );
@@ -29,37 +29,28 @@ export const SchemasArgs: React.FC = () => {
     }
   };
 
-  if (isFetching) {
-    return <Loader />;
-  }
-
   const field = rootQuery && getField(rootQuery);
   const prevType = history.length > 0 ? history[history.length - 1] : '';
 
   const handleButtonClick = () => {
-    const prevType = history.pop();
-    if (prevType) {
-      dispatch(setActiveType(prevType));
-      setHistory([...history]);
-    }
+    dispatch(removeFromHistory());
+    const prevType = history[history.length - 1];
+    prevType && dispatch(setActiveType(prevType));
   };
 
-  const historyUpdate = (typeName: string) => {
-    dispatch(setActiveType(typeName));
-    setHistory([...history, activeType]);
-  };
+  if (isFetching) {
+    return <Loader />;
+  }
 
   return (
     <>
-      {history.length === 0 ? (
-        <></>
-      ) : (
+      {history.length !== 0 && (
         <GoBackBtn callback={handleButtonClick} prev={prevType} />
       )}
       {Array.isArray(field)
         ? field.map((el) => (
             <div key={el.name}>
-              <TypeDetails el={el} onClick={() => historyUpdate(el.name)} />
+              <TypeDetails el={el} />
             </div>
           ))
         : rootQuery && <Scalar rootQuery={rootQuery} />}
