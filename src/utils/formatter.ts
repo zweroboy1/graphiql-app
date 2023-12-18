@@ -18,7 +18,7 @@ const checkSpaces = (value: string): string => {
 };
 
 const fixEnter = (value: string): string => {
-  return value.replace(/\n+/g, '\n');
+  return value.replace(/\n+\t*\n+/g, '\n');
 };
 
 const checkEnter = (value: string): string => {
@@ -68,7 +68,7 @@ const checkFilter = (value: string): string => {
 };
 
 export const formatter = (value: string): string => {
-  let result = value;
+  let result = value.replace(/\s/g, '');
   // result = deleteSpecialCharacters(result);
   result = addEnter(result);
   result = checkSpaces(result);
