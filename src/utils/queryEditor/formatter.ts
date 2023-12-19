@@ -70,5 +70,5 @@ export const formatter = (value: string): string => {
   result = checkTab(result);
   result = checkFilter(result);
   result = fixEnter(result);
-  return result;
+  return result.trim();
 };
