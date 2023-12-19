@@ -1,7 +1,9 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+// import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
+import { useState } from 'react';
 import { formatter } from '../../utils/queryEditor';
-import { getTabCount } from '../../utils/queryEditor';
+//import { getTabCount } from '../../utils/queryEditor';
+import Editor from '@monaco-editor/react';
 
 type QueryEditorProps = {
   mode: 'editor' | 'viewer';
@@ -9,7 +11,7 @@ type QueryEditorProps = {
 
 export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
   const [value, setValue] = useState('');
-  const [rowCounts, setRowCounts] = useState(1);
+  /* const [rowCounts, setRowCounts] = useState(1);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const caretRef = useRef<number | undefined>(undefined);
@@ -17,6 +19,13 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const target = e?.target;
     setValue(target.value);
+  };
+*/
+
+  const handleChange = (inputValue: string | undefined) => {
+    if (inputValue) {
+      setValue(inputValue);
+    }
   };
 
   const onReset = () => {
@@ -29,7 +38,7 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
     }
     setValue((prevState) => formatter(prevState));
   };
-
+  /*
   useEffect(() => {
     if (textareaRef.current && caretRef.current) {
       textareaRef.current.selectionStart = caretRef.current;
@@ -84,7 +93,7 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
   useEffect(() => {
     setRowCounts([...value.matchAll(/\n/g)].length + 1);
   }, [value]);
-
+*/
   return (
     <div>
       <div>{mode === 'viewer' ? <span>Viewer</span> : <span>Editor</span>}</div>
@@ -96,6 +105,16 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
       </button>
       <br />
       <div style={{ position: 'relative' }}>
+        <Editor
+          height="420px"
+          width="520px"
+          theme="light"
+          language="graphql"
+          options={{ minimap: { enabled: false } }}
+          onChange={handleChange}
+          value={value}
+        />
+        {/*
         <textarea
           ref={textareaRef}
           value={value}
@@ -107,7 +126,7 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
             tabSize: '10px',
             fontFamily: 'inherit',
           }}
-        />
+        /> 
         <div
           style={{
             position: 'absolute',
@@ -121,7 +140,7 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
           {Array.from({ length: rowCounts }, (_, i) => i + 1).map((item) => (
             <div key={item}>{item}</div>
           ))}
-        </div>
+        </div>*/}
       </div>
     </div>
   );
