@@ -14,6 +14,9 @@ export const ApiEndpointBtn: React.FC = () => {
   return (
     <div>
       <input
+        style={{
+          width: '100vh',
+        }}
         placeholder="Enter your api..."
         onChange={HandleInputChange}
         value={apiUrl}
