@@ -6,7 +6,7 @@ type ApiEndpoint = {
 };
 
 const initialState: ApiEndpoint = {
-  api: 'https://rickandmortyapi.com/graphql',
+  api: 'https://graphqlzero.almansi.me/api',
 };
 
 export const apiEndpointSlice = createSlice({
