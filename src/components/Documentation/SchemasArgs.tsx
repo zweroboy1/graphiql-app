@@ -11,6 +11,9 @@ import { GoBackBtn } from './GoBackBtn/GoBackBtn';
 import { removeFromHistory } from '../../store/slices/history.slice';
 
 export const SchemasArgs: React.FC = () => {
+  const url = useSelector((state: RootState) => state.apiEndpoint.api);
+  console.log(url);
+
   const { data, isFetching } = useGetGraphQlSchemaQuery();
   const activeType = useSelector((state: RootState) => state.type.name);
   const history = useSelector((state: RootState) => state.history.history);

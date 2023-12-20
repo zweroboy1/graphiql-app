@@ -4,6 +4,7 @@ import { schemasApi } from './api/api';
 import { schemasReducer } from './slices/schemaSlice';
 import { activeTypeReducer } from './slices/activeTypeSlice';
 import { historyReducer } from './slices/history.slice';
+import { ApiEndpointReducer } from './slices/apiEndpoint.slice';
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     schemas: schemasReducer,
     type: activeTypeReducer,
     history: historyReducer,
+    apiEndpoint: ApiEndpointReducer,
     [schemasApi.reducerPath]: schemasApi.reducer,
   },
   middleware: (getDefaultMiddlware) =>
