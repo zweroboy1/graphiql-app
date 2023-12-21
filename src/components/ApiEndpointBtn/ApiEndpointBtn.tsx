@@ -17,14 +17,14 @@ export const ApiEndpointBtn: React.FC = () => {
 
   return (
     <div style={{ position: 'relative' }}>
-      <MdOutlineRefresh
-        className={isFetching ? 'icon-rotate' : 'icon'}
-        style={{}}
-      />
+      <MdOutlineRefresh className={`icon ${isFetching ? 'rotate' : ''}`} />
       <input
         style={{
-          width: 'calc(100vh - 30px)',
+          width: '30vw',
           paddingLeft: '30px',
+          position: 'absolute',
+          top: '10px',
+          left: '107px',
         }}
         placeholder="Enter your api..."
         onChange={HandleInputChange}
