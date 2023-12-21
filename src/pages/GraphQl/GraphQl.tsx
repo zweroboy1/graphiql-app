@@ -4,10 +4,14 @@ import { QueryEditor } from '../../components/Editor/QueryEditor';
 
 export const GraphQl: React.FC = () => {
   return (
-    <>
+    <div
+      style={{
+        display: 'flex',
+      }}
+    >
       <Documentation />
       <ApiEndpointBtn />
       <QueryEditor mode="editor" />
-    </>
+    </div>
   );
 };
