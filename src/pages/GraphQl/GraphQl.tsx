@@ -11,7 +11,8 @@ export const GraphQl: React.FC = () => {
     >
       <Documentation />
       <ApiEndpointBtn />
-      <QueryEditor mode="editor" />
+      <QueryEditor key="editor" mode="editor" />
+      <QueryEditor key="viewer" mode="viewer" />
     </div>
   );
 };

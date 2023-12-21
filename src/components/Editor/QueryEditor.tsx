@@ -2,6 +2,8 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
 import { formatter } from '../../utils/queryEditor';
 import { getTabCount } from '../../utils/queryEditor';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 
 type QueryEditorProps = {
   mode: 'editor' | 'viewer';
@@ -10,6 +12,9 @@ type QueryEditorProps = {
 export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
   const [value, setValue] = useState('');
   const [rowCounts, setRowCounts] = useState(1);
+  // const [apiResult, setApiResult] = useState<string | null>(null);
+
+  const api = useSelector((state: RootState) => state.apiEndpoint.api);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const caretRef = useRef<number | undefined>(undefined);
@@ -85,9 +90,21 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
     setRowCounts([...value.matchAll(/\n/g)].length + 1);
   }, [value]);
 
+  const handleFetch = () => {
+    console.log('fetch', api);
+  };
+
+  if (mode === 'viewer') {
+    return (
+      <div>
+        <button onClick={handleFetch}>Run</button>
+      </div>
+    );
+  }
+
   return (
     <div>
-      <div>{mode === 'viewer' ? <span>Viewer</span> : <span>Editor</span>}</div>
+      {/* <div>{mode === 'viewer' ? <span>Viewer</span> : <span>Editor</span>}</div> */}
       <button type="button" onClick={onReset}>
         Reset
       </button>
@@ -100,7 +117,7 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
           ref={textareaRef}
           value={value}
           onChange={handleChange}
-          disabled={mode === 'viewer'}
+          // disabled={mode === 'viewer'}
           style={{
             width: '420px',
             height: '520px',
