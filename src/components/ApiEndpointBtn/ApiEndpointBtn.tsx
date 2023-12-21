@@ -8,7 +8,7 @@ import './ApiEndpointBtn.css';
 export const ApiEndpointBtn: React.FC = () => {
   const dispatch = useDispatch();
   const apiUrl = useSelector((state: RootState) => state.apiEndpoint.api);
-  const { isFetching, error } = useGetGraphQlSchemaQuery(apiUrl);
+  const { isFetching } = useGetGraphQlSchemaQuery(apiUrl);
 
   const HandleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
@@ -30,20 +30,6 @@ export const ApiEndpointBtn: React.FC = () => {
         onChange={HandleInputChange}
         value={apiUrl}
       />
-      {error && 'error' in error && (
-        <div
-          style={{
-            position: 'absolute',
-            top: '50%',
-            right: '10px',
-            transform: 'translateY(-50%)',
-            color: '#e44d4d',
-            fontSize: '12px',
-          }}
-        >
-          {error.error}
-        </div>
-      )}
     </div>
   );
 };
