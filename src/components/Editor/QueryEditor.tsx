@@ -1,11 +1,12 @@
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
-
-import { formatter } from '../../utils/queryEditor';
-import { getTabCount } from '../../utils/queryEditor';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { RootState } from '../../store/store';
 import { setEditorValue } from '../../store/slices/editorSlice';
 import { setViewerValue } from '../../store/slices/viewerSlice';
+
+import { formatter } from '../../utils/queryEditor';
+import { getTabCount } from '../../utils/queryEditor';
 
 type QueryEditorProps = {
   mode: 'editor' | 'viewer';
@@ -13,33 +14,30 @@ type QueryEditorProps = {
 
 export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
   const [rowCounts, setRowCounts] = useState(1);
+  const [loading, setLoading] = useState(false);
+
   const dispatch = useDispatch();
-  // const [apiResult, setApiResult] = useState<string | null>(null);
 
   const api = useSelector((state: RootState) => state.apiEndpoint.api);
-
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const caretRef = useRef<number | undefined>(undefined);
+  const currentEditorValue = useSelector(
+    (state: RootState) => state.editor.value
+  );
+  const [prevEditorValue, setPrevEditorValue] = useState(currentEditorValue);
 
   const value = useSelector((state: RootState) =>
     mode === 'editor' ? state.editor.value : state.viewer.value
   );
-
-  const currentEditorValue = useSelector(
-    (state: RootState) => state.editor.value
-  );
-
   const setValue = useCallback(
     (value: string) => {
-      console.log('setValue ', {
-        mode,
-      });
       return mode === 'editor'
         ? dispatch(setEditorValue(value))
         : dispatch(setViewerValue(value));
     },
     [mode, dispatch]
   );
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const caretRef = useRef<number | undefined>(undefined);
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const target = e?.target;
@@ -110,45 +108,64 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
   }, [value]);
 
   const handleFetch = async () => {
-    const response = await fetch(api, {
-      method: 'POST',
-      body: JSON.stringify({ query: currentEditorValue }),
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    const result = await response.json();
-    setValue(formatter(JSON.stringify(result.data)));
-    console.log('res >>>', result);
+    try {
+      setLoading(true);
+      setPrevEditorValue(currentEditorValue);
+      const response = await fetch(api, {
+        method: 'POST',
+        body: JSON.stringify({ query: currentEditorValue }),
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      if (response.ok) {
+        const result = await response.json();
+        setValue(formatter(JSON.stringify(result.data)));
+      } else {
+        console.log('something went wrong');
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
   };
-
-  if (mode === 'viewer' && !value) {
-    return (
-      <div>
-        <button type="button" onClick={handleFetch}>
-          Run
-        </button>
-      </div>
-    );
-  }
 
   return (
     <div>
-      {/* <div>{mode === 'viewer' ? <span>Viewer</span> : <span>Editor</span>}</div> */}
-      <button type="button" onClick={onReset}>
-        Reset
-      </button>
-      <button type="button" onClick={onFormat}>
-        Format
-      </button>
-      <br />
+      {mode === 'editor' ? (
+        <div>
+          <button type="button" onClick={onReset}>
+            Reset
+          </button>
+          <button type="button" onClick={onFormat}>
+            Format
+          </button>
+          <br />
+        </div>
+      ) : (
+        <div>
+          <button
+            disabled={
+              currentEditorValue === '' ||
+              currentEditorValue === prevEditorValue ||
+              loading
+            }
+            type="button"
+            onClick={handleFetch}
+          >
+            {loading ? 'loading....' : 'Run'}
+          </button>
+        </div>
+      )}
+
       <div style={{ position: 'relative' }}>
         <textarea
           ref={textareaRef}
           value={value}
           onChange={handleChange}
-          // disabled={mode === 'viewer'}
+          disabled={mode === 'viewer'}
           style={{
             width: '420px',
             height: '520px',

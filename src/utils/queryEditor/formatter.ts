@@ -7,7 +7,7 @@ const addEnter = (value: string): string => {
 };
 
 const checkSpaces = (value: string): string => {
-  return value.replace(/ {2,}/g, ' ');
+  return value.replace(/ {2,}/g, ' ').replace(/\[ {/g, '[{');
 };
 
 const fixEnter = (value: string): string => {
@@ -17,7 +17,7 @@ const fixEnter = (value: string): string => {
 };
 
 const checkEnter = (value: string): string => {
-  return value.replace(/\s+{/, ' {');
+  return value.replace(/\s+{/, ' {').replace(/}\s+,/g, '},\n');
 };
 
 const checkTab = (value: string): string => {
