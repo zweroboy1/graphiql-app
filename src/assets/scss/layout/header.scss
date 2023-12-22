@@ -9,12 +9,17 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 80px;
+  height: 90px;
   padding: 0 24px;
-  background-color: $bg-color;
+  background-color: $white-color;
   border-bottom: 1px solid $light-grey-color;
-  transition: all 0.3s ease 0s;
+  transition: height 0.3s ease 0s;
   z-index: 10;
+
+  &-compact {
+    height: 60px;
+    background-color: $medium-blue-color;
+  }
 
   &__left {
     display: flex;

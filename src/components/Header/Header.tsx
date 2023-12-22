@@ -1,16 +1,39 @@
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { logoutUser } from '../../services/auth';
 import { RootState } from '../../store/store';
 import { LanguageButton } from '../LanguageButton/LanguageButton';
+import { COMPACT_HEADER_WHEN_SCROLL_Y } from '../../constants';
 
 import UserSvg from '../../assets/svg/user.svg';
 import Logo from '../../assets/svg/logo.svg';
 
 export const Header: React.FC = () => {
   const user = useSelector((state: RootState) => state.user.value);
+  const [scrollPos, setScrollPos] = useState(0);
+  const [headerStyle, setHeaderStyle] = useState('');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const position = window.scrollY;
+      setScrollPos(position);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    setHeaderStyle(
+      scrollPos > COMPACT_HEADER_WHEN_SCROLL_Y ? ' header-compact' : ''
+    );
+  }, [scrollPos]);
+
   return (
-    <header className="header">
+    <header className={`header${headerStyle}`}>
       <div className="header__left">
         <Link to="/" title="Welcome page">
           <div className="header__logo-container">
