@@ -4,6 +4,7 @@ import { logoutUser } from '../../services/auth';
 import { RootState } from '../../store/store';
 import { LanguageButton } from '../LanguageButton/LanguageButton';
 
+import UserSvg from '../../assets/svg/user.svg';
 import Logo from '../../assets/svg/logo.svg';
 
 export const Header: React.FC = () => {
@@ -34,11 +35,7 @@ export const Header: React.FC = () => {
             className="header__user-container"
             title={`Your Profile (${user.name})`}
           >
-            <img
-              className="header__user-image"
-              src="/src/assets/svg/user.svg"
-              alt={`You are logged as ${user.name}`}
-            />
+            <UserSvg className="header__user-image" />
           </div>
           <Link
             className="button button_medium button_image button_image-logout"
