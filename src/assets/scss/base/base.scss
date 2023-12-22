@@ -73,7 +73,6 @@ button {
   color: $text-color;
   font-family: $main-font;
   font-size: 16px;
-  //width: 34vw;
   padding: 14px 20px;
 }
 
@@ -96,5 +95,19 @@ button {
     height: 24px;
     background-image: url(/src/assets/svg/Error.svg);
     background-repeat: no-repeat;
+  }
+}
+
+.small-screen {
+  display: none;
+  @include media('s') {
+    display: inline;
+  }
+}
+
+.big-screen {
+  display: inline;
+  @include media('s') {
+    display: none;
   }
 }

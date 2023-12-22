@@ -1,7 +1,9 @@
 .header {
   position: fixed;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow: auto;
+  gap: 8px;
   justify-content: space-between;
   align-items: center;
   top: 0;
@@ -13,6 +15,14 @@
   border-bottom: 1px solid $light-grey-color;
   transition: all 0.3s ease 0s;
   z-index: 10;
+
+  &__left {
+    display: flex;
+    gap: 24px;
+    @include media('s') {
+      gap: 8px;
+    }
+  }
 
   &__right {
     display: flex;
@@ -37,6 +47,21 @@
 
     &-text {
       color: inherit;
+      @include media('s') {
+        display: none;
+      }
+    }
+  }
+
+  &__user {
+    &-container {
+      height: 40px;
+      width: 40px;
+      cursor: pointer;
+    }
+    &-image {
+      height: 100%;
+      width: 100%;
     }
   }
 }

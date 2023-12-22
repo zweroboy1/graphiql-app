@@ -18,6 +18,40 @@
     font-size: 16px;
   }
 
+  @include media('s') {
+    &_image {
+      font-size: 0;
+      padding: 20px 24px;
+      position: relative;
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        translate: 0 -50%;
+        width: 20px;
+        height: 20px;
+        background-size: 20px;
+        background-repeat: no-repeat;
+      }
+
+      &-logout::after {
+        background-image: url(/src/assets/svg/logout.svg);
+      }
+
+      &-playground::after {
+        background-image: url(/src/assets/svg/textbox.svg);
+      }
+
+      &-login::after {
+        background-image: url(/src/assets/svg/login.svg);
+      }
+
+      &-register::after {
+        background-image: url(/src/assets/svg/register.svg);
+      }
+    }
+  }
+
   @include hover {
     color: $white-color;
     background-color: $primary-hover-color;

@@ -10,35 +10,66 @@ export const Header: React.FC = () => {
   const user = useSelector((state: RootState) => state.user.value);
   return (
     <header className="header">
-      <>
-        <Link to="/">
+      <div className="header__left">
+        <Link to="/" title="Welcome page">
           <div className="header__logo-container">
             <Logo className="header__logo-image" />
-            <span className="header__logo-text">GraphQl app</span>
+            <span className="header__logo-text">GraphQL app</span>
           </div>
         </Link>
-        <LanguageButton />
-        {user ? (
-          <div className="header__right">
-            logged as {user.name}
-            <Link className="button button_medium" to="/graph-ql">
-              Graph Ql
-            </Link>
-            <Link className="button button_medium" to="/" onClick={logoutUser}>
-              Logout
-            </Link>
-          </div>
-        ) : (
-          <div className="header__right">
-            <Link className="button button_medium" to="/login">
-              Sign In
-            </Link>
-            <Link className="button button_medium" to="/register">
-              Sign Up
-            </Link>
-          </div>
+        {user && (
+          <Link
+            className="button button_medium button_image button_image-playground"
+            to="/graph-ql"
+            title="GraphQL playground"
+          >
+            Playground
+          </Link>
         )}
-      </>
+      </div>
+      <LanguageButton />
+      {user ? (
+        <div className="header__right">
+          <div
+            className="header__user-container"
+            title={`Your Profile (${user.name})`}
+          >
+            <img
+              className="header__user-image"
+              src="/src/assets/svg/user.svg"
+              alt={`You are logged as ${user.name}`}
+            />
+          </div>
+          <Link
+            className="button button_medium button_image button_image-logout"
+            to="/"
+            onClick={logoutUser}
+            title="Logout"
+            aria-label="Logout"
+          >
+            Logout
+          </Link>
+        </div>
+      ) : (
+        <div className="header__right">
+          <Link
+            className="button button_medium button_image button_image-login"
+            to="/login"
+            title="Login"
+            aria-label="Login"
+          >
+            Sign In
+          </Link>
+          <Link
+            className="button button_medium button_image button_image-register"
+            to="/register"
+            title="Register"
+            aria-label="Register"
+          >
+            Sign Up
+          </Link>
+        </div>
+      )}
     </header>
   );
 };
