@@ -1,23 +1,45 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 
 import { formatter } from '../../utils/queryEditor';
 import { getTabCount } from '../../utils/queryEditor';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
+import { setEditorValue } from '../../store/slices/editorSlice';
+import { setViewerValue } from '../../store/slices/viewerSlice';
 
 type QueryEditorProps = {
   mode: 'editor' | 'viewer';
 };
 
 export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
-  const [value, setValue] = useState('');
   const [rowCounts, setRowCounts] = useState(1);
+  const dispatch = useDispatch();
   // const [apiResult, setApiResult] = useState<string | null>(null);
 
   const api = useSelector((state: RootState) => state.apiEndpoint.api);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const caretRef = useRef<number | undefined>(undefined);
+
+  const value = useSelector((state: RootState) =>
+    mode === 'editor' ? state.editor.value : state.viewer.value
+  );
+
+  const currentEditorValue = useSelector(
+    (state: RootState) => state.editor.value
+  );
+
+  const setValue = useCallback(
+    (value: string) => {
+      console.log('setValue ', {
+        mode,
+      });
+      return mode === 'editor'
+        ? dispatch(setEditorValue(value))
+        : dispatch(setViewerValue(value));
+    },
+    [mode, dispatch]
+  );
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const target = e?.target;
@@ -32,7 +54,7 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
     if (value === '') {
       return;
     }
-    setValue((prevState) => formatter(prevState));
+    setValue(formatter(value));
   };
 
   useEffect(() => {
@@ -49,11 +71,8 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
         e.preventDefault();
         const position = textareaRef.current?.selectionStart || value.length;
 
-        setValue((prevState) => {
-          return (
-            prevState.slice(0, position) + '\t' + prevState.slice(position)
-          );
-        });
+        setValue(value.slice(0, position) + '\t' + value.slice(position));
+
         caretRef.current = position + 1;
       }
     };
@@ -61,22 +80,22 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
     return () => {
       document.removeEventListener('keydown', handleTab);
     };
-  }, [value.length]);
+  }, [setValue, value]);
 
   useEffect(() => {
+    if (mode !== 'editor') return;
+
     const handleEnter = (e: KeyboardEvent) => {
       if (e.key === 'Enter') {
         e.preventDefault();
         const position = textareaRef.current?.selectionStart || value.length;
         const tabCount = getTabCount(value.slice(0, position));
-        setValue((prevState) => {
-          return (
-            prevState.slice(0, position) +
+        setValue(
+          value.slice(0, position) +
             '\n' +
             '\t'.repeat(tabCount) +
-            prevState.slice(position)
-          );
-        });
+            value.slice(position)
+        );
         caretRef.current = position + tabCount + 1;
       }
     };
@@ -84,20 +103,32 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
     return () => {
       document.removeEventListener('keydown', handleEnter);
     };
-  }, [value]);
+  }, [value, setValue, mode]);
 
   useEffect(() => {
     setRowCounts([...value.matchAll(/\n/g)].length + 1);
   }, [value]);
 
-  const handleFetch = () => {
-    console.log('fetch', api);
+  const handleFetch = async () => {
+    const response = await fetch(api, {
+      method: 'POST',
+      body: JSON.stringify({ query: currentEditorValue }),
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const result = await response.json();
+    setValue(formatter(JSON.stringify(result.data)));
+    console.log('res >>>', result);
   };
 
-  if (mode === 'viewer') {
+  if (mode === 'viewer' && !value) {
     return (
       <div>
-        <button onClick={handleFetch}>Run</button>
+        <button type="button" onClick={handleFetch}>
+          Run
+        </button>
       </div>
     );
   }
