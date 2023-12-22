@@ -13,8 +13,17 @@ const LanguageButton: React.FC = () => {
 
   return (
     <div className="language">
-      <button className="language__button" onClick={toggleLanguage}>
-        {LANGUAGES[currentLanguageIndex].label}
+      <button
+        className="language__button"
+        onClick={toggleLanguage}
+        title="Change language"
+      >
+        <span className="big-screen">
+          {LANGUAGES[currentLanguageIndex].label}
+        </span>
+        <span className="small-screen">
+          {LANGUAGES[currentLanguageIndex].abbr}
+        </span>
       </button>
     </div>
   );
