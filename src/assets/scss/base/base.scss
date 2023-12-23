@@ -41,9 +41,9 @@ button {
 .main {
   display: flex;
   flex-grow: 1;
-  margin-top: 80px;
-  // margin-left: 80px;
-  //justify-content: center;
+  margin: 90px auto 0;
+  width: min(1600px, 95vw);
+  justify-content: center;
   align-items: center;
 }
 
