@@ -1,0 +1,29 @@
+.playground {
+  display: flex;
+  flex-direction: column;
+
+  padding: 24px;
+  border-radius: 20px;
+  background: $white-color;
+  margin: 16px auto;
+  max-width: map-get($sizes, 's');
+  box-shadow: $medium-shadow;
+
+  &__header {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+
+    .button {
+      padding: 12px 36px;
+    }
+
+    .input {
+      width: 300px;
+    }
+  }
+
+  &__button-container {
+    margin-bottom: 33px;
+  }
+}
