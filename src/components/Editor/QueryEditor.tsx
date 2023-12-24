@@ -1,20 +1,27 @@
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+import {
+  /*ChangeEvent, useCallback, useEffect, useRef,*/ useState,
+} from 'react';
+/*
 import { useDispatch, useSelector } from 'react-redux';
-
 import { RootState } from '../../store/store';
 import { setEditorValue } from '../../store/slices/editorSlice';
 import { setViewerValue } from '../../store/slices/viewerSlice';
-
 import { formatter } from '../../utils/queryEditor';
 import { getTabCount } from '../../utils/queryEditor';
-import { useFetchDataMutation } from '../../store/api/api';
+*/
+
+import Editor from '@monaco-editor/react';
 
 type QueryEditorProps = {
   mode: 'editor' | 'viewer';
 };
 
 export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
-  const [rowCounts, setRowCounts] = useState(1);
+  // const [rowCounts, setRowCounts] = useState(1);
+  const [value, setValue] = useState('');
+  /*
+ const [loading, setLoading] = useState(false);
+
   const dispatch = useDispatch();
   const api = useSelector((state: RootState) => state.apiEndpoint.api);
 
@@ -22,7 +29,7 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
     (state: RootState) => state.editor.value
   );
   const [prevEditorValue, setPrevEditorValue] = useState(currentEditorValue);
-  const [fetchData, { isLoading }] = useFetchDataMutation();
+
 
   const value = useSelector((state: RootState) =>
     mode === 'editor' ? state.editor.value : state.viewer.value
@@ -43,7 +50,15 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
     const target = e?.target;
     setValue(target.value);
   };
+*/
 
+  const handleChange = (inputValue: string | undefined) => {
+    if (inputValue) {
+      setValue(inputValue);
+    }
+  };
+
+  /*
   const onReset = () => {
     setValue('');
   };
@@ -52,7 +67,8 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
     if (value === '') {
       return;
     }
-    setValue(formatter(value));
+    // setValue(formatter(value));
+    setValue((prevState) => formatter(prevState));
   };
 
   useEffect(() => {
@@ -117,10 +133,64 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
 
     setValue(formatter(JSON.stringify(result)));
   };
-
+*/
   return (
     <div>
-      {mode === 'editor' ? (
+      <h4 className="h4 playground__title">
+        {mode === 'editor' ? 'Request' : 'Response'}
+      </h4>
+      <Editor
+        className="playground__part"
+        height="420px"
+        theme="vs"
+        language={mode === 'editor' ? 'graphql' : 'json'}
+        options={{
+          minimap: { enabled: false },
+          contextmenu: false,
+          quickSuggestions: false,
+          selectionHighlight: false,
+          renderLineHighlight: 'none',
+          hideCursorInOverviewRuler: true,
+          overviewRulerLanes: 0,
+          overviewRulerBorder: false,
+          //readOnly: true
+        }}
+        onChange={handleChange}
+        value={value}
+      />
+      {/*
+        <textarea
+          ref={textareaRef}
+          value={value}
+          onChange={handleChange}
+          disabled={mode === 'viewer'}
+          style={{
+            width: '420px',
+            height: '520px',
+            tabSize: '10px',
+            fontFamily: 'inherit',
+          }}
+        />
+        
+        <div
+          style={{
+            position: 'absolute',
+            display: 'flex',
+            top: '5px',
+            left: '-20px',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          {Array.from({ length: rowCounts }, (_, i) => i + 1).map((item) => (
+            <div key={item}>{item}</div>
+          ))}
+        </div>*/}
+    </div>
+  );
+};
+
+/* mode === 'editor' ? (
         <div>
           <button type="button" onClick={onReset}>
             Reset
@@ -136,44 +206,12 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
             disabled={
               currentEditorValue === '' ||
               currentEditorValue === prevEditorValue ||
-              isLoading
+              loading
             }
             type="button"
             onClick={handleFetch}
           >
-            {isLoading ? 'loading....' : 'Run'}
+            {loading ? 'loading....' : 'Run'}
           </button>
         </div>
-      )}
-
-      <div style={{ position: 'relative' }}>
-        <textarea
-          ref={textareaRef}
-          value={value}
-          onChange={handleChange}
-          disabled={mode === 'viewer'}
-          style={{
-            width: '420px',
-            height: '520px',
-            tabSize: '10px',
-            fontFamily: 'inherit',
-          }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            display: 'flex',
-            top: '5px',
-            left: '-20px',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          {Array.from({ length: rowCounts }, (_, i) => i + 1).map((item) => (
-            <div key={item}>{item}</div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
+          ) */
