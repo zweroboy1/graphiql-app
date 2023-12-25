@@ -44,7 +44,7 @@ export const logoutUser = async () => {
     const errorCode = e instanceof Error ? e.message : null;
     const toastText = getErrorText(errorCode, 'en');
     toast.error(toastText, {
-      className: 'toast-message',
+      className: 'toast-error',
     });
   });
 };

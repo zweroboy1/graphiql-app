@@ -10,6 +10,7 @@ export const TextField: React.FC<TextFieldProps> = ({
   register,
   error,
   icon,
+  defaultValue,
 }) => {
   let inputClasses = error ? 'input input_error' : 'input';
   inputClasses = icon ? `${inputClasses} input_eye` : inputClasses;
@@ -25,6 +26,7 @@ export const TextField: React.FC<TextFieldProps> = ({
           id={id}
           placeholder={placeholder}
           autoComplete={autocomplete}
+          defaultValue={defaultValue}
           {...(register as UseFormRegister<FieldValues>)(id)}
         />
         {icon && (

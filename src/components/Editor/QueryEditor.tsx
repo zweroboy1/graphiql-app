@@ -1,20 +1,44 @@
 import {
   /*ChangeEvent, useCallback, useEffect, useRef,*/ useState,
 } from 'react';
-/*
-import { useDispatch, useSelector } from 'react-redux';
+
+import { /* useDispatch,*/ useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
+import { formatter } from '../../utils/queryEditor';
+
+/*
 import { setEditorValue } from '../../store/slices/editorSlice';
 import { setViewerValue } from '../../store/slices/viewerSlice';
-import { formatter } from '../../utils/queryEditor';
 import { getTabCount } from '../../utils/queryEditor';
 */
 
+import { useFetchGraphQlResponseMutation } from '../../store/api/api';
 import Editor from '@monaco-editor/react';
 
 type QueryEditorProps = {
   mode: 'editor' | 'viewer';
 };
+
+/*
+const api = useSelector((state: RootState) => state.apiEndpoint.api);
+
+const currentEditorValue = useSelector(
+  (state: RootState) => state.editor.value
+);
+const [prevEditorValue, setPrevEditorValue] = useState(currentEditorValue);
+const [fetchResponse, { isLoading }] = useFetchResponseMutation();
+const handleFetch = async () => {
+  try {
+    setPrevEditorValue(currentEditorValue);
+
+    const result = await fetchResponse({ query: currentEditorValue, url: api }).unwrap();
+
+    setValue(formatter(JSON.stringify(result)));
+  } catch (e) {
+    console.log(e);
+  }
+};
+*/
 
 export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
   // const [rowCounts, setRowCounts] = useState(1);
@@ -23,14 +47,30 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
+*/
   const api = useSelector((state: RootState) => state.apiEndpoint.api);
+  // const currentEditorValue = useSelector((state: RootState) => state.editor.value);
+  // const [prevEditorValue, setPrevEditorValue] = useState(currentEditorValue);
+  const [fetchResponse /* , { isLoading } */] =
+    useFetchGraphQlResponseMutation();
 
-  const currentEditorValue = useSelector(
-    (state: RootState) => state.editor.value
-  );
-  const [prevEditorValue, setPrevEditorValue] = useState(currentEditorValue);
+  const handleFetch = async (inputValue: string) => {
+    try {
+      // setPrevEditorValue(currentEditorValue);
 
+      console.log(inputValue, 'hhh');
+      const result = await fetchResponse({
+        query: inputValue /* currentEditorValue */,
+        url: api,
+      }).unwrap();
+      console.log(formatter(JSON.stringify(result)));
+      // setValue(formatter(JSON.stringify(result)));
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
+  /*
   const value = useSelector((state: RootState) =>
     mode === 'editor' ? state.editor.value : state.viewer.value
   );
@@ -55,6 +95,7 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
   const handleChange = (inputValue: string | undefined) => {
     if (inputValue) {
       setValue(inputValue);
+      handleFetch(inputValue);
     }
   };
 

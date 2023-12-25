@@ -1,63 +1,76 @@
-import React /* ,  { useState } */ from 'react';
-// import {  useDispatch,  useSelector } from 'react-redux';
-import { useForm } from 'react-hook-form';
-// import { setApiEndpointSlice } from '../../store/slices/apiEndpoint.slice';
-// import { RootState } from '../../store/store';
-// import { MdOutlineRefresh } from 'react-icons/md';
-// import { useGetGraphQlSchemaQuery } from '../../store/api/api';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { setApiEndpointSlice } from '../../store/slices/apiEndpoint.slice';
+import { RootState } from '../../store/store';
+import { useFetchGraphQlSchemaMutation } from '../../store/api/api';
 import { TextField } from '../../components/inputs/TextField';
-import './ApiEndpointBtn.css';
+import { urlSchema } from '../../schemas';
+import { getErrorText } from '../../utils/getErrorText';
 
 export const ApiEndpointBtn: React.FC = () => {
   const {
     register,
-    formState: { /* errors,*/ isValid },
-    // handleSubmit,
-  } = useForm({ mode: 'onChange' });
-  const submiting = false;
-  // const [submiting, setSubmiting] = useState(false);
-  // const dispatch = useDispatch();
-  /*
+    formState: { errors, isValid },
+    handleSubmit,
+  } = useForm({ mode: 'onChange', resolver: yupResolver(urlSchema) });
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const dispatch = useDispatch();
+
   const apiUrl = useSelector((state: RootState) => state.apiEndpoint.api);
-  
-  const { isFetching } = useGetGraphQlSchemaQuery(apiUrl);
+  const [fetchSchema, { isLoading }] = useFetchGraphQlSchemaMutation();
 
-  const HandleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value;
-    dispatch(setApiEndpointSlice(inputValue));
-    
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    if (!isValid) {
+      return;
+    }
+    const result = await fetchSchema(data.endpoint);
+    if ('error' in result) {
+      const errorCode =
+        'status' in result.error ? String(result.error.status) : null;
+      const toastText = getErrorText(errorCode, 'en');
+      setButtonDisabled(true);
+      toast.error(toastText, {
+        toastId: 'toast',
+        className: 'toast-error',
+      });
+      return;
+    }
+
+    toast.success('Valid GraphQL endpoint!', {
+      toastId: 'toast',
+      className: 'toast-success',
+    });
+    dispatch(setApiEndpointSlice(data.endpoint));
   };
-  
-        <MdOutlineRefresh className={`icon ${isFetching ? 'rotate' : ''}`} />
 
-  <input
-        style={{
-          width: '30vw',
-          paddingLeft: '30px',
-          position: 'absolute',
-          top: '10px',
-          left: '107px',
-        }}
-placeholder="Enter your api..."
-        onChange={HandleInputChange}
-        value={apiUrl}
-      />
-   */
+  useEffect(() => {
+    toast.onChange((v) => {
+      if (v.status === 'removed') {
+        setButtonDisabled(false);
+      }
+    });
+  }, []);
+
   return (
-    <form>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="playground__header">
         <TextField
           id="endpoint"
           type="text"
           label="Endpoint"
           placeholder="Enter API endpoint..."
-          autocomplete="off"
+          autocomplete="url"
           register={register}
+          defaultValue={apiUrl}
+          error={errors['endpoint']}
         />
         <div className="playground__button-container">
           <button
-            className={submiting ? 'button button_loading' : 'button'}
-            disabled={!isValid || submiting}
+            className={isLoading ? 'button button_loading' : 'button'}
+            disabled={!isValid || isLoading || buttonDisabled}
             type="submit"
             role="submit"
           >

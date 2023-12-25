@@ -39,7 +39,7 @@ export const Register: React.FC = () => {
         onClose: () => {
           setButtonDisabled(false);
         },
-        className: 'toast-message',
+        className: 'toast-error',
       });
     } finally {
       setSubmiting(false);
