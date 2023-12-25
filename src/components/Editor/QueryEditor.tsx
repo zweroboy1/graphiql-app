@@ -7,6 +7,7 @@ import { setViewerValue } from '../../store/slices/viewerSlice';
 
 import { formatter } from '../../utils/queryEditor';
 import { getTabCount } from '../../utils/queryEditor';
+import { useFetchDataMutation } from '../../store/api/api';
 
 type QueryEditorProps = {
   mode: 'editor' | 'viewer';
@@ -14,15 +15,14 @@ type QueryEditorProps = {
 
 export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
   const [rowCounts, setRowCounts] = useState(1);
-  const [loading, setLoading] = useState(false);
-
   const dispatch = useDispatch();
-
   const api = useSelector((state: RootState) => state.apiEndpoint.api);
+
   const currentEditorValue = useSelector(
     (state: RootState) => state.editor.value
   );
   const [prevEditorValue, setPrevEditorValue] = useState(currentEditorValue);
+  const [fetchData, { isLoading }] = useFetchDataMutation();
 
   const value = useSelector((state: RootState) =>
     mode === 'editor' ? state.editor.value : state.viewer.value
@@ -108,28 +108,14 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
   }, [value]);
 
   const handleFetch = async () => {
-    try {
-      setLoading(true);
-      setPrevEditorValue(currentEditorValue);
-      const response = await fetch(api, {
-        method: 'POST',
-        body: JSON.stringify({ query: currentEditorValue }),
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      if (response.ok) {
-        const result = await response.json();
-        setValue(formatter(JSON.stringify(result.data)));
-      } else {
-        console.log('something went wrong');
-      }
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setLoading(false);
-    }
+    setPrevEditorValue(currentEditorValue);
+
+    const result = await fetchData({
+      query: currentEditorValue,
+      url: api,
+    }).unwrap();
+
+    setValue(formatter(JSON.stringify(result)));
   };
 
   return (
@@ -150,12 +136,12 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
             disabled={
               currentEditorValue === '' ||
               currentEditorValue === prevEditorValue ||
-              loading
+              isLoading
             }
             type="button"
             onClick={handleFetch}
           >
-            {loading ? 'loading....' : 'Run'}
+            {isLoading ? 'loading....' : 'Run'}
           </button>
         </div>
       )}

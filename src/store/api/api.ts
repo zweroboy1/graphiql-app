@@ -20,7 +20,19 @@ export const schemasApi = createApi({
         };
       },
     }),
+    fetchData: builder.mutation<void, { query: string; url: string }>({
+      query: ({ query, url }) => {
+        return {
+          url: url,
+          method: 'POST',
+          body: JSON.stringify({ query }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        };
+      },
+    }),
   }),
 });
 
-export const { useGetGraphQlSchemaQuery } = schemasApi;
+export const { useGetGraphQlSchemaQuery, useFetchDataMutation } = schemasApi;
