@@ -13,12 +13,14 @@ export const TypeLink: React.FC<TypeButtonProps> = ({ type, onClick }) => {
   const renderType = (type: Type): string => {
     const typeName = type.name || '';
     if (type.ofType) {
-      return (
-        typeName +
-        (typeof type.ofType === 'string'
-          ? type.ofType
-          : renderType(type.ofType))
-      );
+      const a =
+        type.kind === 'NON_NULL'
+          ? `${renderType(type.ofType)}!`
+          : `[${renderType(type.ofType)}]`;
+
+      const allTypes =
+        typeName + (typeof type.ofType === 'string' ? type.ofType : a);
+      return allTypes;
     } else {
       return typeName;
     }
@@ -28,7 +30,8 @@ export const TypeLink: React.FC<TypeButtonProps> = ({ type, onClick }) => {
     if (onClick) {
       onClick();
     }
-    dispatch(setActiveType(renderType(type)));
+    const cleanedType = renderType(type).replace(/[[\]!]/g, '');
+    dispatch(setActiveType(cleanedType));
   };
 
   return (
