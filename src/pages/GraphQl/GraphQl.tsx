@@ -11,7 +11,26 @@ export const GraphQl: React.FC = () => {
         <div className="playground__editor">
           <QueryEditor key="editor" mode="editor" />
         </div>
-        <div className="playground__tools"></div>
+        <div className="playground__tools">
+          <button
+            className="button button_tool button_tool-docs"
+            disabled
+            title="Show API documentation"
+          ></button>
+          <button
+            className="button button_tool button_tool-reset"
+            title="Reset query"
+          ></button>
+          <button
+            className="button button_tool button_tool-format"
+            title="Prettify query"
+          ></button>
+          <button
+            className="button button_tool button_tool-play"
+            disabled
+            title="Execute query"
+          ></button>
+        </div>
         <div className="playground__viewer">
           <QueryEditor key="viewer" mode="viewer" />
         </div>
