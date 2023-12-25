@@ -67,24 +67,28 @@ button {
   background: $dark-grey-color;
 }
 
-.toast-message {
-  background: $error-notification-bg-color;
+.toast-error {
+  background-color: $error-notification-bg-color;
+}
+
+.toast-success {
+  background-color: $success-notification-bg-color;
+}
+
+.Toastify__toast {
+  border-radius: 10px;
   color: $text-color;
   font-family: $main-font;
   font-size: 16px;
   padding: 14px 20px;
 }
 
-.Toastify__toast {
-  border-radius: 10px;
-}
-
 .Toastify__toast-icon {
   & svg {
     visibility: hidden;
   }
-
   position: relative;
+
   &::before {
     content: '';
     position: absolute;
@@ -92,9 +96,16 @@ button {
     left: -8px;
     width: 24px;
     height: 24px;
-    background-image: url(/src/assets/svg/Error.svg);
     background-repeat: no-repeat;
   }
+}
+
+.toast-error .Toastify__toast-icon::before {
+  background-image: url(/src/assets/svg/Error.svg);
+}
+
+.toast-success .Toastify__toast-icon::before {
+  background-image: url(/src/assets/svg/Ok.svg);
 }
 
 .small-screen {

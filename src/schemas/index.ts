@@ -27,5 +27,10 @@ const registerSchemaShape = {
   ...loginSchemaShape,
 };
 
+const urlSchemaShape = {
+  endpoint: yup.string().required('URL is required').url('Invalid URL format'),
+};
+
 export const loginSchema = yup.object().shape(loginSchemaShape);
 export const registerSchema = yup.object().shape(registerSchemaShape);
+export const urlSchema = yup.object().shape(urlSchemaShape);

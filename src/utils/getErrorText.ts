@@ -15,6 +15,10 @@ const errorDictionary: ErrorMessages = {
     en: 'Your password or email is invalid!',
     ru: 'Нельзя зайти с такими логином/паролем!',
   },
+  FETCH_ERROR: {
+    en: 'Invalid API endpoint!',
+    ru: 'Этот url не работает!',
+  },
 };
 
 const getDefaultErrorMessage = (langCode: string): string => {
@@ -26,6 +30,7 @@ export const getErrorText: (
   errorCode: string | null,
   langCode: string
 ) => string = (errorCode, langCode) => {
+  console.log(errorCode);
   if (!errorCode || !errorDictionary[errorCode]) {
     return getDefaultErrorMessage(langCode);
   }
