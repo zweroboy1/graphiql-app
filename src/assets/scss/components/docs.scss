@@ -1,0 +1,45 @@
+.docs {
+  box-sizing: content-box;
+  display: block;
+  background-color: $ligth-blue-color;
+  width: 100%;
+  height: 100%;
+  translate: 0%;
+
+  border-left: 1px solid $grey-border-color;
+  z-index: 10;
+  transition: translate 0.3s ease;
+
+  &_open {
+    translate: calc(-100%);
+  }
+
+  &__content {
+    height: 420px;
+    line-height: 1.3em;
+    padding: 15px;
+    border-width: 1px 0 0;
+    border-style: solid;
+    border-color: $grey-border-color;
+    overflow: auto;
+
+    & div div div {
+      font-weight: 500;
+    }
+
+    & div div div div {
+      font-weight: normal;
+      margin-left: 16px;
+      margin-bottom: 4px;
+    }
+
+    & .button {
+      margin-bottom: 12px;
+    }
+  }
+
+  &__link {
+    color: $primary-color;
+    cursor: pointer;
+  }
+}

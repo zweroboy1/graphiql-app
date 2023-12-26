@@ -176,7 +176,7 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
   };
 */
   return (
-    <div>
+    <div className="playground__monaco">
       <h4 className="h4 playground__title">
         {mode === 'editor' ? 'Request' : 'Response'}
       </h4>

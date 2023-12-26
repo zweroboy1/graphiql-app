@@ -33,15 +33,9 @@
 }
 
 .h4 {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
   line-height: 130%;
-  @include media('xxl') {
-    font-size: 18px;
-  }
-  @include media('s') {
-    font-size: 16px;
-  }
 }
 
 .text {
