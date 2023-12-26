@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { LANGUAGES } from '../../constants';
 import { useLocalization } from '../../contexts/locale.context';
 
 const LanguageButton: React.FC = () => {
-  const [currentLanguageIndex, setCurrentLanguageIndex] = useState<number>(0);
-  const { setLanguage } = useLocalization();
+  const { language, setLanguage } = useLocalization();
+
+  const currentLanguage = LANGUAGES.filter((el) => el.code === language)[0];
 
   const toggleLanguage = () => {
-    setCurrentLanguageIndex((currentLanguageIndex + 1) % LANGUAGES.length);
-    setLanguage(LANGUAGES[currentLanguageIndex].code);
+    const nextLanguageId = (currentLanguage.id + 1) % LANGUAGES.length;
+    const nextLanguage = LANGUAGES.filter((el) => el.id === nextLanguageId)[0];
+    setLanguage(nextLanguage.code);
   };
 
   return (
@@ -18,12 +20,8 @@ const LanguageButton: React.FC = () => {
         onClick={toggleLanguage}
         title="Change language"
       >
-        <span className="big-screen">
-          {LANGUAGES[currentLanguageIndex].label}
-        </span>
-        <span className="small-screen">
-          {LANGUAGES[currentLanguageIndex].abbr}
-        </span>
+        <span className="big-screen">{currentLanguage.label}</span>
+        <span className="small-screen">{currentLanguage.abbr}</span>
       </button>
     </div>
   );

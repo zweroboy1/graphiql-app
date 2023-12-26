@@ -37,5 +37,6 @@
   "VariablesDescription": "GraphQL Playgrounds support environment variables, allowing you to parameterize your queries and mutations. This is useful for testing different scenarios without modifying your queries directly.",
   "ExampleWithVariables": "Example with variables:",
   "ExampleWithVariablesCode": "query($id: ID!) {\n  user(id: $id) {\n    name\n    id\n  }\n}",
-  "VariablesCode": "{\n  \"id\": 1\n}"
+  "VariablesCode": "{\n  \"id\": 1\n}",
+  "Docs": "Documentation"
 }
