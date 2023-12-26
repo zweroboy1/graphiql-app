@@ -35,13 +35,13 @@ export const TypeLink: React.FC<TypeButtonProps> = ({ type, onClick }) => {
   };
 
   return (
-    <a
-      href="#"
+    <span
+      className="docs__link"
       onClick={() => {
         handleClick();
       }}
     >
       {renderType(type)}
-    </a>
+    </span>
   );
 };
