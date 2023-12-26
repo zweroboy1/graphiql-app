@@ -37,5 +37,6 @@
   "VariablesDescription": "GraphQL Playground поддерживает переменные среды, что позволяет вам параметризовать ваши запросы и мутации. Это полезно для тестирования различных сценариев без непосредственного изменения ваших запросов.",
   "ExampleWithVariables": "Пример с переменными:",
   "ExampleWithVariablesCode": "query($id: ID!) {\n  user(id: $id) {\n    name\n    id\n  }\n}",
-  "VariablesCode": "{\n  \"id\": 1\n}"
+  "VariablesCode": "{\n  \"id\": 1\n}",
+  "Docs": "Документация"
 }
