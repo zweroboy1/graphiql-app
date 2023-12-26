@@ -34,7 +34,7 @@ export const schemasApi = createApi({
       },
     }),
     fetchGraphQlResponse: builder.mutation<
-      void,
+      unknown,
       { query: string; url: string }
     >({
       query: ({ query, url }) => {
