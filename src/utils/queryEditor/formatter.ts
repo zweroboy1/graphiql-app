@@ -1,6 +1,6 @@
 const TAB_TO_SPACES = 3;
 
-const addEnter = (value: string): string => {
+export const addEnter = (value: string): string => {
   let result = value.replace(/\w+[\s\w]+\w+/g, (match) => {
     return match.replace(/\s/g, '\n');
   });
@@ -8,21 +8,22 @@ const addEnter = (value: string): string => {
   return result.replace(/{/g, ' {\n');
 };
 
-const checkSpaces = (value: string): string => {
-  return value.replace(/ {2,}/g, ' ').replace(/\[\s+{/g, '[\n{');
+
+export const checkSpaces = (value: string): string => {
+  return value.replace(/ {2,}/g, ' ').replace(/\[\s+{/g, '[{');
 };
 
-const fixEnter = (value: string): string => {
-  return value.replace(/\n+\s*\n+/g, '\n').replace(/[)\w:]\s+{/g, (match) => {
+export const fixEnter = (value: string): string => {
+  return value.replace(/\n+\t*\n+/g, '\n').replace(/[)\w:]\s+{/g, (match) => {
     return match.replace(/\s+{/g, ' {');
   });
 };
 
-const checkEnter = (value: string): string => {
+export const checkEnter = (value: string): string => {
   return value.replace(/\s+{/, ' {').replace(/}\s+,/g, '},\n');
 };
 
-const checkTab = (value: string): string => {
+export const checkTab = (value: string): string => {
   let tabCount = 0;
   let result = value[0];
   for (let i = 1; i < value.length; i += 1) {
@@ -49,7 +50,7 @@ const checkTab = (value: string): string => {
   return result;
 };
 
-const checkFilter = (value: string): string => {
+export const checkFilter = (value: string): string => {
   return value
     .replace(/\s+\(\s+/g, ' (')
     .replace(/\s+\)\s+/g, ') ')
