@@ -18,9 +18,13 @@ const historySlice = createSlice({
     removeFromHistory: (state) => {
       state.history.pop();
     },
+    clearAllHistory: (state) => {
+      state.history = [];
+    },
   },
 });
 
-export const { addToHistory, removeFromHistory } = historySlice.actions;
+export const { addToHistory, removeFromHistory, clearAllHistory } =
+  historySlice.actions;
 
 export const historyReducer = historySlice.reducer;

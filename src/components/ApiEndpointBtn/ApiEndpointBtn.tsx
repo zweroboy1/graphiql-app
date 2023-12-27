@@ -9,6 +9,8 @@ import { useFetchGraphQlSchemaMutation } from '../../store/api/api';
 import { TextField } from '../../components/inputs/TextField';
 import { urlSchema } from '../../schemas';
 import { getErrorText } from '../../utils/getErrorText';
+import { clearAllHistory } from '../../store/slices/history.slice';
+import { setActiveType } from '../../store/slices/activeTypeSlice';
 
 export const ApiEndpointBtn: React.FC = () => {
   const {
@@ -44,6 +46,8 @@ export const ApiEndpointBtn: React.FC = () => {
       className: 'toast-success',
     });
     dispatch(setApiEndpointSlice(data.endpoint));
+    dispatch(clearAllHistory());
+    dispatch(setActiveType('Query'));
   };
 
   useEffect(() => {
