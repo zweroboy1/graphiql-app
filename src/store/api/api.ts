@@ -35,13 +35,13 @@ export const schemasApi = createApi({
     }),
     fetchGraphQlResponse: builder.mutation<
       unknown,
-      { query: string; url: string }
+      { query: string; url: string; variables?: string }
     >({
-      query: ({ query, url }) => {
+      query: ({ query, url, variables }) => {
         return {
           url: url,
           method: 'POST',
-          body: JSON.stringify({ query }),
+          body: JSON.stringify({ query, variables }),
           headers: {
             'Content-Type': 'application/json',
           },

@@ -7,6 +7,7 @@ import { historyReducer } from './slices/history.slice';
 import { ApiEndpointReducer } from './slices/apiEndpoint.slice';
 import { editorReducer } from './slices/editorSlice';
 import { viewerReducer } from './slices/viewerSlice';
+import { queryFieldsReducer } from './slices/queryFields.slice';
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
     apiEndpoint: ApiEndpointReducer,
     editor: editorReducer,
     viewer: viewerReducer,
+    queryFields: queryFieldsReducer,
     [schemasApi.reducerPath]: schemasApi.reducer,
   },
   middleware: (getDefaultMiddlware) =>

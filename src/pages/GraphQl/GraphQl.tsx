@@ -15,6 +15,7 @@ export const GraphQl: React.FC = () => {
   const dispatch = useDispatch();
   const editorValue = useSelector((state: RootState) => state.editor.value);
   const apiEndpoint = useSelector((state: RootState) => state.apiEndpoint.api);
+  const vars = useSelector((state: RootState) => state.queryFields.variables);
 
   const [fetchResponse /* , { isLoading } */] =
     useFetchGraphQlResponseMutation();
@@ -31,6 +32,7 @@ export const GraphQl: React.FC = () => {
     await fetchResponse({
       query: editorValue,
       url: apiEndpoint,
+      variables: JSON.parse(vars),
     })
       .unwrap()
       .then((payload) => {

@@ -1,30 +1,36 @@
 import { Editor } from '@monaco-editor/react';
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setHeaders, setVariables } from '../../store/slices/queryFields.slice';
+import { RootState } from '../../store/store';
 
 export const QueryFields: React.FC = () => {
   const [inputValue, setInputValue] = useState<string | null>('');
-  const [vars, setVars] = useState<string>('');
-  const [head, setHead] = useState<string>('');
+  const headers = useSelector((state: RootState) => state.queryFields.headers);
+  const variables = useSelector(
+    (state: RootState) => state.queryFields.variables
+  );
+  const dispatch = useDispatch();
 
-  const params = inputValue === 'Variables' ? vars : head;
+  const queryParams = inputValue === 'Variables' ? variables : headers;
 
   const handleInputChange = (e: React.MouseEvent<HTMLElement>) => {
-    // console.log(e.currentTarget.textContent);
     setInputValue(e.currentTarget.textContent);
   };
 
-  const handleQuery = (value: string | undefined) => {
-    console.log(value);
+  const handleQueryFields = (value: string | undefined) => {
     if (value) {
-      inputValue === 'Variables' ? setVars(value) : setHead(value);
+      inputValue === 'Variables'
+        ? dispatch(setVariables(value))
+        : dispatch(setHeaders(value));
     }
   };
 
   return (
     <div>
       <div>
-        <button onClick={handleInputChange}>{'Variables'}</button>
-        <button onClick={handleInputChange}>{'Headers'}</button>
+        <button onClick={handleInputChange}>Variables</button>
+        <button onClick={handleInputChange}>Headers</button>
         <div>
           <Editor
             height="120px"
@@ -39,8 +45,8 @@ export const QueryFields: React.FC = () => {
               overviewRulerLanes: 0,
               overviewRulerBorder: false,
             }}
-            onChange={handleQuery}
-            value={params}
+            onChange={handleQueryFields}
+            value={queryParams}
           />
         </div>
       </div>
