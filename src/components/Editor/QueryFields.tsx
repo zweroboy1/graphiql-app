@@ -7,12 +7,10 @@ import { RootState } from '../../store/store';
 export const QueryFields: React.FC = () => {
   const [inputValue, setInputValue] = useState<string | null>('');
   const headers = useSelector((state: RootState) => state.queryFields.headers);
-  const variables = useSelector(
-    (state: RootState) => state.queryFields.variables
-  );
+  const vars = useSelector((state: RootState) => state.queryFields.variables);
   const dispatch = useDispatch();
 
-  const queryParams = inputValue === 'Variables' ? variables : headers;
+  const queryParams = inputValue === 'Variables' ? vars : headers;
 
   const handleInputChange = (e: React.MouseEvent<HTMLElement>) => {
     setInputValue(e.currentTarget.textContent);

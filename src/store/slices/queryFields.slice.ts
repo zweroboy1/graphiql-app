@@ -1,8 +1,8 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 type queryFields = {
-  variables: string;
-  headers: string;
+  variables?: string;
+  headers?: string;
 };
 
 const initialState: queryFields = {
