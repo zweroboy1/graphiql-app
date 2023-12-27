@@ -9,6 +9,7 @@ import { TypeDetails } from './TypeDetails';
 import { setActiveType } from '../../store/slices/activeTypeSlice';
 import { GoBackBtn } from './GoBackBtn/GoBackBtn';
 import { removeFromHistory } from '../../store/slices/history.slice';
+import { GoDotFill } from 'react-icons/go';
 
 export const SchemasArgs: React.FC = () => {
   const apiUrl = useSelector((state: RootState) => state.apiEndpoint.api);
@@ -48,6 +49,10 @@ export const SchemasArgs: React.FC = () => {
       {history.length !== 0 && (
         <GoBackBtn callback={handleButtonClick} prev={prevType} />
       )}
+      <div className="docs__title">
+        <GoDotFill />
+        {activeType}
+      </div>
       {Array.isArray(field)
         ? field.map((el) => (
             <div key={el.name}>
