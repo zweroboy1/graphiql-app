@@ -5,7 +5,7 @@ import { useLocalization } from '../../contexts/locale.context';
 interface DocumentationProps {
   isOpen: boolean;
 }
-const Documentation: React.FC<DocumentationProps> = ({ isOpen }) => {
+export const Documentation: React.FC<DocumentationProps> = ({ isOpen }) => {
   const { t } = useLocalization();
   return (
     <div className="playground__docs-container">
@@ -18,5 +18,3 @@ const Documentation: React.FC<DocumentationProps> = ({ isOpen }) => {
     </div>
   );
 };
-
-export default Documentation;
