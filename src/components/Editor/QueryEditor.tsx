@@ -25,7 +25,7 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
   );
 
   const handleChange = (inputValue: string | undefined) => {
-    if (inputValue) {
+    if (inputValue !== undefined) {
       setValue(inputValue);
     }
   };
