@@ -14,6 +14,12 @@
     translate: calc(-100%);
   }
 
+  &__title {
+    display: flex;
+    font-size: 20px;
+    padding: 10px 0;
+  }
+
   &__content {
     height: 420px;
     line-height: 1.3em;
