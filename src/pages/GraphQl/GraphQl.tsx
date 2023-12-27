@@ -1,8 +1,7 @@
-import React, { useCallback, useState } from 'react';
+import React, { lazy, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { ApiEndpointBtn } from '../../components/ApiEndpointBtn/ApiEndpointBtn';
-import { Documentation } from '../../components/Documentation/Documentation';
 import { QueryEditor } from '../../components/Editor/QueryEditor';
 import { useFetchGraphQlResponseMutation } from '../../store/api/api';
 import { setEditorValue } from '../../store/slices/editorSlice';
@@ -12,16 +11,18 @@ import { QueryFields } from '../../components/Editor/QueryFields';
 import { toast } from 'react-toastify';
 import { setHeaders, setVariables } from '../../store/slices/queryFields.slice';
 
+const Documentation = lazy(
+  () => import('../../components/Documentation/Documentation')
+);
+
 export const GraphQl: React.FC = () => {
   const [docsOpen, setDocsOpen] = useState(false);
   const editorValue = useSelector((state: RootState) => state.editor.value);
   const apiEndpoint = useSelector((state: RootState) => state.apiEndpoint.api);
   const vars = useSelector((state: RootState) => state.queryFields.variables);
   const headers = useSelector((state: RootState) => state.queryFields.headers);
+  const [fetchResponse] = useFetchGraphQlResponseMutation();
   const dispatch = useDispatch();
-
-  const [fetchResponse /* , { isLoading } */] =
-    useFetchGraphQlResponseMutation();
 
   const toggleMenu = useCallback(async () => {
     setDocsOpen(!docsOpen);
@@ -60,12 +61,10 @@ export const GraphQl: React.FC = () => {
   };
 
   const handleReset = () => {
-    dispatch(
-      setEditorValue(''),
-      setHeaders(''),
-      setViewerValue(''),
-      setVariables('')
-    );
+    dispatch(setViewerValue(''));
+    dispatch(setHeaders(''));
+    dispatch(setEditorValue(''));
+    dispatch(setVariables(''));
     if (docsOpen) {
       toggleMenu();
     }
