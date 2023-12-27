@@ -1,4 +1,4 @@
-import React, { lazy, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { ApiEndpointBtn } from '../../components/ApiEndpointBtn/ApiEndpointBtn';
@@ -10,10 +10,7 @@ import { formatter } from '../../utils/queryEditor';
 import { QueryFields } from '../../components/Editor/QueryFields';
 import { toast } from 'react-toastify';
 import { setHeaders, setVariables } from '../../store/slices/queryFields.slice';
-
-const Documentation = lazy(
-  () => import('../../components/Documentation/Documentation')
-);
+import { Documentation } from '../../components/Documentation/Documentation';
 
 export const GraphQl: React.FC = () => {
   const [docsOpen, setDocsOpen] = useState(false);
