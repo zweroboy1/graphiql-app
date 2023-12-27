@@ -2,6 +2,13 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { getIntrospectionQuery } from 'graphql';
 import { RootObject } from '../../types/types';
 
+type RequestParams = {
+  query: string;
+  url: string;
+  variables?: string;
+  headers?: Record<string, string>;
+};
+
 export const schemasApi = createApi({
   reducerPath: 'schemasApi',
   baseQuery: fetchBaseQuery({
@@ -33,17 +40,15 @@ export const schemasApi = createApi({
         };
       },
     }),
-    fetchGraphQlResponse: builder.mutation<
-      unknown,
-      { query: string; url: string; variables?: string }
-    >({
-      query: ({ query, url, variables }) => {
+    fetchGraphQlResponse: builder.mutation<unknown, RequestParams>({
+      query: ({ query, url, variables, headers }) => {
         return {
           url: url,
           method: 'POST',
-          body: JSON.stringify({ query, variables }),
+          body: JSON.stringify({ query, variables, headers }),
           headers: {
             'Content-Type': 'application/json',
+            ...headers,
           },
         };
       },

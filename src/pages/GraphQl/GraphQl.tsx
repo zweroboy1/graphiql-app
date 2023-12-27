@@ -9,13 +9,16 @@ import { setEditorValue } from '../../store/slices/editorSlice';
 import { setViewerValue } from '../../store/slices/viewerSlice';
 import { formatter } from '../../utils/queryEditor';
 import { QueryFields } from '../../components/Editor/QueryFields';
+import { toast } from 'react-toastify';
+import { setHeaders, setVariables } from '../../store/slices/queryFields.slice';
 
 export const GraphQl: React.FC = () => {
   const [docsOpen, setDocsOpen] = useState(false);
-  const dispatch = useDispatch();
   const editorValue = useSelector((state: RootState) => state.editor.value);
   const apiEndpoint = useSelector((state: RootState) => state.apiEndpoint.api);
   const vars = useSelector((state: RootState) => state.queryFields.variables);
+  const headers = useSelector((state: RootState) => state.queryFields.headers);
+  const dispatch = useDispatch();
 
   const [fetchResponse /* , { isLoading } */] =
     useFetchGraphQlResponseMutation();
@@ -29,26 +32,40 @@ export const GraphQl: React.FC = () => {
       toggleMenu();
     }
 
-    await fetchResponse({
-      query: editorValue,
-      url: apiEndpoint,
-      variables: JSON.parse(vars),
-    })
-      .unwrap()
-      .then((payload) => {
-        // const jsonCode = formatter(JSON.stringify(payload)).trim();
-        const jsonCode = JSON.stringify(payload, null, 3).trim();
-        dispatch(setViewerValue(jsonCode));
+    try {
+      const parsedVars = vars && JSON.parse(vars);
+      const parsedHeaders = headers && JSON.parse(headers);
+
+      await fetchResponse({
+        query: editorValue,
+        url: apiEndpoint,
+        variables: parsedVars,
+        headers: parsedHeaders,
       })
-      .catch((error) => {
-        const jsonCode = JSON.stringify(error, null, 3).trim();
-        dispatch(setViewerValue(jsonCode));
+        .unwrap()
+        .then((payload) => {
+          const jsonCode = JSON.stringify(payload, null, 3).trim();
+          dispatch(setViewerValue(jsonCode));
+        })
+        .catch((error) => {
+          const jsonCode = JSON.stringify(error, null, 3).trim();
+          dispatch(setViewerValue(jsonCode));
+        });
+    } catch (error) {
+      const errorCode = error instanceof Error ? error.message : null;
+      toast.error(errorCode, {
+        className: 'toast-error',
       });
+    }
   };
 
   const handleReset = () => {
-    dispatch(setEditorValue(''));
-    dispatch(setViewerValue(''));
+    dispatch(
+      setEditorValue(''),
+      setHeaders(''),
+      setViewerValue(''),
+      setVariables('')
+    );
     if (docsOpen) {
       toggleMenu();
     }
