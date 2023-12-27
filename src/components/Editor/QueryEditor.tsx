@@ -4,7 +4,6 @@ import { RootState } from '../../store/store';
 import { setEditorValue } from '../../store/slices/editorSlice';
 import { setViewerValue } from '../../store/slices/viewerSlice';
 import Editor from '@monaco-editor/react';
-// import { QueryFields } from './QueryFields';
 
 type QueryEditorProps = {
   mode: 'editor' | 'viewer';
@@ -26,60 +25,37 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
   );
 
   const handleChange = (inputValue: string | undefined) => {
-    if (inputValue !== undefined) {
+    if (inputValue) {
       setValue(inputValue);
     }
   };
 
-  // const [variablesOpen, setVariablesOpen] = useState(false);
-  // const [headersOpen, setHeadersOpen] = useState(false);
-
-  // const toggleVariables = () => {
-  //   setVariablesOpen(true);
-  //   setHeadersOpen(false);
-  // };
-
-  // const toggleHeaders = () => {
-  //   setHeadersOpen(true);
-  //   setVariablesOpen(false);
-  // };
-
   return (
     <>
-    <div className="playground__monaco">
-      <h4 className="h4 playground__title">
-        {mode === 'editor' ? 'Request' : 'Response'}
-      </h4>
-      <Editor
-        className="playground__part"
-        height="420px"
-        theme="vs"
-        language={mode === 'editor' ? 'graphql' : 'json'}
-        options={{
-          minimap: { enabled: false },
-          contextmenu: false,
-          quickSuggestions: false,
-          selectionHighlight: false,
-          renderLineHighlight: 'none',
-          hideCursorInOverviewRuler: true,
-          overviewRulerLanes: 0,
-          overviewRulerBorder: false,
-          readOnly: mode !== 'editor',
-        }}
-        onChange={handleChange}
-        value={value}
-      />
-    </div>
-    {/* <div>
-    {mode === 'editor' && (
-        <div>
-      <button onClick={toggleVariables}>{'Variables'}</button>
-      <button onClick={toggleHeaders}>{'Headers'}</button>
-          {variablesOpen && <QueryFields type="vars" />}
-          {headersOpen && <QueryFields type="headers" />}
-        </div>
-      )}
-    </div> */}
+      <div className="playground__monaco">
+        <h4 className="h4 playground__title">
+          {mode === 'editor' ? 'Request' : 'Response'}
+        </h4>
+        <Editor
+          className="playground__part"
+          height="420px"
+          theme="vs"
+          language={mode === 'editor' ? 'graphql' : 'json'}
+          options={{
+            minimap: { enabled: false },
+            contextmenu: false,
+            quickSuggestions: false,
+            selectionHighlight: false,
+            renderLineHighlight: 'none',
+            hideCursorInOverviewRuler: true,
+            overviewRulerLanes: 0,
+            overviewRulerBorder: false,
+            readOnly: mode !== 'editor',
+          }}
+          onChange={handleChange}
+          value={value}
+        />
+      </div>
     </>
   );
 };

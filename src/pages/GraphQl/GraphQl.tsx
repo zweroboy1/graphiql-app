@@ -8,7 +8,7 @@ import { useFetchGraphQlResponseMutation } from '../../store/api/api';
 import { setEditorValue } from '../../store/slices/editorSlice';
 import { setViewerValue } from '../../store/slices/viewerSlice';
 import { formatter } from '../../utils/queryEditor';
-import { VarsHeadersMenu } from '../../components/Editor/Vars&HeadersMenu';
+import { QueryFields } from '../../components/Editor/QueryFields';
 
 export const GraphQl: React.FC = () => {
   const [docsOpen, setDocsOpen] = useState(false);
@@ -67,8 +67,10 @@ export const GraphQl: React.FC = () => {
       <ApiEndpointBtn />
       <div className="playground__content">
         <div className="playground__editor">
-          <QueryEditor key="editor" mode="editor" />
-          <VarsHeadersMenu />
+          <div>
+            <QueryEditor key="editor" mode="editor" />
+            <QueryFields />
+          </div>
         </div>
         <div className="playground__tools">
           <button
