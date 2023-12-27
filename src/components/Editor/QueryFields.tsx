@@ -17,7 +17,7 @@ export const QueryFields: React.FC = () => {
   };
 
   const handleQueryFields = (value: string | undefined) => {
-    if (value) {
+    if (value !== undefined) {
       inputValue === 'Variables'
         ? dispatch(setVariables(value))
         : dispatch(setHeaders(value));
@@ -44,7 +44,7 @@ export const QueryFields: React.FC = () => {
               overviewRulerBorder: false,
             }}
             onChange={handleQueryFields}
-            value={queryParams}
+            value={queryParams ?? ''}
           />
         </div>
       </div>
