@@ -5,7 +5,7 @@ import { RootObject } from '../../types/types';
 type RequestParams = {
   query: string;
   url: string;
-  variables?: string;
+  variables?: Record<string, string>;
   headers?: Record<string, string>;
 };
 
@@ -28,18 +28,6 @@ export const schemasApi = createApi({
       },
     }),
 
-    fetchGraphQlSchema: builder.mutation<void, string>({
-      query: (url) => {
-        return {
-          url,
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ query: getIntrospectionQuery() }),
-        };
-      },
-    }),
     fetchGraphQlResponse: builder.mutation<unknown, RequestParams>({
       query: ({ query, url, variables, headers }) => {
         return {
@@ -56,8 +44,5 @@ export const schemasApi = createApi({
   }),
 });
 
-export const {
-  useGetGraphQlSchemaQuery,
-  useFetchGraphQlSchemaMutation,
-  useFetchGraphQlResponseMutation,
-} = schemasApi;
+export const { useGetGraphQlSchemaQuery, useFetchGraphQlResponseMutation } =
+  schemasApi;
