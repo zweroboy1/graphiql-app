@@ -7,11 +7,11 @@ const addEnter = (value: string): string => {
 };
 
 const checkSpaces = (value: string): string => {
-  return value.replace(/ {2,}/g, ' ').replace(/\[ {/g, '[{');
+  return value.replace(/ {2,}/g, ' ').replace(/\[\s+{/g, '[\n{');
 };
 
 const fixEnter = (value: string): string => {
-  return value.replace(/\n+\t*\n+/g, '\n').replace(/[)\w:]\s+{/g, (match) => {
+  return value.replace(/\n+\s*\n+/g, '\n').replace(/[)\w:]\s+{/g, (match) => {
     return match.replace(/\s+{/g, ' {');
   });
 };
