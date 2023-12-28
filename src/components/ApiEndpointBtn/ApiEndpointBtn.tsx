@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -9,6 +9,7 @@ import { urlSchema } from '../../schemas';
 import { clearAllHistory } from '../../store/slices/history.slice';
 import { setActiveType } from '../../store/slices/activeTypeSlice';
 import { RootState } from '../../store/store';
+import { useGetGraphQlSchemaQuery } from '../../store/api/api';
 
 export const ApiEndpointBtn: React.FC = () => {
   const {
@@ -16,8 +17,10 @@ export const ApiEndpointBtn: React.FC = () => {
     formState: { errors, isValid },
     handleSubmit,
   } = useForm({ mode: 'onChange', resolver: yupResolver(urlSchema) });
-  const [buttonDisabled] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
   const apiUrl = useSelector((state: RootState) => state.apiEndpoint.api);
+  const { isFetching } = useGetGraphQlSchemaQuery(apiUrl);
+
   const dispatch = useDispatch();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -35,6 +38,14 @@ export const ApiEndpointBtn: React.FC = () => {
     dispatch(setActiveType('Query'));
   };
 
+  useEffect(() => {
+    toast.onChange((v) => {
+      if (v.status === 'removed') {
+        setButtonDisabled(false);
+      }
+    });
+  }, []);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="playground__header">
@@ -50,8 +61,8 @@ export const ApiEndpointBtn: React.FC = () => {
         />
         <div className="playground__button-container">
           <button
-            className={'button'}
-            disabled={!isValid || buttonDisabled}
+            className={isFetching ? 'button button_loading' : 'button'}
+            disabled={!isValid || isFetching || buttonDisabled}
             type="submit"
             role="submit"
           >
