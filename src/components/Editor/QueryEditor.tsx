@@ -38,7 +38,7 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
         </h4>
         <Editor
           className="playground__part"
-          height="420px"
+          height={mode === 'editor' ? 'calc(50vh - 44px)' : '50vh'}
           theme="vs"
           language={mode === 'editor' ? 'graphql' : 'json'}
           options={{

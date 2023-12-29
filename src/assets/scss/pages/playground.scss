@@ -80,6 +80,7 @@
   &__content {
     display: flex;
     align-items: flex-start;
+    height: 100%;
 
     @include media('l') {
       flex-direction: column;
@@ -87,9 +88,12 @@
   }
 
   &__title {
-    display: block;
-    padding: 12px 0 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
     color: $dark-grey-color;
+    background-color: $medium-blue-color;
     text-align: center;
   }
 
@@ -100,7 +104,7 @@
     gap: 4px;
     padding: 8px;
     color: $dark-grey-color;
-    background-color: $white-color;
+    background-color: $ligth-blue-color;
     border: 1px solid $grey-border-color;
     border-bottom: 0;
     @include media('s') {
@@ -126,7 +130,7 @@
   }
 
   &__part {
-    height: 420px;
+    height: 100%;
     width: 100%;
     border-top: 1px solid $grey-border-color;
   }
@@ -142,13 +146,22 @@
     }
   }
 
+  &__editor {
+    display: flex;
+    flex-direction: column;
+    height: calc(50vh + 52px);
+    overflow: hidden;
+  }
+
   &__viewer {
+    align-self: stretch;
     position: relative;
     overflow: hidden;
   }
 
   &__monaco {
     position: relative;
+    height: 100%;
     z-index: 1;
   }
 
@@ -182,6 +195,73 @@
     height: 100%;
     z-index: 5;
   }
+
+  &__variables {
+    &-container {
+      border-top: 1px solid $grey-border-color;
+      background-color: $medium-blue-color;
+    }
+
+    &-monaco {
+      width: calc(50vw - 90px) !important;
+      max-width: 640px !important;
+      @include media('l') {
+        max-width: initial !important;
+        width: 100% !important;
+      }
+    }
+
+    &-buttons {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px;
+    }
+
+    &-left {
+      display: flex;
+      gap: 12px;
+    }
+    &-editor {
+      display: grid;
+      grid-template-rows: 0fr;
+      overflow: hidden;
+
+      width: calc(50vw - 90px);
+      @include media('l') {
+        width: 100%;
+      }
+
+      & section {
+        width: inherit;
+        transition: all 0.3s ease;
+      }
+    }
+  }
+}
+
+.playground__variables-container.open .playground__variables-editor {
+  grid-template-rows: 1fr;
+  border-top: 1px solid $grey-border-color;
+  & section {
+    height: 120px !important;
+  }
+}
+
+.playground__editor .playground__monaco section {
+  transition: height 0.3s ease;
+}
+
+.playground__editor:has(.open) .playground__monaco section {
+  height: calc(50vh - 165px) !important;
+}
+
+.playground__variables-container.open .button_tool-arrow::after {
+  rotate: 0deg;
+}
+
+.playground__variables-container.open .button_micro_active {
+  background-color: $primary-hover-color;
+  color: $white-color;
 }
 
 .margin-view-overlays {

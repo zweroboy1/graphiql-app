@@ -23,6 +23,15 @@
     font-size: 14px;
   }
 
+  &_micro {
+    padding: 4px 8px;
+    font-size: 14px;
+    width: 90px;
+    height: fit-content;
+    color: $dark-grey-color;
+    background-color: $ligth-blue-color;
+  }
+
   &_tool {
     border-radius: 5px;
     padding: 0;
@@ -70,6 +79,19 @@
     }
   }
 
+  &_tool-arrow {
+    width: 24px;
+    height: 24px;
+    &::after {
+      width: 16px;
+      height: 16px;
+      background-size: 16px 16px;
+      background-image: url(/src/assets/svg/Arrow.svg);
+      rotate: 180deg;
+      transition: rotate 0.3s ease;
+    }
+  }
+
   @include media('s') {
     &_image {
       font-size: 0;
@@ -109,7 +131,7 @@
     background-color: $primary-hover-color;
   }
 
-  &:focus {
+  &:focus-visible {
     outline: 2px solid $outline-stroke-color;
   }
 
