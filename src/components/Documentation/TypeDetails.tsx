@@ -21,11 +21,13 @@ export const TypeDetails: React.FC<TypeDetailsProps> = ({ el }) => {
   return (
     <div>
       <div key={el.name}>
-        {el.name}
-        {el.args && el.args.length > 0 && <span>( </span>}
+        <strong className="docs__subtitle">{el.name}</strong>
+        {el.args && el.args.length > 0 && (
+          <span className="docs__parenthesis"> (</span>
+        )}
         {el.args &&
           el.args.map((arg, idx) => (
-            <span key={arg.name}>
+            <span key={arg.name} className="docs__param">
               {arg.name}:{' '}
               <TypeLink
                 type={arg.type}
@@ -34,8 +36,10 @@ export const TypeDetails: React.FC<TypeDetailsProps> = ({ el }) => {
               {idx < el.args.length - 1 && ', '}
             </span>
           ))}
-        {el.args && el.args.length > 0 && <span>)</span>}
-        {' : '}
+        {el.args && el.args.length > 0 && (
+          <span className="docs__parenthesis">)</span>
+        )}
+        {': '}
         {el.type && (
           <>
             <TypeLink type={el.type} onClick={() => historyUpdate(el.name)} />

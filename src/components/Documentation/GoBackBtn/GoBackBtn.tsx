@@ -10,6 +10,6 @@ export const GoBackBtn: React.FC<GoBackButtonProps> = ({ callback, prev }) => {
     <button
       className="button button_small"
       onClick={callback}
-    >{`<-- ${prev}`}</button>
+    >{`back to ${prev}`}</button>
   );
 };

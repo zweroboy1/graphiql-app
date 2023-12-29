@@ -1,4 +1,6 @@
 .docs {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+    'Lucida Sans', Arial, sans-serif;
   box-sizing: content-box;
   display: block;
   background-color: $ligth-blue-color;
@@ -14,15 +16,33 @@
     translate: calc(-100%);
   }
 
+  &__header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
   &__title {
     display: flex;
+    color: #863b00;
     font-size: 20px;
-    padding: 10px 0;
+    margin-bottom: 8px;
+  }
+
+  &__parenthesis {
+    color: #319331;
+  }
+  &__param {
+    color: #863b00;
+  }
+
+  &__subtitle {
+    font-weight: bold;
   }
 
   &__content {
     height: 50vh;
-    line-height: 1.3em;
+    line-height: 1.4em;
     padding: 15px;
     border-width: 1px 0 0;
     border-style: solid;
@@ -36,7 +56,7 @@
     & div div div div {
       font-weight: normal;
       margin-left: 16px;
-      margin-bottom: 4px;
+      margin-bottom: 8px;
     }
 
     & .button {
