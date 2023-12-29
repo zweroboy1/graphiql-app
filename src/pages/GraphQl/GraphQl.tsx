@@ -80,6 +80,18 @@ export const GraphQl: React.FC = () => {
   return (
     <div className="playground">
       <ApiEndpointBtn />
+      <div className="playground__current-container">
+        <div className="playground__current">
+          <span className="playground__current-title">Current endpoint:</span>
+          <a
+            className="playground__current-url"
+            href={apiEndpoint}
+            target="_blank"
+          >
+            {apiEndpoint}
+          </a>
+        </div>
+      </div>
       <div className="playground__content">
         <div className="playground__editor">
           <div>
