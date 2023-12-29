@@ -1,6 +1,4 @@
 .docs {
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
-    'Lucida Sans', Arial, sans-serif;
   box-sizing: content-box;
   display: block;
   background-color: $ligth-blue-color;
@@ -41,6 +39,8 @@
   }
 
   &__content {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
+      'Lucida Sans', Arial, sans-serif;
     height: 50vh;
     line-height: 1.4em;
     padding: 15px;
