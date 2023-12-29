@@ -132,6 +132,7 @@
       background-image: url(/src/assets/svg/loader.svg);
       background-repeat: no-repeat;
       animation: spin 1s linear infinite;
+      z-index: 3;
     }
     & span {
       visibility: hidden;
