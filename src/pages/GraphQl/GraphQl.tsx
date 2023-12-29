@@ -14,6 +14,7 @@ import { Documentation } from '../../components/Documentation/Documentation';
 
 export const GraphQl: React.FC = () => {
   const [docsOpen, setDocsOpen] = useState(false);
+  const [isRequestLoading, setRequestLoading] = useState(false);
   const editorValue = useSelector((state: RootState) => state.editor.value);
   const apiEndpoint = useSelector((state: RootState) => state.apiEndpoint.api);
   const vars = useSelector((state: RootState) => state.queryFields.variables);
@@ -33,7 +34,7 @@ export const GraphQl: React.FC = () => {
     try {
       const parsedVars = vars && JSON.parse(vars);
       const parsedHeaders = headers && JSON.parse(headers);
-
+      setRequestLoading(true);
       await fetchResponse({
         query: editorValue,
         url: apiEndpoint,
@@ -48,6 +49,9 @@ export const GraphQl: React.FC = () => {
         .catch((error) => {
           const jsonCode = JSON.stringify(error, null, 3).trim();
           dispatch(setViewerValue(jsonCode));
+        })
+        .finally(() => {
+          setRequestLoading(false);
         });
     } catch (error) {
       const errorCode = error instanceof Error ? error.message : null;
@@ -102,22 +106,28 @@ export const GraphQl: React.FC = () => {
         <div className="playground__tools">
           <button
             className="button button_tool button_tool-docs"
+            disabled={apiEndpoint === ''}
             title="Show API documentation"
             onClick={toggleMenu}
           ></button>
           <button
             className="button button_tool button_tool-reset"
             title="Reset query"
+            disabled={editorValue === ''}
             onClick={handleReset}
           ></button>
           <button
             className="button button_tool button_tool-format"
             title="Prettify query"
+            disabled={editorValue === ''}
             onClick={handlePrettify}
           ></button>
           <button
-            className="button button_tool button_tool-play"
+            className={`button button_tool button_tool-play${
+              isRequestLoading ? ' button_loading' : ''
+            }`}
             title="Execute query"
+            disabled={editorValue === '' || isRequestLoading}
             onClick={executeQuery}
           ></button>
         </div>
