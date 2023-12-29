@@ -98,10 +98,8 @@ export const GraphQl: React.FC = () => {
       </div>
       <div className="playground__content">
         <div className="playground__editor">
-          <div>
-            <QueryEditor key="editor" mode="editor" />
-            <QueryFields />
-          </div>
+          <QueryEditor key="editor" mode="editor" />
+          <QueryFields />
         </div>
         <div className="playground__tools">
           <button
