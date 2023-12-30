@@ -1,5 +1,5 @@
 .header {
-  position: fixed;
+  position: sticky;
   display: flex;
   flex-wrap: nowrap;
   overflow: auto;
@@ -9,7 +9,7 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 90px;
+  min-height: 90px;
   padding: 0 24px;
   background-color: $white-color;
   border-bottom: 1px solid $light-grey-color;
@@ -17,8 +17,9 @@
   z-index: 10;
 
   &-compact {
-    height: 60px;
+    min-height: 60px;
     background-color: $medium-blue-color;
+    border-color: $grey-border-color;
   }
 
   &__left {
