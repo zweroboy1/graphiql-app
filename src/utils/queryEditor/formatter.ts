@@ -1,3 +1,5 @@
+const TAB_TO_SPACES = 3;
+
 const addEnter = (value: string): string => {
   let result = value.replace(/\w+[\s\w]+\w+/g, (match) => {
     return match.replace(/\s/g, '\n');
@@ -70,5 +72,6 @@ export const formatter = (value: string): string => {
   result = checkTab(result);
   result = checkFilter(result);
   result = fixEnter(result);
+  result = result.replace(/\t/g, ' '.repeat(TAB_TO_SPACES));
   return result;
 };
