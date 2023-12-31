@@ -3,7 +3,7 @@ import { LANGUAGES } from '../../constants';
 import { useLocalization } from '../../contexts/locale.context';
 
 const LanguageButton: React.FC = () => {
-  const { language, setLanguage } = useLocalization();
+  const { t, language, setLanguage } = useLocalization();
 
   const currentLanguage = LANGUAGES.filter((el) => el.code === language)[0];
 
@@ -18,7 +18,7 @@ const LanguageButton: React.FC = () => {
       <button
         className="language__button"
         onClick={toggleLanguage}
-        title="Change language"
+        title={t.ChangeLanguage}
       >
         <span className="big-screen">{currentLanguage.label}</span>
         <span className="small-screen">{currentLanguage.abbr}</span>

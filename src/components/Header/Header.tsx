@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
-
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useLocalization } from '../../contexts/locale.context';
 import { logoutUser } from '../../services/auth';
 import { RootState } from '../../store/store';
 import { LanguageButton } from '../LanguageButton/LanguageButton';
@@ -15,6 +15,7 @@ export const Header: React.FC = () => {
   const [scrollPos, setScrollPos] = useState(0);
   const [headerStyle, setHeaderStyle] = useState('');
   const headerRef = useRef<HTMLDivElement>(null);
+  const { t } = useLocalization();
 
   const debounce = (func: VoidFunction, delay: number) => {
     let timer: NodeJS.Timeout;
@@ -37,7 +38,6 @@ export const Header: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    console.log('rerender');
     let headerHeight = 0;
     if (headerRef.current) {
       headerHeight = headerRef.current.offsetHeight;
@@ -53,7 +53,7 @@ export const Header: React.FC = () => {
     <header className={`header`}>
       <div className={`header__wrapper ${headerStyle}`} ref={headerRef}>
         <div className="header__left">
-          <Link to="/" title="Welcome page">
+          <Link to="/" title={t.WelcomePage}>
             <div className="header__logo-container">
               <Logo className="header__logo-image" />
               <span className="header__logo-text">GraphQL app</span>
@@ -63,9 +63,9 @@ export const Header: React.FC = () => {
             <Link
               className="button button_medium button_image button_image-playground"
               to="/graph-ql"
-              title="GraphQL playground"
+              title={t.GraphQlPlayground}
             >
-              Playground
+              {t.Playground}
             </Link>
           )}
         </div>
@@ -74,7 +74,7 @@ export const Header: React.FC = () => {
           <div className="header__right">
             <div
               className="header__user-container"
-              title={`Your Profile (${user.name})`}
+              title={`${t.YourProfile} (${user.name})`}
             >
               <UserSvg className="header__user-image" />
             </div>
@@ -82,10 +82,10 @@ export const Header: React.FC = () => {
               className="button button_medium button_image button_image-logout"
               to="/"
               onClick={logoutUser}
-              title="Logout"
-              aria-label="Logout"
+              title={t.Logout}
+              aria-label={t.Logout}
             >
-              Logout
+              {t.Logout}
             </Link>
           </div>
         ) : (
@@ -93,18 +93,18 @@ export const Header: React.FC = () => {
             <Link
               className="button button_medium button_image button_image-login"
               to="/login"
-              title="Login"
-              aria-label="Login"
+              title={t.Login}
+              aria-label={t.Login}
             >
-              Sign In
+              {t.SignIn}
             </Link>
             <Link
               className="button button_medium button_image button_image-register"
               to="/register"
-              title="Register"
-              aria-label="Register"
+              title={t.Register}
+              aria-label={t.Register}
             >
-              Sign Up
+              {t.SignUp}
             </Link>
           </div>
         )}
