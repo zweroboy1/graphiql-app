@@ -1,6 +1,7 @@
 import { Editor } from '@monaco-editor/react';
 import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocalization } from '../../contexts/locale.context';
 import { setHeaders, setVariables } from '../../store/slices/queryFields.slice';
 import { RootState } from '../../store/store';
 
@@ -14,6 +15,7 @@ export const QueryFields: React.FC = () => {
   const [inputType, setInputType] = useState<InputType>(InputType.Variables);
   const headers = useSelector((state: RootState) => state.queryFields.headers);
   const vars = useSelector((state: RootState) => state.queryFields.variables);
+  const { t } = useLocalization();
   const dispatch = useDispatch();
 
   const queryParams = inputType === 'Variables' ? vars : headers;
@@ -45,19 +47,19 @@ export const QueryFields: React.FC = () => {
         <div className="playground__variables-left">
           <button
             className={`button button_micro${
-              inputType === 'Variables' ? ' button_micro_active' : ''
+              inputType === InputType.Variables ? ' button_micro_active' : ''
             }`}
             onClick={() => changeTab(InputType.Variables)}
           >
-            Variables
+            {t.Variables}
           </button>
           <button
             className={`button button_micro ${
-              inputType !== 'Variables' ? ' button_micro_active' : ''
+              inputType !== InputType.Variables ? ' button_micro_active' : ''
             }`}
             onClick={() => changeTab(InputType.Headers)}
           >
-            Headers
+            {t.Headers}
           </button>
         </div>
         <div>

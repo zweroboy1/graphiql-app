@@ -1,9 +1,10 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Editor from '@monaco-editor/react';
 import { RootState } from '../../store/store';
 import { setEditorValue } from '../../store/slices/editorSlice';
 import { setViewerValue } from '../../store/slices/viewerSlice';
-import Editor from '@monaco-editor/react';
+import { useLocalization } from '../../contexts/locale.context';
 
 type QueryEditorProps = {
   mode: 'editor' | 'viewer';
@@ -11,6 +12,7 @@ type QueryEditorProps = {
 
 export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
   const dispatch = useDispatch();
+  const { t } = useLocalization();
 
   const value = useSelector((state: RootState) =>
     mode === 'editor' ? state.editor.value : state.viewer.value
@@ -34,7 +36,7 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
     <>
       <div className="playground__monaco">
         <h4 className="h4 playground__title">
-          {mode === 'editor' ? 'Request' : 'Response'}
+          {mode === 'editor' ? t.Request : t.Response}
         </h4>
         <Editor
           className="playground__part"

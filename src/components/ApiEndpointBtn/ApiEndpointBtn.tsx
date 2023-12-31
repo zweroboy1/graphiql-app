@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useLocalization } from '../../contexts/locale.context';
 import { setApiEndpointSlice } from '../../store/slices/apiEndpoint.slice';
 import { TextField } from '../../components/inputs/TextField';
 import { urlSchema } from '../../schemas';
@@ -20,7 +21,7 @@ export const ApiEndpointBtn: React.FC = () => {
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const apiUrl = useSelector((state: RootState) => state.apiEndpoint.api);
   const { isFetching } = useGetGraphQlSchemaQuery(apiUrl);
-
+  const { t } = useLocalization();
   const dispatch = useDispatch();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -29,7 +30,7 @@ export const ApiEndpointBtn: React.FC = () => {
     }
     dispatch(setApiEndpointSlice(data.endpoint));
 
-    toast.success('Valid GraphQL endpoint!', {
+    toast.success(t.ValidEndpoint, {
       toastId: 'toast',
       className: 'toast-success',
     });
@@ -52,8 +53,8 @@ export const ApiEndpointBtn: React.FC = () => {
         <TextField
           id="endpoint"
           type="text"
-          label="Endpoint"
-          placeholder="Enter API endpoint..."
+          label={t.Endpoint}
+          placeholder={t.EnterEndpoint}
           autocomplete="url"
           register={register}
           defaultValue={apiUrl}
@@ -66,7 +67,7 @@ export const ApiEndpointBtn: React.FC = () => {
             type="submit"
             role="submit"
           >
-            <span>Try</span>
+            <span>{t.Try}</span>
           </button>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocalization } from '../../contexts/locale.context';
 import { RootState } from '../../store/store';
 import { ApiEndpointBtn } from '../../components/ApiEndpointBtn/ApiEndpointBtn';
 import { QueryEditor } from '../../components/Editor/QueryEditor';
@@ -19,6 +20,7 @@ export const GraphQl: React.FC = () => {
   const apiEndpoint = useSelector((state: RootState) => state.apiEndpoint.api);
   const vars = useSelector((state: RootState) => state.queryFields.variables);
   const headers = useSelector((state: RootState) => state.queryFields.headers);
+  const { t } = useLocalization();
   const [fetchResponse] = useFetchGraphQlResponseMutation();
   const dispatch = useDispatch();
 
@@ -86,7 +88,9 @@ export const GraphQl: React.FC = () => {
       <ApiEndpointBtn />
       <div className="playground__current-container">
         <div className="playground__current">
-          <span className="playground__current-title">Current endpoint:</span>
+          <span className="playground__current-title">
+            {t.CurrentEndpoint}:
+          </span>
           <a
             className="playground__current-url"
             href={apiEndpoint}
@@ -105,18 +109,18 @@ export const GraphQl: React.FC = () => {
           <button
             className="button button_tool button_tool-docs"
             disabled={apiEndpoint === ''}
-            title="Show API documentation"
+            title={t.ShowDocumentation}
             onClick={toggleMenu}
           ></button>
           <button
             className="button button_tool button_tool-reset"
-            title="Reset query"
+            title={t.ResetQuery}
             disabled={editorValue === ''}
             onClick={handleReset}
           ></button>
           <button
             className="button button_tool button_tool-format"
-            title="Prettify query"
+            title={t.PrettifyQuery}
             disabled={editorValue === ''}
             onClick={handlePrettify}
           ></button>
@@ -124,7 +128,7 @@ export const GraphQl: React.FC = () => {
             className={`button button_tool button_tool-play${
               isRequestLoading ? ' button_loading' : ''
             }`}
-            title="Execute query"
+            title={t.ExecuteQuery}
             disabled={editorValue === '' || isRequestLoading}
             onClick={executeQuery}
           ></button>

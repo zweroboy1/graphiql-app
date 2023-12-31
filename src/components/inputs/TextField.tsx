@@ -1,5 +1,6 @@
 import { FieldValues, UseFormRegister } from 'react-hook-form';
 import { TextFieldProps } from '../../types/inputs';
+import { useLocalization } from '../../contexts/locale.context';
 
 export const TextField: React.FC<TextFieldProps> = ({
   id,
@@ -12,6 +13,7 @@ export const TextField: React.FC<TextFieldProps> = ({
   icon,
   defaultValue,
 }) => {
+  const { t } = useLocalization();
   let inputClasses = error ? 'input input_error' : 'input';
   inputClasses = icon ? `${inputClasses} input_eye` : inputClasses;
   return (
@@ -36,7 +38,7 @@ export const TextField: React.FC<TextFieldProps> = ({
         )}
       </div>
       {error && (
-        <div className="input-error-message">{error.message as string}</div>
+        <div className="input-error-message">{t[String(error.message)]}</div>
       )}
     </div>
   );

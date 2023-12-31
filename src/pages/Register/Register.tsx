@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useLocalization } from '../../contexts/locale.context';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -20,6 +21,7 @@ export const Register: React.FC = () => {
   const [submiting, setSubmiting] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const navigate = useNavigate();
+  const { t, language } = useLocalization();
 
   const onSubmit = async (data: {
     email: string;
@@ -33,7 +35,7 @@ export const Register: React.FC = () => {
       navigate('/');
     } catch (e) {
       const errorCode = e instanceof Error ? e.message : null;
-      const toastText = getErrorText(errorCode, 'en');
+      const toastText = getErrorText(errorCode, language);
       setButtonDisabled(true);
       toast.error(toastText, {
         onClose: () => {
@@ -49,12 +51,12 @@ export const Register: React.FC = () => {
   return (
     <>
       <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
-        <h2 className="login-form__title h2">Sign up</h2>
+        <h2 className="login-form__title h2">{t.SignUp}</h2>
         <TextField
           id="name"
           type="text"
-          label="Name"
-          placeholder="Your name"
+          label={t.Name}
+          placeholder={t.YourName}
           autocomplete="name"
           register={register}
           error={errors['name']}
@@ -62,7 +64,7 @@ export const Register: React.FC = () => {
         <TextField
           id="email"
           type="email"
-          label="Email"
+          label={t.Email}
           placeholder="name@example.com"
           autocomplete="username"
           register={register}
@@ -70,8 +72,8 @@ export const Register: React.FC = () => {
         />
         <PasswordField
           id="password"
-          label="Password"
-          placeholder="Enter your password"
+          label={t.Password}
+          placeholder={t.PasswordPlaceholder}
           autocomplete="current-password"
           register={register}
           error={errors['password']}
@@ -82,13 +84,13 @@ export const Register: React.FC = () => {
           type="submit"
           role="submit"
         >
-          <span>Register</span>
+          <span>{t.Register}</span>
         </button>
 
         <div className="login-form__text text">
-          Already have an account?
+          {t.AlreadyHaveAccount}
           <br />
-          <Link to="/login">Sign In</Link>
+          <Link to="/login">{t.SignIn}</Link>
         </div>
       </form>
     </>

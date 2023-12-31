@@ -3,32 +3,29 @@ import * as yup from 'yup';
 const loginSchemaShape = {
   email: yup
     .string()
-    .required('email is required')
-    .email()
-    .matches(/\.[a-z]{2,}$/, 'email address must contain a domain'),
+    .required('EmailIsRequired')
+    .email('EmailMustBeValid')
+    .matches(/\.[a-z]{2,}$/, 'MustContainDomain'),
   password: yup
     .string()
-    .required('password is required')
-    .min(8)
-    .matches(
-      /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]+/,
-      'password must have a special character'
-    )
-    .matches(/\p{Lu}/u, 'password must have one uppercased letter')
-    .matches(/\p{Ll}/u, 'password must have one lowered letter')
-    .matches(/[0-9]+/, 'password must have one number'),
+    .required('PasswordIsRequired')
+    .min(8, 'AtLeast8Characters')
+    .matches(/[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]+/, 'MustHaveSpecial')
+    .matches(/\p{Lu}/u, 'MustHaveUppercased')
+    .matches(/\p{Ll}/u, 'MustHaveLowered')
+    .matches(/[0-9]+/, 'MustHaveNumber'),
 };
 
 const registerSchemaShape = {
   name: yup
     .string()
-    .required('name is required')
-    .matches(/^[\p{L}\s.-]+$/u, 'only letters are allowed'),
+    .required('NameIsRequired')
+    .matches(/^[\p{L}\s.-]+$/u, 'OnlyLetters'),
   ...loginSchemaShape,
 };
 
 const urlSchemaShape = {
-  endpoint: yup.string().required('URL is required').url('Invalid URL format'),
+  endpoint: yup.string().required('UrlIsRequired').url('InvalidUrlFormat'),
 };
 
 export const loginSchema = yup.object().shape(loginSchemaShape);
