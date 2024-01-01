@@ -113,14 +113,14 @@ query (
 
 const finalTestOutput = `
 query (property1: "value") {
-\ta
-\tb
-\tc {
-\t\ta1
-\t\ta2
-\t\ta3
-\t}
-\td
+   a
+   b
+   c {
+      a1
+      a2
+      a3
+   }
+   d
 }
 `;
 

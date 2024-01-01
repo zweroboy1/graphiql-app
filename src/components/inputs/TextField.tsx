@@ -26,6 +26,7 @@ export const TextField: React.FC<TextFieldProps> = ({
           className={inputClasses}
           type={type}
           id={id}
+          role={id}
           placeholder={placeholder}
           autoComplete={autocomplete}
           defaultValue={defaultValue}
