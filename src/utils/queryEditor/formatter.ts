@@ -8,7 +8,6 @@ export const addEnter = (value: string): string => {
   return result.replace(/{/g, ' {\n');
 };
 
-
 export const checkSpaces = (value: string): string => {
   return value.replace(/ {2,}/g, ' ').replace(/\[\s+{/g, '[{');
 };
