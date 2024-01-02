@@ -1,12 +1,12 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { setActiveType } from '../../store/slices/activeTypeSlice';
 import { addToHistory } from '../../store/slices/history.slice';
-import { EnumValue, Field, InputField } from '../../types/types';
+import { Field } from '../../types/types';
 import { RootState } from '../../store/store';
 import { TypeLink } from './TypeLink';
 
 interface TypeDetailsProps {
-  el: Field | InputField | EnumValue;
+  el: Field;
 }
 
 export const TypeDetails: React.FC<TypeDetailsProps> = ({ el }) => {
@@ -33,7 +33,7 @@ export const TypeDetails: React.FC<TypeDetailsProps> = ({ el }) => {
                 type={arg.type}
                 onClick={() => historyUpdate(el.name)}
               />
-              {idx < el.args.length - 1 && ', '}
+              {el.args && idx < el.args.length - 1 && ', '}
             </span>
           ))}
         {el.args && el.args.length > 0 && (
