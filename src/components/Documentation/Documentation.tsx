@@ -5,6 +5,7 @@ import { useLocalization } from '../../contexts/locale.context';
 interface DocumentationProps {
   isOpen: boolean;
 }
+
 export const Documentation: React.FC<DocumentationProps> = ({ isOpen }) => {
   const { t } = useLocalization();
   return (
