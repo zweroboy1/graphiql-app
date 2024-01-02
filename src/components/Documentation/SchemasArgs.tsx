@@ -39,27 +39,31 @@ export const SchemasArgs: React.FC = () => {
     prevType && dispatch(setActiveType(prevType));
   };
 
-  if (isFetching) {
-    return <Loader />;
-  }
-
   return (
     <>
-      <div className="docs__header">
-        <div className="docs__title h3">{activeType}</div>
-        <div>
-          {history.length !== 0 && (
-            <GoBackBtn callback={handleButtonClick} prev={prevType} />
-          )}
+      {isFetching ? (
+        <Loader />
+      ) : (
+        <div className="docs__header">
+          <div className="docs__title h3">{activeType}</div>
+          <div>
+            {history.length !== 0 && (
+              <GoBackBtn
+                data-testId="goBackButton"
+                callback={handleButtonClick}
+                prev={prevType}
+              />
+            )}
+          </div>
+          {Array.isArray(field)
+            ? field.map((el) => (
+                <div key={el.name}>
+                  <TypeDetails el={el} />
+                </div>
+              ))
+            : rootQuery && <Scalar rootQuery={rootQuery} />}
         </div>
-      </div>
-      {Array.isArray(field)
-        ? field.map((el) => (
-            <div key={el.name}>
-              <TypeDetails el={el} />
-            </div>
-          ))
-        : rootQuery && <Scalar rootQuery={rootQuery} />}
+      )}
     </>
   );
 };
