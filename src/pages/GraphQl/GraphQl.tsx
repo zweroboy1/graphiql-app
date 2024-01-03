@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocalization } from '../../contexts/locale.context';
 import { RootState } from '../../store/store';
@@ -18,11 +18,20 @@ export const GraphQl: React.FC = () => {
   const [isRequestLoading, setRequestLoading] = useState(false);
   const editorValue = useSelector((state: RootState) => state.editor.value);
   const apiEndpoint = useSelector((state: RootState) => state.apiEndpoint.api);
+  const isValidEndpoint = useSelector(
+    (state: RootState) => state.apiEndpoint.isValid
+  );
   const vars = useSelector((state: RootState) => state.queryFields.variables);
   const headers = useSelector((state: RootState) => state.queryFields.headers);
   const { t } = useLocalization();
   const [fetchResponse] = useFetchGraphQlResponseMutation();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!isValidEndpoint) {
+      setDocsOpen(false);
+    }
+  }, [isValidEndpoint]);
 
   const toggleMenu = useCallback(async () => {
     setDocsOpen(!docsOpen);
@@ -82,7 +91,6 @@ export const GraphQl: React.FC = () => {
       toggleMenu();
     }
   };
-
   return (
     <div className="playground" data-testid="graph-ql">
       <ApiEndpointBtn />
@@ -108,7 +116,7 @@ export const GraphQl: React.FC = () => {
         <div className="playground__tools">
           <button
             className="button button_tool button_tool-docs"
-            disabled={apiEndpoint === ''}
+            disabled={apiEndpoint === '' || !isValidEndpoint}
             title={t.ShowDocumentation}
             onClick={toggleMenu}
           ></button>
@@ -129,7 +137,9 @@ export const GraphQl: React.FC = () => {
               isRequestLoading ? ' button_loading' : ''
             }`}
             title={t.ExecuteQuery}
-            disabled={editorValue === '' || isRequestLoading}
+            disabled={
+              editorValue === '' || isRequestLoading || !isValidEndpoint
+            }
             onClick={executeQuery}
           ></button>
         </div>

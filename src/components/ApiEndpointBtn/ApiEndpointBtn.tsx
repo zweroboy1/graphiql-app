@@ -4,7 +4,10 @@ import { useForm, SubmitHandler, FieldValues } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useLocalization } from '../../contexts/locale.context';
-import { setApiEndpointSlice } from '../../store/slices/apiEndpoint.slice';
+import {
+  setApiEndpointSlice,
+  setValid,
+} from '../../store/slices/apiEndpoint.slice';
 import { TextField } from '../../components/inputs/TextField';
 import { urlSchema } from '../../schemas';
 import { clearAllHistory } from '../../store/slices/history.slice';
@@ -20,7 +23,8 @@ export const ApiEndpointBtn: React.FC = () => {
   } = useForm({ mode: 'onChange', resolver: yupResolver(urlSchema) });
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const apiUrl = useSelector((state: RootState) => state.apiEndpoint.api);
-  const { isFetching } = useGetGraphQlSchemaQuery(apiUrl);
+
+  const { isFetching, error } = useGetGraphQlSchemaQuery(apiUrl);
   const { t } = useLocalization();
   const dispatch = useDispatch();
 
@@ -30,21 +34,36 @@ export const ApiEndpointBtn: React.FC = () => {
     }
     dispatch(setApiEndpointSlice(data.endpoint));
 
-    toast.success(t.ValidEndpoint, {
-      toastId: 'toast',
-      className: 'toast-success',
-    });
-
     dispatch(clearAllHistory());
     dispatch(setActiveType('Query'));
   };
 
   useEffect(() => {
-    toast.onChange((v) => {
+    if (isFetching) {
+      return;
+    }
+    if (error) {
+      toast.error(t.ValidEndpoint, {
+        toastId: 'toast',
+        className: 'toast-error',
+      });
+      dispatch(setValid(false));
+    } else {
+      toast.success(t.ValidEndpoint, {
+        toastId: 'toast',
+        className: 'toast-success',
+      });
+      dispatch(setValid(true));
+    }
+  }, [error, t, dispatch, isFetching]);
+
+  useEffect(() => {
+    const unsubscribe = toast.onChange((v) => {
       if (v.status === 'removed') {
         setButtonDisabled(false);
       }
     });
+    return unsubscribe;
   }, []);
 
   return (
