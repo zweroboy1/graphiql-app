@@ -44,16 +44,18 @@ export const SchemasArgs: React.FC = () => {
       {isFetching ? (
         <Loader />
       ) : (
-        <div className="docs__header">
-          <div className="docs__title h3">{activeType}</div>
-          <div>
-            {history.length !== 0 && (
-              <GoBackBtn
-                data-testId="goBackButton"
-                callback={handleButtonClick}
-                prev={prevType}
-              />
-            )}
+        <div>
+          <div className="docs__header">
+            <div className="docs__title h3">{activeType}</div>
+            <div>
+              {history.length !== 0 && (
+                <GoBackBtn
+                  data-testId="goBackButton"
+                  callback={handleButtonClick}
+                  prev={prevType}
+                />
+              )}
+            </div>
           </div>
           {Array.isArray(field)
             ? field.map((el) => (
