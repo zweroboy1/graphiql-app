@@ -52,6 +52,7 @@ export const ApiEndpointBtn: React.FC = () => {
       <div className="playground__header">
         <TextField
           id="endpoint"
+          data-testid="endpoint"
           type="text"
           label={t.Endpoint}
           placeholder={t.EnterEndpoint}
