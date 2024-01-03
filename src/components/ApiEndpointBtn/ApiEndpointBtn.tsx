@@ -67,6 +67,7 @@ export const ApiEndpointBtn: React.FC = () => {
             disabled={!isValid || isFetching || buttonDisabled}
             type="submit"
             role="submit"
+            data-testid="submit"
           >
             <span>{t.Try}</span>
           </button>
