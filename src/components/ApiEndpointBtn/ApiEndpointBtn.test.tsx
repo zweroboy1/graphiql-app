@@ -1,17 +1,16 @@
 import { MemoryRouter } from 'react-router';
+import { act } from 'react-dom/test-utils';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { Provider } from 'react-redux';
 
 import { ApiEndpointBtn } from './ApiEndpointBtn';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+
 import { LanguageProvider } from '../../contexts/locale.context';
-import { Provider } from 'react-redux';
 import { store } from '../../store/store';
-import { act } from 'react-dom/test-utils';
 import * as GraphQlSchemaQuery from '../../store/api/api';
 import * as ApiEndpointSlice from '../../store/slices/apiEndpoint.slice';
 
 import type { Mock } from 'vitest';
-
-// import { UseQueryHookResult } from '@reduxjs/toolkit/dist/query/react/buildHooks';
 
 const setApiEndpointSliceMock = vi.spyOn(
   ApiEndpointSlice,
