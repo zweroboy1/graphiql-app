@@ -75,29 +75,6 @@ describe('Router', () => {
     expect(loginComponent).toBeInTheDocument();
   });
 
-  it.skip('render graph-ql component for /graph-ql path', () => {
-    render(
-      <LanguageContext.Provider
-        value={{
-          language: 'en',
-          setLanguage: vi.fn,
-          t: {
-            Docs: 'Documentation',
-          },
-        }}
-      >
-        <Provider store={store}>
-          <MemoryRouter initialEntries={['/graph-ql']}>
-            <Router />
-          </MemoryRouter>
-        </Provider>
-      </LanguageContext.Provider>
-    );
-
-    const graphQlComponent = screen.getByTestId('graph-ql');
-    expect(graphQlComponent).toBeInTheDocument();
-  });
-
   it('Ensure that the 404 page is displayed when navigating to an invalid route', () => {
     render(
       <Provider store={store}>
