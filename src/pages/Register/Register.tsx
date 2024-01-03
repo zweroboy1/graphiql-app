@@ -50,7 +50,11 @@ export const Register: React.FC = () => {
 
   return (
     <>
-      <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="login-form"
+        onSubmit={handleSubmit(onSubmit)}
+        data-testid="register"
+      >
         <h2 className="login-form__title h2">{t.SignUp}</h2>
         <TextField
           id="name"

@@ -40,7 +40,11 @@ export const Login: React.FC = () => {
 
   return (
     <>
-      <form className="login-form" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="login-form"
+        onSubmit={handleSubmit(onSubmit)}
+        data-testid="login"
+      >
         <h2 className="login-form__title h2">{t.SignIn}</h2>
         <TextField
           id="email"

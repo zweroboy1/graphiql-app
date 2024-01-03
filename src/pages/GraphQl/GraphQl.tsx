@@ -84,7 +84,7 @@ export const GraphQl: React.FC = () => {
   };
 
   return (
-    <div className="playground">
+    <div className="playground" data-testid="graph-ql">
       <ApiEndpointBtn />
       <div className="playground__current-container">
         <div className="playground__current">
