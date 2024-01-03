@@ -7,7 +7,7 @@ vi.mock('react-redux', () => ({
   useDispatch: () => mockDispatch,
 }));
 
-const type = {
+const MockType = {
   name: 'MockType',
   kind: 'OBJECT',
   description: 'jskfj',
@@ -15,14 +15,18 @@ const type = {
 
 describe('TypeLink Component', () => {
   it('renders TypeLink component', () => {
-    const { getByText } = render(<TypeLink type={type} onClick={() => {}} />);
+    const { getByText } = render(
+      <TypeLink type={MockType} onClick={() => {}} />
+    );
 
     expect(getByText('MockType')).toBeInTheDocument();
     screen.debug();
   });
 
   it('dispatches active type on click', () => {
-    const { getByText } = render(<TypeLink type={type} onClick={() => {}} />);
+    const { getByText } = render(
+      <TypeLink type={MockType} onClick={() => {}} />
+    );
 
     fireEvent.click(getByText('MockType'));
   });
@@ -31,7 +35,7 @@ describe('TypeLink Component', () => {
     const onClickMock = vi.fn();
 
     const { getByText } = render(
-      <TypeLink type={type} onClick={onClickMock} />
+      <TypeLink type={MockType} onClick={onClickMock} />
     );
 
     fireEvent.click(getByText('MockType'));
