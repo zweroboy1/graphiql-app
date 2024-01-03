@@ -1,4 +1,4 @@
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { TypeLink } from './TypeLink';
 
@@ -20,7 +20,6 @@ describe('TypeLink Component', () => {
     );
 
     expect(getByText('MockType')).toBeInTheDocument();
-    screen.debug();
   });
 
   it('dispatches active type on click', () => {
