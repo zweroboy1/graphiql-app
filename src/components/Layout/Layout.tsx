@@ -9,7 +9,7 @@ export const Layout: React.FC = () => {
     <div className="wrapper">
       <Header />
       <ToastContainer limit={1} autoClose={TOAST_DELAY} position="top-center" />
-      <main className="main">
+      <main className="main" data-testid="main">
         <Outlet />
       </main>
       <Footer />
