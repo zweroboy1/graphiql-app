@@ -50,7 +50,7 @@ export const Header: React.FC = () => {
   }, [scrollPos]);
 
   return (
-    <header className={`header`}>
+    <header className={`header`} data-testid="header">
       <div className={`header__wrapper ${headerStyle}`} ref={headerRef}>
         <div className="header__left">
           <Link to="/" title={t.WelcomePage}>

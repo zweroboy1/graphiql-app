@@ -4,7 +4,7 @@ import GithubIcon from '../../assets/svg/github.svg';
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="footer">
+    <footer className="footer" data-testid="footer">
       <a
         className="footer__rss-container footer__link"
         href="https://rs.school/react/"
