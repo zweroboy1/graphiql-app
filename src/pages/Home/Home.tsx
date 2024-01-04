@@ -135,7 +135,7 @@ export const Home: React.FC = () => {
             <div className="welcome__developer-photo">
               <img
                 className="welcome__developer-img"
-                src="/src/assets/img/alena.svg"
+                src="/src/assets/img/alena.jpg"
                 alt={t.Alena}
               />
             </div>
