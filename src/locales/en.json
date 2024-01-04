@@ -6,7 +6,6 @@
   "WelcomePage_p4": "Questions on how to navigate?",
   "WelcomePage_p5": "Find comprehensive answers within the in-app documentation.",
   "WelcomePage_p6": "Embark on your exploration of GraphQL APIs in the sandbox now!",
-  "StartNow": "to the GraphQl Playground",
   "AboutCourse": "About Course",
   "ThisIsPartOfRSS": "This project was created as part of the course",
   "CourseIncludes": "The course includes modules about:",
@@ -83,5 +82,6 @@
   "Endpoint": "Endpoint",
   "EnterEndpoint": "Enter API endpoint...",
   "Try": "Try",
-  "ValidEndpoint": "Valid GraphQL endpoint!"
+  "ValidEndpoint": "Valid GraphQL endpoint!",
+  "MainPage": "Main Page"
 }
