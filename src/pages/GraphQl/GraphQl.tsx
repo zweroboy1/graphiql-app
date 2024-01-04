@@ -17,6 +17,7 @@ export const GraphQl: React.FC = () => {
   const [docsOpen, setDocsOpen] = useState(false);
   const [isRequestLoading, setRequestLoading] = useState(false);
   const editorValue = useSelector((state: RootState) => state.editor.value);
+  const viewerValue = useSelector((state: RootState) => state.viewer.value);
   const apiEndpoint = useSelector((state: RootState) => state.apiEndpoint.api);
   const vars = useSelector((state: RootState) => state.queryFields.variables);
   const headers = useSelector((state: RootState) => state.queryFields.headers);
@@ -115,7 +116,12 @@ export const GraphQl: React.FC = () => {
           <button
             className="button button_tool button_tool-reset"
             title={t.ResetQuery}
-            disabled={editorValue === ''}
+            disabled={
+              editorValue === '' &&
+              viewerValue === '' &&
+              vars === '' &&
+              headers === ''
+            }
             onClick={handleReset}
           ></button>
           <button
