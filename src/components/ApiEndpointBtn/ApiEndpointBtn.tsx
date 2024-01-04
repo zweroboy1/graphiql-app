@@ -10,7 +10,8 @@ import { urlSchema } from '../../schemas';
 import { clearAllHistory } from '../../store/slices/history.slice';
 import { setActiveType } from '../../store/slices/activeTypeSlice';
 import { RootState } from '../../store/store';
-import { useGetGraphQlSchemaQuery } from '../../store/api/api';
+import { useFetchGraphQlSchemaMutation } from '../../store/api/api';
+import { getErrorText } from '../../utils/getErrorText';
 
 export const ApiEndpointBtn: React.FC = () => {
   const {
@@ -20,16 +21,29 @@ export const ApiEndpointBtn: React.FC = () => {
   } = useForm({ mode: 'onChange', resolver: yupResolver(urlSchema) });
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const apiUrl = useSelector((state: RootState) => state.apiEndpoint.api);
-  const { isFetching } = useGetGraphQlSchemaQuery(apiUrl);
-  const { t } = useLocalization();
+  const { t, language } = useLocalization();
+  const [fetchSchema, { isLoading }] = useFetchGraphQlSchemaMutation();
   const dispatch = useDispatch();
 
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (form) => {
     if (!isValid) {
       return;
     }
-    dispatch(setApiEndpointSlice(data.endpoint));
 
+    const result = await fetchSchema(form.endpoint);
+    if ('error' in result) {
+      const errorCode =
+        'status' in result.error ? String(result.error.status) : null;
+      const toastText = getErrorText(errorCode, language);
+      setButtonDisabled(true);
+      toast.error(toastText, {
+        toastId: 'toast',
+        className: 'toast-error',
+      });
+      return;
+    }
+
+    dispatch(setApiEndpointSlice(form.endpoint));
     toast.success(t.ValidEndpoint, {
       toastId: 'toast',
       className: 'toast-success',
@@ -63,8 +77,8 @@ export const ApiEndpointBtn: React.FC = () => {
         />
         <div className="playground__button-container">
           <button
-            className={isFetching ? 'button button_loading' : 'button'}
-            disabled={!isValid || isFetching || buttonDisabled}
+            className={isLoading ? 'button button_loading' : 'button'}
+            disabled={!isValid || isLoading || buttonDisabled}
             type="submit"
             role="submit"
             data-testid="submit"
