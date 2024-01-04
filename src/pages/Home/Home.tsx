@@ -1,9 +1,13 @@
 import React from 'react';
 import { useLocalization } from '../../contexts/locale.context';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
+import { RootState } from '../../store/store';
 
 export const Home: React.FC = () => {
   const { t } = useLocalization();
+  const user = useSelector((state: RootState) => state.user.value);
 
   const htmlCode1 = `<span class="keyword">query</span> <span class="bracket2">{</span>
    <span class="word">user</span><span class="bracket">(</span><span class="word">id</span>: <span class="bracket">1)</span> <span class="bracket">{</span>
@@ -25,6 +29,37 @@ export const Home: React.FC = () => {
 
   return (
     <section className="welcome">
+      <div className="welcome__links">
+        {user === null ? (
+          <>
+            <Link
+              className="button button_medium"
+              to="/login"
+              title={t.Login}
+              aria-label={t.Login}
+            >
+              {t.SignIn}
+            </Link>
+            <Link
+              className="button button_medium"
+              to="/register"
+              title={t.Register}
+              aria-label={t.Register}
+            >
+              {t.SignUp}
+            </Link>
+          </>
+        ) : (
+          <Link
+            className="button button_medium"
+            to="/graph-ql"
+            title={t.MainPage}
+            aria-label={t.MainPage}
+          >
+            {t.MainPage}
+          </Link>
+        )}
+      </div>
       <h2 className="h2">{t.GraphQLPlayground}</h2>
       <div className="welcome__paragraph text">
         <p>{t.WelcomePage_p1}</p>
@@ -33,9 +68,6 @@ export const Home: React.FC = () => {
         <p>{t.WelcomePage_p4}</p>
         <p>{t.WelcomePage_p5}</p>
         <p>{t.WelcomePage_p6}</p>
-        <div>
-          <Link to="/graph-ql">{t.StartNow}</Link>
-        </div>
       </div>
       <h2 className="h2">{t.AboutCourse}</h2>
       <div className="welcome__paragraph text">
