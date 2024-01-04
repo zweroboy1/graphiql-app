@@ -83,5 +83,6 @@
   "EnterEndpoint": "Введите API эндпоинт...",
   "Try": "Пуск",
   "ValidEndpoint": "Эндпоинт рабочий!",
-  "MainPage": "Главная"
+  "MainPage": "Главная",
+  "PageNotFound": "Страница не найдена"
 }
