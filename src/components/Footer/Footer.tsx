@@ -42,7 +42,7 @@ export const Footer: React.FC = () => {
         </a>
       </div>
 
-      <div className="footer__team">AAA Batteries &copy; 2023</div>
+      <div className="footer__team">AAA Batteries &copy; 2024</div>
     </footer>
   );
 };
