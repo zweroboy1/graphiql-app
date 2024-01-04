@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useLocalization } from '../../contexts/locale.context';
@@ -12,7 +12,6 @@ import Logo from '../../assets/svg/logo.svg';
 
 export const Header: React.FC = () => {
   const user = useSelector((state: RootState) => state.user.value);
-  const [scrollPos, setScrollPos] = useState(0);
   const [headerStyle, setHeaderStyle] = useState('');
   const headerRef = useRef<HTMLDivElement>(null);
   const { t } = useLocalization();
@@ -25,29 +24,23 @@ export const Header: React.FC = () => {
     };
   };
 
-  useEffect(() => {
-    const handleScroll = debounce(() => {
+  const handleScroll = useCallback(
+    debounce(() => {
       const position = window.scrollY;
-      setScrollPos(position);
-    }, 100);
+      const headerOffsetHeight = headerRef.current?.offsetHeight || 0;
+      const isCompact =
+        position - headerOffsetHeight > COMPACT_HEADER_WHEN_SCROLL_Y;
+      setHeaderStyle(isCompact ? 'header__wrapper-compact' : '');
+    }, 100),
+    []
+  );
 
+  useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
-
-  useEffect(() => {
-    let headerHeight = 0;
-    if (headerRef.current) {
-      headerHeight = headerRef.current.offsetHeight;
-    }
-    setHeaderStyle(
-      scrollPos - headerHeight > COMPACT_HEADER_WHEN_SCROLL_Y
-        ? 'header__wrapper-compact'
-        : ''
-    );
-  }, [scrollPos]);
+  }, [handleScroll]);
 
   return (
     <header className={`header`} data-testid="header">
