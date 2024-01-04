@@ -18,7 +18,7 @@ export function Router(): ReactElement {
         <Route
           path="/register"
           element={
-            <WithAuthRoute redirectLink="/">
+            <WithAuthRoute redirectLink="/graph-ql">
               <Register />
             </WithAuthRoute>
           }
@@ -26,7 +26,7 @@ export function Router(): ReactElement {
         <Route
           path="/login"
           element={
-            <WithAuthRoute redirectLink="/">
+            <WithAuthRoute redirectLink="/graph-ql">
               <Login />
             </WithAuthRoute>
           }
