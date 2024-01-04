@@ -5,9 +5,28 @@ import { Link } from 'react-router-dom';
 export const Home: React.FC = () => {
   const { t } = useLocalization();
 
+  const htmlCode1 = `<span class="keyword">query</span> <span class="bracket2">{</span>
+   <span class="word">user</span><span class="bracket">(</span><span class="word">id</span>: <span class="bracket">1)</span> <span class="bracket">{</span>
+      <span class="word">name</span>
+      <span class="word">email</span>
+   <span class="bracket">}</span>
+<span class="bracket2">}</span>`;
+
+  const htmlCode2 = `<span class="keyword">query</span><span class="bracket">(</span>$id: <span class="keyword">ID</span>!<span class="bracket">)</span> <span class="bracket2">{</span>
+   <span class="word">user</span><span class="bracket">(</span><span class="word">id</span>: $id<span class="bracket">)</span> <span class="bracket">{</span>
+      <span class="word">name</span>
+      <span class="word">id</span>
+   <span class="bracket">}</span>
+<span class="bracket2">}</span>`;
+
+  const htmlCode3 = `<span class="bracket2">{</span>
+   <span class="word">"id"</span>: <span class="bracket">1</span>
+<span class="bracket2">}</span>`;
+
   return (
     <section className="welcome">
-      <div style={{ margin: '20px' }}>
+      <h2 className="h2">{t.GraphQLPlayground}</h2>
+      <div className="welcome__paragraph text">
         <p>{t.WelcomePage_p1}</p>
         <p>{t.WelcomePage_p2}</p>
         <p>{t.WelcomePage_p3}</p>
@@ -18,59 +37,112 @@ export const Home: React.FC = () => {
           <Link to="/graph-ql">{t.StartNow}</Link>
         </div>
       </div>
-      <div style={{ margin: '20px' }}>
-        <p>{t.AboutCourse}</p>
+      <h2 className="h2">{t.AboutCourse}</h2>
+      <div className="welcome__paragraph text">
+        <p>
+          {t.ThisIsPartOfRSS} &nbsp;
+          <a
+            href="https://github.com/rolling-scopes-school/tasks/tree/master/react"
+            target="_blank"
+          >
+            RS School. React
+          </a>
+        </p>
         <p>{t.CourseIncludes}</p>
-        <p>{t.Routing}</p>
-        <p>{t.TestsContextAPI}</p>
-        <p>{t.ReduxRTK}</p>
-        <p>{t.NextJSSSRSSG}</p>
-        <p>{t.FormsValidation}</p>
+        <ul className="welcome__list">
+          <li>{t.Components}</li>
+          <li>{t.Routing}</li>
+          <li>{t.Tests}</li>
+          <li>{t.ContextAPI}</li>
+          <li>{t.ReduxRTK}</li>
+          <li>{t.NextJSSSRSSG}</li>
+          <li>{t.FormsValidation}</li>
+        </ul>
       </div>
-      <div style={{ margin: '20px' }}>
-        <p>{t.Developers}</p>
-        <div style={{ margin: '20px' }}>
-          <h1>{t.Angelina}</h1>
-          <p>{t.Role}</p>
-          <p>{t.ProjectSetup}</p>
-          <p>{t.DocumentationExplorer}</p>
-          <p>{t.VariablesSection}</p>
-          <p>{t.Localization}</p>
-        </div>
-        <div style={{ margin: '20px' }}>
-          <h1>{t.Alexey}</h1>
-          <p>
-            {t.Role} {t.StylesAndDesign}
-          </p>
-          <p>{t.StylesAndDesign}</p>
-          <p>{t.RegistrationPage}</p>
-          <p>{t.ChangeEndpointSection}</p>
-        </div>
-        <div style={{ margin: '20px' }}>
-          <h1>{t.Alena}</h1>
-          <p>{t.Role} </p>
-          <p>{t.QueryEditor}</p>
-          <p>{t.LoginPage}</p>
-          <p>{t.Prettifying}</p>
-          <p>{t.ResponseSection}</p>
-        </div>
+
+      <h2 className="h2">{t.Developers}</h2>
+      <div className="welcome__paragraph  text">
+        <ul className="welcome__developers">
+          <li className="welcome__developer">
+            <div className="welcome__developer-photo">
+              <img
+                className="welcome__developer-img"
+                src="/src/assets/img/angelina.svg"
+                alt={t.Angelina}
+              />
+            </div>
+            <h3 className="h3">
+              <a href="https://github.com/ritter1111" target="_blank">
+                {t.Angelina}
+              </a>
+            </h3>
+            <p>{t.ProjectSetup}</p>
+            <p>{t.DocumentationExplorer}</p>
+            <p>{t.VariablesSection}</p>
+            <p>{t.Localization}</p>
+          </li>
+          <li className="welcome__developer">
+            <div className="welcome__developer-photo">
+              <img
+                className="welcome__developer-img"
+                src="/src/assets/img/alex.jpeg"
+                alt={t.Alexey}
+              />
+            </div>
+            <h3 className="h3">
+              <a href="https://github.com/zweroboy1" target="_blank">
+                {t.Alexey}
+              </a>
+            </h3>
+            <p>{t.StylesAndDesign}</p>
+            <p>{t.RegistrationPage}</p>
+            <p>{t.WelcomePage}</p>
+            <p>{t.ChangeEndpointSection}</p>
+          </li>
+          <li className="welcome__developer">
+            <div className="welcome__developer-photo">
+              <img
+                className="welcome__developer-img"
+                src="/src/assets/img/alena.svg"
+                alt={t.Alena}
+              />
+            </div>
+
+            <h3 className="h3">
+              <a href="https://github.com/alenzija" target="_blank">
+                {t.Alena}
+              </a>
+            </h3>
+            <p>{t.QueryEditor}</p>
+            <p>{t.LoginPage}</p>
+            <p>{t.Prettifying}</p>
+            <p>{t.ResponseSection}</p>
+          </li>
+        </ul>
       </div>
-      <div>
-        <p style={{ margin: '20px' }}>{t.HowToUseGraphQLPlayground}?</p>
-        <p style={{ margin: '20px' }}>{t.PlaygroundDescription}</p>
-        <div style={{ margin: '20px' }}>
-          <p>{t.WriteYourQueryOrMutation}</p>
-          <p>{t.ExampleQuery}</p>
-          <pre>{t.ExampleQueryCode}</pre>
-        </div>
-        <p style={{ margin: '20px' }}>{t.UseVariables}</p>
-        <p style={{ margin: '20px' }}>{t.VariablesDescription}</p>
-        <div style={{ margin: '20px' }}>
-          <p>{t.ExampleWithVariables}</p>
-          <pre>{t.ExampleWithVariablesCode}</pre>
-          <p>{t.Variables}:</p>
-          <pre>{t.VariablesCode}</pre>
-        </div>
+
+      <h2 className="h2">{t.HowToUseGraphQLPlayground}</h2>
+
+      <div className="welcome__paragraph text">
+        <p>{t.PlaygroundDescription}</p>
+        <h3 className="h3">{t.WriteYourQueryOrMutation}</h3>
+        <h4 className="h4">{t.ExampleQuery}</h4>
+        <pre
+          className="welcome__code"
+          dangerouslySetInnerHTML={{ __html: htmlCode1 }}
+        />
+        <h3 className="h3">{t.UseVariables}</h3>
+        <p>{t.VariablesDescription}</p>
+        <h4 className="h4">{t.ExampleWithVariables}</h4>
+        <pre
+          className="welcome__code"
+          dangerouslySetInnerHTML={{ __html: htmlCode2 }}
+        />
+        <h4 className="h4">{t.Variables}:</h4>
+        <pre
+          className="welcome__code"
+          dangerouslySetInnerHTML={{ __html: htmlCode3 }}
+        />
       </div>
     </section>
   );

@@ -83,7 +83,7 @@ export const Register: React.FC = () => {
           error={errors['password']}
         />
         <button
-          className={submiting ? 'button button_loading' : 'button'}
+          className={`button button_bigger${submiting ? 'button_loading' : ''}`}
           disabled={!isValid || submiting || buttonDisabled}
           type="submit"
           role="submit"

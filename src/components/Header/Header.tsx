@@ -24,16 +24,17 @@ export const Header: React.FC = () => {
     };
   };
 
-  const handleScroll = useCallback(
-    debounce(() => {
+  const handleScroll = useCallback(() => {
+    const handleDebouncedScroll = debounce(() => {
       const position = window.scrollY;
       const headerOffsetHeight = headerRef.current?.offsetHeight || 0;
       const isCompact =
         position - headerOffsetHeight > COMPACT_HEADER_WHEN_SCROLL_Y;
       setHeaderStyle(isCompact ? 'header__wrapper-compact' : '');
-    }, 100),
-    []
-  );
+    }, 100);
+
+    handleDebouncedScroll();
+  }, [headerRef]);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
