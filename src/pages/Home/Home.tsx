@@ -2,8 +2,11 @@ import React from 'react';
 import { useLocalization } from '../../contexts/locale.context';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
 import { RootState } from '../../store/store';
+
+import angelina from '../../assets/img/angelina.jpg';
+import alex from '../../assets/img/alex.jpeg';
+import alena from '../../assets/img/alena.jpg';
 
 export const Home: React.FC = () => {
   const { t } = useLocalization();
@@ -99,7 +102,7 @@ export const Home: React.FC = () => {
             <div className="welcome__developer-photo">
               <img
                 className="welcome__developer-img"
-                src="/src/assets/img/angelina.svg"
+                src={angelina}
                 alt={t.Angelina}
               />
             </div>
@@ -117,7 +120,7 @@ export const Home: React.FC = () => {
             <div className="welcome__developer-photo">
               <img
                 className="welcome__developer-img"
-                src="/src/assets/img/alex.jpeg"
+                src={alex}
                 alt={t.Alexey}
               />
             </div>
@@ -135,7 +138,7 @@ export const Home: React.FC = () => {
             <div className="welcome__developer-photo">
               <img
                 className="welcome__developer-img"
-                src="/src/assets/img/alena.jpg"
+                src={alena}
                 alt={t.Alena}
               />
             </div>
