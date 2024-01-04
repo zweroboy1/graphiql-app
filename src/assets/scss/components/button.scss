@@ -1,6 +1,7 @@
 .button {
   display: inline-flex;
-  padding: 16px 32px;
+  padding: 16px 0px;
+  width: 110px;
   justify-content: center;
   align-items: center;
   font-size: 18px;
@@ -12,6 +13,10 @@
   border-radius: 10px;
   white-space: nowrap;
   cursor: pointer;
+
+  &_bigger {
+    width: 210px;
+  }
 
   &_medium {
     padding: 12px 30px;
@@ -26,7 +31,7 @@
   &_micro {
     padding: 4px 8px;
     font-size: 14px;
-    width: 90px;
+    width: 100px;
     height: fit-content;
     color: $dark-grey-color;
     background-color: $ligth-blue-color;
@@ -96,6 +101,7 @@
     &_image {
       font-size: 0;
       padding: 20px 24px;
+      width: 0;
       position: relative;
       &::after {
         content: '';
