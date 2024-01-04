@@ -83,5 +83,6 @@
   "EnterEndpoint": "Enter API endpoint...",
   "Try": "Try",
   "ValidEndpoint": "Valid GraphQL endpoint!",
-  "MainPage": "Main Page"
+  "MainPage": "Main Page",
+  "PageNotFound": "Page is not found"
 }
