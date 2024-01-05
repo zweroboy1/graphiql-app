@@ -30,19 +30,19 @@ describe('Login Page:', () => {
     vi.clearAllMocks();
   });
 
-  it.skip('should has input for email', () => {
+  it('should has input for email', () => {
     expect(emailInput).toBeInTheDocument();
   });
 
-  it.skip('should has input for password', () => {
+  it('should has input for password', () => {
     expect(passwordInput).toBeInTheDocument();
   });
 
-  it.skip('should has button for submit form', () => {
+  it('should has button for submit form', () => {
     expect(submitButton).toBeInTheDocument();
   });
 
-  test.skip('should has errors for invalid email and password: ', async () => {
+  it('should has errors for invalid email and password: ', async () => {
     fireEvent.change(emailInput, { target: { value: 'testEmail' } });
     fireEvent.change(passwordInput, { target: { value: 'testPassword' } });
     await waitFor(() => {
@@ -55,7 +55,7 @@ describe('Login Page:', () => {
     });
   });
 
-  test('valid inputs:', async () => {
+  it('should login with valid inputs', async () => {
     await waitFor(() => {
       fireEvent.change(emailInput, { target: { value: 'test@test.com' } });
       fireEvent.change(passwordInput, { target: { value: 'testP1!test' } });

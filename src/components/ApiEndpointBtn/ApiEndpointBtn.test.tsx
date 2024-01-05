@@ -25,6 +25,12 @@ const GraphQlSchemaQueryResult = {
   vi.spyOn(GraphQlSchemaQuery, 'useGetGraphQlSchemaQuery') as Mock
 ).mockReturnValue(GraphQlSchemaQueryResult);
 
+const FetchGraphQlSchemaMutationMock = [() => ({}), { isLoading: false }];
+
+(
+  vi.spyOn(GraphQlSchemaQuery, 'useFetchGraphQlSchemaMutation') as Mock
+).mockReturnValue(FetchGraphQlSchemaMutationMock);
+
 describe('APIEndpoint button:', () => {
   let input: HTMLInputElement;
   let submitButton: HTMLButtonElement;
@@ -85,7 +91,11 @@ describe('APIEndpoint button:', () => {
   });
 
   it('should submit form', async () => {
-    fireEvent.change(input, { target: { value: 'https://gra.io' } });
+    await waitFor(() => {
+      fireEvent.change(input, {
+        target: { value: 'https://gra.io' },
+      });
+    });
     fireEvent.click(screen.getByRole('submit'));
 
     await waitFor(() => {

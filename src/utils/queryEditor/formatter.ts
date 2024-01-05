@@ -13,7 +13,7 @@ export const checkSpaces = (value: string): string => {
 };
 
 export const fixEnter = (value: string): string => {
-  return value.replace(/\n+\t*\n+/g, '\n').replace(/[)\w:]\s+{/g, (match) => {
+  return value.replace(/\n+\s*\n+/g, '\n').replace(/[)\w:]\s+{/g, (match) => {
     return match.replace(/\s+{/g, ' {');
   });
 };
@@ -64,14 +64,24 @@ export const checkFilter = (value: string): string => {
     });
 };
 
+export const checkQuery = (value: string): string => {
+  return value.replace(/^query\s+/, 'query ');
+};
+
 export const formatter = (value: string): string => {
+  const formatters = [
+    addEnter,
+    checkSpaces,
+    checkEnter,
+    checkTab,
+    checkFilter,
+    fixEnter,
+    checkQuery,
+  ];
   let result = value;
-  result = addEnter(result);
-  result = checkSpaces(result);
-  result = checkEnter(result);
-  result = checkTab(result);
-  result = checkFilter(result);
-  result = fixEnter(result);
+  formatters.forEach((func) => {
+    result = func(result);
+  });
   result = result.replace(/\t/g, ' '.repeat(TAB_TO_SPACES));
   return result;
 };

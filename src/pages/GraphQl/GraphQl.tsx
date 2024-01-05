@@ -84,7 +84,7 @@ export const GraphQl: React.FC = () => {
     if (!editorValue) {
       return;
     }
-    dispatch(setEditorValue(formatter(editorValue).trim()));
+    dispatch(setEditorValue(formatter(editorValue)));
     if (docsOpen) {
       toggleMenu();
     }
