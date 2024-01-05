@@ -35,8 +35,14 @@ export const GraphQl: React.FC = () => {
     }
 
     try {
-      const parsedVars = vars && JSON.parse(vars);
-      const parsedHeaders = headers && JSON.parse(headers);
+      let parsedVars = vars && JSON.parse(vars);
+      if (parsedVars === '') {
+        parsedVars = null;
+      }
+      let parsedHeaders = headers && JSON.parse(headers);
+      if (parsedHeaders === '') {
+        parsedHeaders = null;
+      }
       setRequestLoading(true);
       await fetchResponse({
         query: editorValue,
