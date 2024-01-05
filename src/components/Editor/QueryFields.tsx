@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocalization } from '../../contexts/locale.context';
 import { setHeaders, setVariables } from '../../store/slices/queryFields.slice';
 import { RootState } from '../../store/store';
+import { TAB_TO_SPACES } from '../../constants';
 
 enum InputType {
   Variables = 'Variables',
@@ -84,6 +85,7 @@ export const QueryFields: React.FC = () => {
             hideCursorInOverviewRuler: true,
             overviewRulerLanes: 0,
             overviewRulerBorder: false,
+            tabSize: TAB_TO_SPACES,
           }}
           onChange={handleQueryFields}
           value={queryParams ?? ''}

@@ -12,6 +12,7 @@ import { QueryFields } from '../../components/Editor/QueryFields';
 import { toast } from 'react-toastify';
 import { setHeaders, setVariables } from '../../store/slices/queryFields.slice';
 import { Documentation } from '../../components/Documentation/Documentation';
+import { TAB_TO_SPACES } from '../../constants';
 
 export const GraphQl: React.FC = () => {
   const [docsOpen, setDocsOpen] = useState(false);
@@ -52,11 +53,11 @@ export const GraphQl: React.FC = () => {
       })
         .unwrap()
         .then((payload) => {
-          const jsonCode = JSON.stringify(payload, null, 3).trim();
+          const jsonCode = JSON.stringify(payload, null, TAB_TO_SPACES).trim();
           dispatch(setViewerValue(jsonCode));
         })
         .catch((error) => {
-          const jsonCode = JSON.stringify(error, null, 3).trim();
+          const jsonCode = JSON.stringify(error, null, TAB_TO_SPACES).trim();
           dispatch(setViewerValue(jsonCode));
         })
         .finally(() => {
