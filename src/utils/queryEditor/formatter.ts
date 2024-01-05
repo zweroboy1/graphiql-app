@@ -1,4 +1,4 @@
-const TAB_TO_SPACES = 3;
+import { TAB_TO_SPACES } from '../../constants';
 
 export const addEnter = (value: string): string => {
   let result = value.replace(/\w+[\s\w]+\w+/g, (match) => {

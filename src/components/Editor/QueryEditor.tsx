@@ -5,6 +5,7 @@ import { RootState } from '../../store/store';
 import { setEditorValue } from '../../store/slices/editorSlice';
 import { setViewerValue } from '../../store/slices/viewerSlice';
 import { useLocalization } from '../../contexts/locale.context';
+import { TAB_TO_SPACES } from '../../constants';
 
 type QueryEditorProps = {
   mode: 'editor' | 'viewer';
@@ -52,6 +53,7 @@ export const QueryEditor: React.FC<QueryEditorProps> = ({ mode }) => {
             hideCursorInOverviewRuler: true,
             overviewRulerLanes: 0,
             overviewRulerBorder: false,
+            tabSize: TAB_TO_SPACES,
             readOnly: mode !== 'editor',
           }}
           onChange={handleChange}
