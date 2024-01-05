@@ -77,12 +77,22 @@ describe('Router', () => {
 
   it('Ensure that the 404 page is displayed when navigating to an invalid route', () => {
     render(
-      <Provider store={store}>
-        <MemoryRouter initialEntries={['/unkdcncdks']}>
-          <Router />
-        </MemoryRouter>
-      </Provider>
+      <LanguageContext.Provider
+        value={{
+          language: 'en',
+          setLanguage: vi.fn,
+          t: {
+            PageNotFound: 'Page is not found',
+          },
+        }}
+      >
+        <Provider store={store}>
+          <MemoryRouter initialEntries={['/unkdcncdks']}>
+            <Router />
+          </MemoryRouter>
+        </Provider>
+      </LanguageContext.Provider>
     );
-    expect(screen.getByText(/NotFound/i)).toBeInTheDocument();
+    expect(screen.getByText(/Page is not found/i)).toBeInTheDocument();
   });
 });
