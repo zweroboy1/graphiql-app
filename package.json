@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "format:fix": "prettier --write ./src",
     "prepare": "husky install",
-    "test": "vitest run",
+    "test": "env NODE_ENV=test vitest run",
     "test-coverage": "vitest run --coverage",
     "postinstall": "chmod +x .husky/*",
     "commit": "git add . && git-cz"
