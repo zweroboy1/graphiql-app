@@ -65,7 +65,7 @@ export const GraphQl: React.FC = () => {
         });
     } catch (error) {
       const errorCode = error instanceof Error ? error.message : null;
-      toast.error(errorCode, {
+      toast.error(`${t.VarsHeadersError} ${errorCode}`, {
         className: 'toast-error',
       });
     }
@@ -85,7 +85,7 @@ export const GraphQl: React.FC = () => {
     if (!editorValue) {
       return;
     }
-    dispatch(setEditorValue(formatter(editorValue)));
+    dispatch(setEditorValue(formatter(editorValue).trim()));
     if (docsOpen) {
       toggleMenu();
     }

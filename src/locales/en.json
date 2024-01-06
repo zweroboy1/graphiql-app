@@ -84,5 +84,6 @@
   "Try": "Try",
   "ValidEndpoint": "Valid GraphQL endpoint!",
   "MainPage": "Main Page",
-  "PageNotFound": "Page is not found"
+  "PageNotFound": "Page is not found",
+  "VarsHeadersError": "Variables and headers should be valid JSON. Error text:"
 }
