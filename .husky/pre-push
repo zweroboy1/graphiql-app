@@ -5,3 +5,6 @@
 echo "Running npm test"
 echo "Environment variables:"
 printenv
+
+
+npm run test
