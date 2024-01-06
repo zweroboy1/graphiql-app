@@ -28,6 +28,11 @@ button {
   flex-direction: column;
   min-height: 100vh;
   min-height: 100svh;
+
+  &_loader {
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .main {

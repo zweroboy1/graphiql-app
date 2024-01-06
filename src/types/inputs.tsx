@@ -3,7 +3,6 @@ import {
   FieldErrorsImpl,
   FieldValues,
   Merge,
-  // UseFormRegister,
 } from 'react-hook-form';
 
 export type AutocompleteType =

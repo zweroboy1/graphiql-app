@@ -4,11 +4,14 @@ import { Router } from '../../router/router';
 import { auth } from '../../firebase';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../../store/slices/userSlice';
+import { Loader } from '../Loader/Loader';
+import { useLocalization } from '../../contexts/locale.context';
 
 export const App: React.FC = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const location = useLocation();
+  const { translationsLoaded } = useLocalization();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -30,8 +33,14 @@ export const App: React.FC = () => {
     };
   }, [dispatch, location]);
 
-  if (loading) {
-    return null; //<div>loader</div>;
+  if (loading || !translationsLoaded) {
+    return (
+      <main className="main">
+        <section className="wrapper wrapper_loader">
+          <Loader />
+        </section>
+      </main>
+    );
   }
 
   return <Router />;
