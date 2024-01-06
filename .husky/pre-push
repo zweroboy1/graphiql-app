@@ -1,4 +1,8 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+
+echo "Running npm test"
+echo "Environment variables:"
+printenv
 npm run test
