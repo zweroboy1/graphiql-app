@@ -4,7 +4,7 @@ type LanguageContextType = {
   language: string;
   setLanguage: (language: string) => void;
   t: Record<string, string>;
-  translationsLoaded: boolean;
+  translationsLoaded?: boolean;
 };
 
 type LanguageProviderProps = {
