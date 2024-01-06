@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocalization } from '../../contexts/locale.context';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -38,15 +38,21 @@ export const Register: React.FC = () => {
       const toastText = getErrorText(errorCode, language);
       setButtonDisabled(true);
       toast.error(toastText, {
-        onClose: () => {
-          setButtonDisabled(false);
-        },
+        toastId: 'toast',
         className: 'toast-error',
       });
     } finally {
       setSubmiting(false);
     }
   };
+
+  useEffect(() => {
+    toast.onChange((v) => {
+      if (v.status === 'removed') {
+        setButtonDisabled(false);
+      }
+    });
+  }, []);
 
   return (
     <>
@@ -83,7 +89,9 @@ export const Register: React.FC = () => {
           error={errors['password']}
         />
         <button
-          className={`button button_bigger${submiting ? 'button_loading' : ''}`}
+          className={`button button_bigger${
+            submiting ? ' button_loading' : ''
+          }`}
           disabled={!isValid || submiting || buttonDisabled}
           type="submit"
           role="submit"

@@ -13,11 +13,11 @@ const errorDictionary: ErrorMessages = {
   },
   'Firebase: Error (auth/invalid-credential).': {
     en: 'Your password or email is invalid!',
-    ru: 'Нельзя зайти с такими логином/паролем!',
+    ru: 'Нет пользователя с такими логином/паролем!',
   },
   FETCH_ERROR: {
-    en: 'Invalid API endpoint!',
-    ru: 'Этот url не работает!',
+    en: `Invalid API endpoint! If you're sure that it's a working endpoint, you can try entering https://corsproxy.io?`,
+    ru: `Неверный API-эндпоинт! Если уверены, что это рабочий эндпоинт, попробуйте ввести https://corsproxy.io?`,
   },
 };
 
@@ -28,12 +28,12 @@ const getDefaultErrorMessage = (langCode: string): string => {
 
 export const getErrorText: (
   errorCode: string | null,
-  langCode: string
-) => string = (errorCode, langCode) => {
-  console.log(errorCode);
+  langCode: string,
+  argument?: string | null
+) => string = (errorCode, langCode, argument = null) => {
   if (!errorCode || !errorDictionary[errorCode]) {
     return getDefaultErrorMessage(langCode);
   }
 
-  return errorDictionary[errorCode][langCode];
+  return errorDictionary[errorCode][langCode] + (argument ? argument : '');
 };

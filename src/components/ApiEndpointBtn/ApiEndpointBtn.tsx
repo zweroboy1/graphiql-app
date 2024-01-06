@@ -34,7 +34,7 @@ export const ApiEndpointBtn: React.FC = () => {
     if ('error' in result) {
       const errorCode =
         'status' in result.error ? String(result.error.status) : null;
-      const toastText = getErrorText(errorCode, language);
+      const toastText = getErrorText(errorCode, language, form.endpoint);
       setButtonDisabled(true);
       toast.error(toastText, {
         toastId: 'toast',
