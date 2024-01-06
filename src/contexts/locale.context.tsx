@@ -4,6 +4,7 @@ type LanguageContextType = {
   language: string;
   setLanguage: (language: string) => void;
   t: Record<string, string>;
+  translationsLoaded: boolean;
 };
 
 type LanguageProviderProps = {
@@ -18,18 +19,21 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({
   children,
 }) => {
   const [language, setLanguage] = useState<string>('en');
+  const [translationsLoaded, setTranslationsLoaded] = useState<boolean>(false);
 
   const translationsPromise = import(`../locales/${language}.json`);
   const [t, setTranslations] = useState<Record<string, string>>({});
 
   translationsPromise.then((module) => {
     setTranslations(module.default || {});
+    setTranslationsLoaded(true);
   });
 
   const contextValue: LanguageContextType = {
     language,
     setLanguage,
     t,
+    translationsLoaded,
   };
 
   return (
