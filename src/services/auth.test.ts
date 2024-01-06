@@ -1,5 +1,4 @@
 import * as FirebaseAuth from '@firebase/auth';
-2;
 
 import { Mock } from 'vitest';
 import { waitFor } from '@testing-library/react';

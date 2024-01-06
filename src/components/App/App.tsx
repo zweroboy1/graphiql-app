@@ -1,9 +1,9 @@
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Router } from '../../router/router';
 import { auth } from '../../firebase';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../../store/slices/userSlice';
-import { useState, useEffect } from 'react';
 
 export const App: React.FC = () => {
   const dispatch = useDispatch();
