@@ -66,23 +66,19 @@ describe('APIEndpoint button:', () => {
   });
 
   it('should display error for invalid input', async () => {
-    fireEvent.change(input, { target: { value: 'testEndpoint' } });
     await waitFor(() => {
-      const error = screen.getByText('Invalid URL format');
-      expect(error).toBeInTheDocument();
+      fireEvent.change(input, { target: { value: 'testEndpoint' } });
     });
-  });
-
-  it('should display error for invalid input', async () => {
-    fireEvent.change(input, { target: { value: 'testEndpoint' } });
+    const error = screen.getByText('Invalid URL format');
     await waitFor(() => {
-      const error = screen.getByText('Invalid URL format');
       expect(error).toBeInTheDocument();
     });
   });
 
   it('should not submit form', async () => {
-    fireEvent.change(input, { target: { value: 'gra.io' } });
+    await waitFor(() => {
+      fireEvent.change(input, { target: { value: 'gra.io' } });
+    });
     fireEvent.click(screen.getByRole('submit'));
 
     await waitFor(() => {
