@@ -25,6 +25,7 @@ export const registerUser = async (user: {
     email,
     name: userFromServer.displayName,
   });
+  return await loginUser({ email, password });
 };
 
 export const loginUser = async ({
