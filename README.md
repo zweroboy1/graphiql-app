@@ -61,7 +61,7 @@ To enforce consistent coding styles and to identify potential code issues we use
 - `lint:fix` - runs ESLint to check code and fix autofixable issues.
 - `format:fix` - runs Prettier to format code.
 - `test` - runs prepared unit tests.
-- `coverage` - runs prepared unit tests with displaying coverage.
+- `test-coverage` - runs prepared unit tests with displaying coverage.
 - `prepare` - automatically enables Git hooks.
 - `commit` - enables formatted commits following commitizen conventions.
 
