@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { setApiEndpointSlice } from './apiEndpoint.slice';
 
 interface HistoryState {
   history: string[];
@@ -21,6 +22,11 @@ const historySlice = createSlice({
     clearAllHistory: (state) => {
       state.history = [];
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(setApiEndpointSlice, (state) => {
+      state.history = [];
+    });
   },
 });
 

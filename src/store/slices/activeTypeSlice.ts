@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { setApiEndpointSlice } from './apiEndpoint.slice';
 
 type ActiveType = {
   name: string;
@@ -15,6 +16,11 @@ export const activeTypeSlice = createSlice({
     setActiveType: (state, action: PayloadAction<string>) => {
       state.name = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(setApiEndpointSlice, (state) => {
+      state.name = 'Query';
+    });
   },
 });
 

@@ -10,9 +10,9 @@ import { setViewerValue } from '../../store/slices/viewerSlice';
 import { formatter } from '../../utils/queryEditor';
 import { QueryFields } from '../../components/Editor/QueryFields';
 import { toast } from 'react-toastify';
-import { setHeaders, setVariables } from '../../store/slices/queryFields.slice';
 import { Documentation } from '../../components/Documentation/Documentation';
 import { TAB_TO_SPACES } from '../../constants';
+import { graphqlPageReset } from '../../store/actions';
 
 export const GraphQl: React.FC = () => {
   const [docsOpen, setDocsOpen] = useState(false);
@@ -72,10 +72,7 @@ export const GraphQl: React.FC = () => {
   };
 
   const handleReset = () => {
-    dispatch(setViewerValue(''));
-    dispatch(setHeaders(''));
-    dispatch(setEditorValue(''));
-    dispatch(setVariables(''));
+    dispatch(graphqlPageReset());
     if (docsOpen) {
       toggleMenu();
     }
