@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { graphqlPageReset } from '../actions';
 
 interface ViewerState {
   value: string;
@@ -15,6 +16,11 @@ const viewerSlice = createSlice({
     setViewerValue: (state, action: PayloadAction<string>) => {
       state.value = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(graphqlPageReset, (state) => {
+      state.value = '';
+    });
   },
 });
 

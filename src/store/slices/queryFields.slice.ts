@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { graphqlPageReset } from '../actions';
 
 type queryFields = {
   variables?: string | null;
@@ -20,6 +21,12 @@ const queryFieldsSlice = createSlice({
     setHeaders: (state, action: PayloadAction<string>) => {
       state.headers = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(graphqlPageReset, (state) => {
+      state.headers = '';
+      state.variables = '';
+    });
   },
 });
 export const { setHeaders, setVariables } = queryFieldsSlice.actions;
