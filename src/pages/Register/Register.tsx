@@ -4,7 +4,7 @@ import { useLocalization } from '../../contexts/locale.context';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { loginUser, registerUser } from '../../services/auth';
+import { registerUser } from '../../services/auth';
 import { TextField } from '../../components/inputs/TextField';
 import { PasswordField } from '../../components/inputs/PasswordField';
 import { registerSchema } from '../../schemas';
@@ -31,8 +31,7 @@ export const Register: React.FC = () => {
     setSubmiting(true);
     try {
       await registerUser(data);
-      await loginUser(data);
-      navigate('/');
+      navigate('.');
     } catch (e) {
       const errorCode = e instanceof Error ? e.message : null;
       const toastText = getErrorText(errorCode, language);
