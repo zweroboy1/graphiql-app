@@ -1,0 +1,90 @@
+.input {
+  box-sizing: border-box;
+  width: 240px;
+  padding: 12px 20px;
+  font-family: inherit;
+  font-size: 16px;
+  border: 0;
+  border-radius: 10px;
+  background-color: $light-grey-color;
+  color: $text-color;
+
+  @include hover {
+    outline: 1px solid $grey-border-color;
+  }
+
+  &[type='password']::placeholder {
+    letter-spacing: 0;
+  }
+  &[type='password'] {
+    font-family: inherit;
+    letter-spacing: 3px;
+  }
+  &::placeholder {
+    color: $dark-grey-color;
+  }
+  &:focus {
+    outline: 1px solid $grey-border-color;
+  }
+  &_error,
+  &_error:focus {
+    background-color: $error-bg-color;
+    outline: 1px solid $error-border-color;
+  }
+
+  &_error {
+    @include hover {
+      outline: 1px solid $error-border-color;
+    }
+  }
+
+  &_eye {
+    padding-right: 32px;
+  }
+
+  &__container {
+    position: relative;
+    width: max-content;
+    margin-top: 4px;
+  }
+
+  &__group {
+    height: 104px;
+  }
+
+  &__icon {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    height: 16px;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+
+    &:focus-visible {
+      border-radius: 20%;
+      outline: 2px solid $outline-stroke-color;
+    }
+  }
+}
+
+.input-error-message {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+  font-size: 12px;
+  color: $error-text-color;
+
+  &::before {
+    display: inline-block;
+    content: '';
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+    background-image: url(/src/assets/svg/Attention.svg);
+  }
+}

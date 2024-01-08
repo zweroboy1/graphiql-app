@@ -1,0 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+body {
+  height: 100vh;
+  height: 100svh;
+  font-family: $main-font;
+  background-color: $bg-color;
+}
+
+a {
+  color: $primary-color;
+  text-decoration: none;
+  @include hover {
+    color: $primary-hover-color;
+  }
+  &:focus,
+  &:focus-visible {
+    outline-color: $outline-stroke-color;
+  }
+}
+
+button {
+  border: 0;
+  outline: auto;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100svh;
+
+  &_loader {
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.main {
+  display: flex;
+  flex-grow: 1;
+  margin: 0 auto;
+  width: min(1600px, 95vw);
+  justify-content: center;
+  align-items: center;
+  @include media('xs') {
+    margin: 0 20px 0 5px;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+  @include media('s') {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+::-webkit-scrollbar-track {
+  background: $light-grey-color;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $grey-border-color;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $dark-grey-color;
+}
+
+.toast-error {
+  background-color: $error-notification-bg-color;
+}
+
+.toast-success {
+  background-color: $success-notification-bg-color;
+}
+
+.Toastify__toast {
+  border-radius: 10px;
+  color: $text-color;
+  font-family: $main-font;
+  font-size: 16px;
+  padding: 14px 20px;
+}
+
+.Toastify__toast-icon {
+  & svg {
+    visibility: hidden;
+  }
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -8px;
+    width: 24px;
+    height: 24px;
+    background-repeat: no-repeat;
+  }
+}
+
+.toast-error .Toastify__toast-icon::before {
+  background-image: url(/src/assets/svg/Error.svg);
+}
+
+.toast-success .Toastify__toast-icon::before {
+  background-image: url(/src/assets/svg/Ok.svg);
+}
+
+.small-screen {
+  display: none;
+  @include media('s') {
+    display: inline;
+  }
+}
+
+.big-screen {
+  display: inline;
+  @include media('s') {
+    display: none;
+  }
+}

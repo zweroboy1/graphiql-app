@@ -1,0 +1,15 @@
+.login-form {
+  padding: 24px;
+  border-radius: 20px;
+  background: $white-color;
+  margin: 0 auto;
+  max-width: map-get($sizes, 's');
+  box-shadow: $medium-shadow;
+
+  &__title {
+    margin-bottom: 12px;
+  }
+  &__text {
+    margin-top: 12px;
+  }
+}

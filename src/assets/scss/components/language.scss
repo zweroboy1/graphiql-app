@@ -1,0 +1,40 @@
+.language {
+  &__button {
+    display: flex;
+    justify-content: center;
+    width: 100px;
+    padding: 10px 0;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    border: 1px solid $primary-color;
+    border-radius: 10px;
+    background-color: $white-color;
+    color: $primary-hover-color;
+    outline: 0;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    @include hover {
+      background-color: $ligth-blue-color;
+    }
+    &:focus-visible {
+      border-color: transparent;
+      outline: 2px solid $outline-stroke-color;
+    }
+
+    @include media('s') {
+      width: 50px;
+    }
+  }
+}
+
+.header-compact {
+  .language {
+    &__button {
+      background-color: $ligth-blue-color;
+      @include hover {
+        background-color: $white-color;
+      }
+    }
+  }
+}

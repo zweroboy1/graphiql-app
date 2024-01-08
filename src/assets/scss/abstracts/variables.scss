@@ -1,0 +1,38 @@
+$bg-color: #f4f4f5;
+$primary-color: #1e88e5;
+$primary-hover-color: #0f74cc;
+$white-color: #ffffff;
+$ligth-blue-color: #eff8ff;
+$medium-blue-color: #d5eafc;
+
+$outline-stroke-color: #ffa726;
+$light-grey-color: #eceff1;
+$dark-grey-color: #78909c;
+$disabled-bg-color: #e4edf4;
+$grey-border-color: #cfd8dc;
+
+$text-color: #212121;
+$light-text-color: #90a4ae;
+
+$disabled-text-color: #b6c8d1;
+
+$error-border-color: #ffcdd2;
+$error-bg-color: #fff5f6;
+$error-text-color: #f16865;
+$error-notification-bg-color: #ffebee;
+
+$success-notification-bg-color: #e8f5e9;
+
+$medium-shadow: 0px 10px 20px 0px rgba(38, 50, 56, 0.08);
+
+$sizes: (
+  'xxs': 380px,
+  'xs': 480px,
+  's': 639px,
+  'm': 767px,
+  'l': 991px,
+  'xl': 1120px,
+  'xxl': 1279px,
+);
+
+$main-font: 'Roboto', sans-serif;

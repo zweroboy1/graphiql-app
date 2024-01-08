@@ -1,0 +1,179 @@
+.button {
+  display: inline-flex;
+  padding: 16px 0px;
+  width: 110px;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 400;
+  background-color: $primary-color;
+  color: $white-color;
+  border: 0;
+  outline: 0;
+  border-radius: 10px;
+  white-space: nowrap;
+  cursor: pointer;
+
+  &_bigger {
+    width: 210px;
+  }
+
+  &_medium {
+    padding: 12px 30px;
+    font-size: 16px;
+  }
+
+  &_small {
+    padding: 8px 12px;
+    width: initial;
+    font-size: 14px;
+  }
+
+  &_micro {
+    padding: 4px 8px;
+    font-size: 14px;
+    width: 100px;
+    height: fit-content;
+    color: $dark-grey-color;
+    background-color: $ligth-blue-color;
+  }
+
+  &_tool {
+    border-radius: 5px;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    position: relative;
+
+    &:disabled {
+      border: 1px solid $error-border-color;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      translate: 0 -50%;
+      width: 24px;
+      height: 24px;
+      background-repeat: no-repeat;
+      background-size: 24px 24px;
+    }
+    &:disabled::after {
+      filter: invert(1);
+      filter: invert(27%) sepia(92%) saturate(5050%) hue-rotate(196deg)
+        brightness(100%) contrast(88%);
+    }
+    &-docs::after {
+      background-image: url(/src/assets/svg/docs.svg);
+    }
+
+    &-reset::after {
+      background-image: url(/src/assets/svg/reset.svg);
+      width: 28px;
+      height: 28px;
+      background-size: 28px 28px;
+    }
+
+    &-format::after {
+      background-image: url(/src/assets/svg/format.svg);
+    }
+
+    &-play::after {
+      left: 10px;
+      background-image: url(/src/assets/svg/play.svg);
+    }
+  }
+
+  &_tool-arrow {
+    width: 24px;
+    height: 24px;
+    &::after {
+      width: 16px;
+      height: 16px;
+      background-size: 16px 16px;
+      background-image: url(/src/assets/svg/Arrow.svg);
+      rotate: 180deg;
+      transition: rotate 0.3s ease;
+    }
+  }
+
+  @include media('s') {
+    &_image {
+      font-size: 0;
+      padding: 20px 24px;
+      width: 0;
+      position: relative;
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        translate: 0 -50%;
+        width: 20px;
+        height: 20px;
+        background-size: 20px;
+        background-repeat: no-repeat;
+      }
+
+      &-logout::after {
+        background-image: url(/src/assets/svg/logout.svg);
+      }
+
+      &-playground::after {
+        background-image: url(/src/assets/svg/textbox.svg);
+      }
+
+      &-login::after {
+        background-image: url(/src/assets/svg/login.svg);
+      }
+
+      &-register::after {
+        background-image: url(/src/assets/svg/register.svg);
+      }
+    }
+  }
+
+  @include hover {
+    color: $white-color;
+    background-color: $primary-hover-color;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $outline-stroke-color;
+  }
+
+  &:disabled {
+    color: $disabled-text-color;
+    background-color: $disabled-bg-color;
+    cursor: not-allowed;
+  }
+
+  &_loading:disabled {
+    position: relative;
+    background-color: $primary-color;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      translate: 0 -50%;
+      width: 18px;
+      height: 18px;
+      background-image: url(/src/assets/svg/loader.svg);
+      background-repeat: no-repeat;
+      animation: spin 1s linear infinite;
+      z-index: 3;
+    }
+    & span {
+      visibility: hidden;
+    }
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
